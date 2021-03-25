@@ -4,11 +4,11 @@ CC		= clang++
 CFLAGS		= -Werror -Wextra -Wall
 RM		= rm -rf
 
-DIR_SRCS	= ./
+DIR_SRCS	= test/
 DIR_OBJS	= objs/
 DIR_INC		= ./srcs/
 
-F_SRCS		= main.cpp
+F_SRCS		= vector.cpp
 SRCS		= $(addprefix $(DIR_SRCS), $(F_SRCS))
 
 OBJS		= $(addprefix $(DIR_OBJS), $(F_SRCS:.cpp=.o))
