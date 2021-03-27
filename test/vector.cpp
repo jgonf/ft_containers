@@ -6,13 +6,64 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/25 20:00:47 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:22:36 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/vector.hpp"
 #include <vector>
 
+
+int main()
+{
+	ft::vector<int> v1(5, 5);
+	ft::vector<int> v2(5, 5);
+
+	ft::vector<int>::itvec it;
+
+	if (v1.begin() == v1.begin())
+		std::cout << "Success" << std::endl;
+	if (v1.begin() == v2.begin())
+		std::cout << "What ?" << std::endl;
+
+	if (v1.begin() != v2.begin())
+		std::cout << "Success" << std::endl;
+	if (v1.begin() != v1.begin())
+		std::cout << "What ?" << std::endl;
+
+	it = v2.begin();
+	if(*it == 5)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+	++it;
+	--it;
+	if(it == v2.begin())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	it++;
+	it--;
+	if(it == v2.begin())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	ft::vector<int> test1(1, 1);
+	test1.push_back(2);
+	test1.push_back(3);
+	test1.push_back(4);
+	ft::vector<int>::itvec it_test = test1.begin();
+
+	std::cout << *(it_test + 3) << std::endl; 
+	std::cout << *(2 + it_test) << std::endl; 
+	std::cout << *(it_test) << std::endl; 
+	it_test++;
+	std::cout << *(it_test - 1) << std::endl; 
+}
+
+/*
 int main()
 {
 	ft::vector<int> v1;
@@ -71,5 +122,42 @@ int main()
 	std::cout << v4.front() << std::endl;
 	std::cout << v4.back() << std::endl;
 
+
+	std::cout << std::endl << "assing, push back and pop_back" << std::endl;
+	v4.push_back("YOLO");
+	std::cout << v4.back() << std::endl;
+	v4.pop_back();
+	std::cout << v4.back() << std::endl;
+
+
+	std::cout << std::endl << "insert" << std::endl;
+	std::string *it;
+	std::cout << std::endl;
+	for (it = v4.begin(); it != v4.end(); ++it)
+		std::cout << *it << std::endl;
+	it--;
+	it--;
+	v4.insert(it, "pouet");
+	std::cout << std::endl;
+	for (it = v4.begin(); it != v4.end(); ++it)
+		std::cout << *it << std::endl;
+	it = v4.begin();
+	it++;
+	v4.insert(it, 3, "chouette");
+	std::cout << std::endl;
+	for (it = v4.begin(); it != v4.end(); ++it)
+		std::cout << *it << std::endl;
+
+	std::cout << std::endl;
+	v2.push_back(8);
+	v2.insert(v2.begin(), 3);
+	v1.insert(v1.begin(), v2.begin(), v2.end());
+	for (int *it2 = v2.begin(); it2 != v2.end(); ++it2)
+		std::cout << *it2 << std::endl;
+
+//	for (int *it2 = v1.begin(); it2 != v1.end(); ++it2)
+//		std::cout << *it2 << std::endl;
+
 	return 1;
 }
+*/
