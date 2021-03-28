@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/27 15:22:36 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/28 23:00:18 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,34 @@
 #include <vector>
 
 
-int main()
+void	test_iterator(void)
 {
+	std::cout << "Iterator test" << std::endl;
 	ft::vector<int> v1(5, 5);
 	ft::vector<int> v2(5, 5);
 
-	ft::vector<int>::itvec it;
+	ft::vector<int>::iterator it;
 
+	std::cout << "test 1: ";
 	if (v1.begin() == v1.begin())
 		std::cout << "Success" << std::endl;
 	if (v1.begin() == v2.begin())
 		std::cout << "What ?" << std::endl;
 
+	std::cout << "test 2: ";
 	if (v1.begin() != v2.begin())
 		std::cout << "Success" << std::endl;
 	if (v1.begin() != v1.begin())
 		std::cout << "What ?" << std::endl;
 
+	std::cout << "test 3: ";
 	it = v2.begin();
 	if(*it == 5)
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 4: ";
 	++it;
 	--it;
 	if(it == v2.begin())
@@ -43,6 +49,7 @@ int main()
 	else
 		std::cout << "What ?" << std::endl;
 
+	std::cout << "test 5: ";
 	it++;
 	it--;
 	if(it == v2.begin())
@@ -50,22 +57,107 @@ int main()
 	else
 		std::cout << "What ?" << std::endl;
 
-	ft::vector<int> test1(1, 1);
+	ft::vector<int> test1(1, 0);
+	std::vector<int> cmp1(1, 0);
+
+	test1.push_back(1);
 	test1.push_back(2);
 	test1.push_back(3);
 	test1.push_back(4);
-	ft::vector<int>::itvec it_test = test1.begin();
+	cmp1.push_back(1);
+	cmp1.push_back(2);
+	cmp1.push_back(3);
+	cmp1.push_back(4);
 
-	std::cout << *(it_test + 3) << std::endl; 
-	std::cout << *(2 + it_test) << std::endl; 
-	std::cout << *(it_test) << std::endl; 
+	ft::vector<int>::iterator it_test = test1.begin();
+	std::vector<int>::iterator it_cmp = cmp1.begin();
+
+	std::cout << "test 6: ";
+	if (*(it_test + 3) == *(it_cmp + 3))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+	std::cout << "test 7: ";
+	if (*(2 + it_test) == *(2 + it_cmp))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+	std::cout << "test 8: ";
+	if (*(it_test) == *(it_cmp))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 9: ";
 	it_test++;
-	std::cout << *(it_test - 1) << std::endl; 
+	it_cmp++;
+	if (*(it_test - 1) == *(it_cmp - 1))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 10: ";
+	if ((it_test - (it_test + 3)) == (it_cmp - (it_cmp + 3)))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 11: ";
+	if ((it_test - (it_test - 2)) == (it_cmp - (it_cmp - 2)))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 12: ";
+	if ((it_test > it_test++) == (it_cmp > it_cmp++))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 13: ";
+	if ((it_test <= it_test) == (it_cmp <= it_cmp))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 14: ";
+	if ((it_test < it_test--) == (it_cmp < it_cmp--))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 15: ";
+	if ((it_test >= it_test) == (it_cmp >= it_cmp))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "test 16: ";
+	if (*(it_test -= 1) == *(it_cmp -= 1))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+	std::cout << "test 17: ";
+	if (*(it_test += 2) == *(it_cmp += 2))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+	std::cout << "test 18: ";
+	if (it_test[3] == it_cmp[3])
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+
+	
+
 }
 
-/*
+
 int main()
 {
+//	test_iterator();
+
 	ft::vector<int> v1;
 	ft::vector<int> v2(5,5);
 	ft::vector<char> v3(5,'a');
@@ -76,8 +168,8 @@ int main()
 
 	std::cout << std::endl << "Iterartors " << std::endl;
 
-	v2.end();
-	for (int *it = v2.begin(); it != v2.end(); ++it)
+	ft::vector<int>::iterator it;
+	for (it = v2.begin(); it != v2.end(); ++it)
 		std::cout << *it << std::endl;
 	v3.rbegin();
 	v3.rend();
@@ -131,33 +223,37 @@ int main()
 
 
 	std::cout << std::endl << "insert" << std::endl;
-	std::string *it;
+	ft::vector<std::string>::iterator itstr;
 	std::cout << std::endl;
-	for (it = v4.begin(); it != v4.end(); ++it)
-		std::cout << *it << std::endl;
-	it--;
-	it--;
-	v4.insert(it, "pouet");
+	for (itstr = v4.begin(); itstr != v4.end(); ++itstr)
+		std::cout << *itstr << std::endl;
+	itstr--;
+	itstr--;
+	v4.insert(itstr, "pouet");
 	std::cout << std::endl;
-	for (it = v4.begin(); it != v4.end(); ++it)
-		std::cout << *it << std::endl;
-	it = v4.begin();
-	it++;
-	v4.insert(it, 3, "chouette");
+	for (itstr = v4.begin(); itstr != v4.end(); ++itstr)
+		std::cout << *itstr << std::endl;
+	itstr = v4.begin();
+	itstr++;
+	v4.insert(itstr, 3, "chouette");
 	std::cout << std::endl;
-	for (it = v4.begin(); it != v4.end(); ++it)
-		std::cout << *it << std::endl;
+	for (itstr = v4.begin(); itstr != v4.end(); ++itstr)
+		std::cout << *itstr << std::endl;
 
 	std::cout << std::endl;
+	ft::vector<int>::iterator it2;
 	v2.push_back(8);
 	v2.insert(v2.begin(), 3);
-	v1.insert(v1.begin(), v2.begin(), v2.end());
-	for (int *it2 = v2.begin(); it2 != v2.end(); ++it2)
-		std::cout << *it2 << std::endl;
-
-//	for (int *it2 = v1.begin(); it2 != v1.end(); ++it2)
+	it2 = v1.begin();
+	std::cout << "Here" << std::endl;
+	v1.insert(it2, v2.begin(), v2.end());
+//	std::cout << "v2" << std::endl;
+//	for (it2 = v2.begin(); it2 != v2.end(); ++it2)
 //		std::cout << *it2 << std::endl;
+//	std::cout << "v1" << std::endl;
+	for (it2 = v1.begin(); it2 != v1.end(); ++it2)
+		std::cout << *it2 << std::endl;
 
 	return 1;
 }
-*/
+

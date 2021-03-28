@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:59:21 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/27 15:21:58 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/28 23:20:29 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,58 @@ namespace ft
 				value_type operator*(void) const { return *_ptr; }
 				value_type operator->(void) const { return _ptr; }
 
-				VectorIterator operator+(int n)
+				VectorIterator operator+(difference_type n)
 				{
 					value_type *tmp = _ptr;
 					return tmp +=n;
 				}
 
-				VectorIterator operator-(int n)
+				VectorIterator operator-(difference_type n)
 				{
 					value_type *tmp = _ptr;
 					return tmp -=n;
 				}
 
-			private:
+				difference_type operator-(VectorIterator const &cmp)
+				{
+					return _ptr - cmp._ptr;
+				}
+
+				bool operator<(VectorIterator const &cmp) const
+				{
+					return (_ptr < cmp._ptr);
+				}
+
+				bool operator>(VectorIterator const &cmp) const
+				{
+					return (_ptr > cmp._ptr);
+				}
+
+				bool operator<=(VectorIterator const &cmp) const
+				{
+					return (_ptr <= cmp._ptr);
+				}
+
+				bool operator>=(VectorIterator const &cmp) const
+				{
+					return (_ptr <= cmp._ptr);
+				}
+
+				VectorIterator operator+=(difference_type n)
+				{
+					_ptr += n;
+					return *this;
+				}
+
+				VectorIterator operator-=(difference_type n)
+				{
+					_ptr -= n;
+					return *this;
+				}
+
+				value_type operator[](difference_type n) const { return _ptr[n]; }
+
+			protected:
 				pointer	_ptr;
 		};
 
@@ -119,8 +158,7 @@ namespace ft
 				typedef value_type		*pointer;
 				typedef value_type const	*const_pointer;
 
-				typedef T		*iterator;
-				typedef VectorIterator<value_type> itvec;
+				typedef VectorIterator<value_type> iterator;
 				typedef iterator const	const_iterator;
 				typedef iterator	reverse_iterator;
 				typedef iterator const	const_reverse_iterator;
@@ -143,7 +181,10 @@ namespace ft
 						_cont[i] = val;
 				}
 
-				vector(iterator first, iterator last);
+//				vector(iterator first, iterator last)
+//				{
+//					assign(first, last);
+//				}
 
 				vector(vector const & src)
 				{
@@ -164,21 +205,10 @@ namespace ft
 					return *this;
 				}
 
-				itvec		begin(void)
-				{
-					return _cont;
-				}
-
 				//fonctions iterators
-//				iterator	begin(void)
-//				{
-//					return _cont;
-//				}
+				iterator	begin(void) { return _cont; }
 
-				const_iterator 	begin(void) const
-				{
-					return _cont;
-				}
+				const_iterator 	begin(void) const { return _cont; }
 
 				iterator	end(void)
 				{
@@ -218,17 +248,14 @@ namespace ft
 				//capacity
 				size_t	size(void) const { return _size; }
 
-				size_t	max_size(void) const
-				{
-					std::cout << "Est on sur de pouvoir utiliser allocator ? " << std::endl;
-					return std::allocator<T>().max_size();
-				}
+				size_t	max_size(void) const { return std::allocator<T>().max_size(); }
 
 				void	resize(size_type n, value_type val = value_type())
 				{
 					if (n < _size)
 					{
-						std::cout << "Need pop_back()" << std::endl;
+						for (size_type i = 0; i < n ; i++)
+							pop_back();
 					}
 					else
 						insert(end(), n, val);
@@ -321,15 +348,16 @@ namespace ft
 				{
 					int i = 0;
 					int j = 0;
+					iterator	it;
 					iterator	ret;
 
 					value_type *tmp = new value_type[_size + 1];
-					for (value_type *it = begin(); it != end(); ++it)
+					for (it = begin(); it != end(); ++it)
 					{
 						if (it == position)
 						{
 							tmp[i++] = val;
-							ret = &tmp[i];
+							ret = iterator(&tmp[i]);
 						}
 						tmp[i++] = _cont[j++];
 					}
@@ -337,6 +365,7 @@ namespace ft
 					_cont = tmp;
 					_size = _size + 1;
 					_capacity = _size;
+					std::cout << "yo" << *ret << std::endl;
 					return (ret);
 				}
 
@@ -344,9 +373,10 @@ namespace ft
 				{
 					int i = 0;
 					int j = 0;
+					iterator it;
 
 					value_type *tmp = new value_type[_size + n];
-					for (value_type *it = begin(); it != end(); ++it)
+					for (it = begin(); it != end(); ++it)
 					{
 						if (it == position)
 							for (size_type k = 0; k < n; k++)
@@ -362,27 +392,45 @@ namespace ft
 				template <class InputIterator>
 					void insert (iterator position, InputIterator first, InputIterator last)
 					{
-						int	i = 0;
-						int	j = 0;
+						std::cout << "implementer assign avant pour pouvoir utiliser vector a partir d'iterator" << std::endl;
+						size_t	i = 0;
+						iterator	pos = position;
 
-						std::cout << "need iterator pour calculer len" << std::endl;
-						//					for (value_type *it = first; it != last; ++it)
-						//						len++;
-						int len = 50;
-						value_type *tmp = new value_type[_size + len];
 
-						for (value_type *it = begin(); it != end(); ++it)
+						for (iterator it = first; it != last; ++it)
 						{
-							if (it == position)
-								for (value_type *it2 = first; it2 != last; ++it2)
-									tmp[i++] = *it2;
-							tmp[i++] = _cont[j++];
+							pos = insert(pos, *it);
+//							std::cout << *pos << std::endl;
+//							pos + i;
+							i++;
 						}
-						delete [] _cont;
-						_cont = tmp;
-						_size = _size + len;
-						_capacity = _size;
 
+						(void)last;
+						(void)first;
+//						int	i = 0;
+//						int	j = 0;
+//						iterator	it = begin();
+//						iterator	it2;
+//
+//						size_type len = _size + last - first;
+//						value_type *tmp = new value_type[len];
+//						for (size_t pos = 0; pos < _size; ++pos)
+//						{
+//							std::cout <<"Yo" << std::endl;
+//							if (it == position)
+//							{
+//								for (it2 = first; it2 != last; ++it2)
+//									tmp[i++] = *it2;
+//								std::cout << "Wesh" << std::endl;
+//							}
+//							tmp[i++] = _cont[j++];
+//							it++;
+//						}
+//						delete [] _cont;
+//						_cont = tmp;
+//						_size = len;
+//						_capacity = _size;
+//
 					}
 
 //				iterator	erase(iterator position)
