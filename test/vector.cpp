@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/28 23:00:18 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/29 22:53:18 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,15 +149,13 @@ void	test_iterator(void)
 		std::cout << "What ?" << std::endl;
 
 
-	
-
 }
 
 
 int main()
 {
 //	test_iterator();
-
+/*
 	ft::vector<int> v1;
 	ft::vector<int> v2(5,5);
 	ft::vector<char> v3(5,'a');
@@ -246,6 +244,8 @@ int main()
 	v2.insert(v2.begin(), 3);
 	it2 = v1.begin();
 	std::cout << "Here" << std::endl;
+	v1.push_back(18);
+	v1.insert(it2, 29);
 	v1.insert(it2, v2.begin(), v2.end());
 //	std::cout << "v2" << std::endl;
 //	for (it2 = v2.begin(); it2 != v2.end(); ++it2)
@@ -253,7 +253,49 @@ int main()
 //	std::cout << "v1" << std::endl;
 	for (it2 = v1.begin(); it2 != v1.end(); ++it2)
 		std::cout << *it2 << std::endl;
+*/
 
+	ft::vector<int> t1(3,5);
+	ft::vector<int>::iterator it;
+	ft::vector<int> t2(20,56);
+	ft::vector<int>::iterator it2;
+	ft::vector<int>::iterator ite2;
+	t1.insert(t1.begin(), 2, 8);
+	it2 = t2.begin() + 3;
+	ite2 = it2 + 5;
+	t1.insert(t1.begin(), it2, ite2);
+	for (it = t1.begin(); it != t1.end(); ++it)
+		std::cout << *it << std::endl;
+
+//
+//	std::vector<int> s1(3,5);
+//	std::vector<int>::iterator it1;
+//	std::vector<int> s2(20,56);
+//	std::vector<int>::iterator its;
+//	std::vector<int>::iterator ites;
+//	s1.insert(s1.begin(), 2, 8);
+//	its = s2.begin() + 3;
+//	ites = its + 5;
+//	s1.insert(s1.begin(), its, ites);
+//	for (it1 = s1.begin(); it1 != s1.end(); ++it1)
+//		std::cout << *it1 << std::endl;
+//
+	
+	t1.erase(t1.begin() + 5);
+	std::cout << std::endl;
+	for (it = t1.begin(); it != t1.end(); ++it)
+		std::cout << *it << std::endl;
+
+//	t1.erase(t1.begin(), t1.begin() + 4);
+//	std::cout << std::endl;
+//	for (it = t1.begin(); it != t1.end(); ++it)
+//		std::cout << *it << std::endl;
+
+//	ft::vector<int> t1(3,5);
+//	t1.assign(2, 8);
+//	for (ft::vector<int>::iterator it = t1.begin(); it != t1.end(); ++it)
+//		std::cout << *it << std::endl;
+//
 	return 1;
 }
 

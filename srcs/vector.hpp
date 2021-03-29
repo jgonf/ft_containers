@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:59:21 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/28 23:20:29 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/29 23:02:17 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 
 namespace ft
 {
+	template<bool, class T>
+		struct enable_if {};
+	template<class T>
+		struct enable_if<true, T> { typedef T type; };
+
 	template < typename T>
 		class vector;
 
@@ -30,6 +35,7 @@ namespace ft
 				typedef std::ptrdiff_t 	difference_type;
 				typedef T		*pointer;
 				typedef T		*reference;
+				static const bool	input_iter;
 
 				VectorIterator(void): _ptr(NULL) {}
 				VectorIterator(VectorIterator const &src): _ptr(src._ptr) {};
@@ -145,6 +151,9 @@ namespace ft
 		return tmp +=n;
 	}
 
+	template < class T>
+	const bool VectorIterator<T>::input_iter = true;
+
 	template < typename T>
 		class vector {
 
@@ -181,16 +190,15 @@ namespace ft
 						_cont[i] = val;
 				}
 
-//				vector(iterator first, iterator last)
-//				{
-//					assign(first, last);
-//				}
+				vector(iterator first, iterator last)
+				{
+					assign(first, last);
+				}
 
 				vector(vector const & src)
 				{
 					(void)src;
-					std::cout << "Need : operator =" << std::endl;
-					//	*this = src;
+					*this = src;
 				}
 
 				virtual ~vector(void)
@@ -200,8 +208,7 @@ namespace ft
 
 				vector	& operator=(vector const & src)
 				{
-					(void)src;
-					std::cout << "Need : assign method" << std::endl;
+					assign(src.begin(), src.end());
 					return *this;
 				}
 
@@ -277,7 +284,6 @@ namespace ft
 						return ;
 					if (n > this->max_size())
 						throw std::length_error("The size is too large");
-
 					value_type *tmp = new value_type[n];
 					for (size_type i = 0; i < _size; i++)
 						tmp[i] = _cont[i];
@@ -322,13 +328,24 @@ namespace ft
 
 				//modifiers
 
-				//				template <class InputIterator>	void
-				//				need clear and insert ?
+				template <class InputIterator>
+					void assign(InputIterator first, InputIterator last)
+				{
+					clear();
+					insert(begin(), first, last);
+				}
+
+				void	assign(size_type n, const value_type& val)
+				{
+					clear();
+					insert(begin(), n, val);
+
+				}
 
 				void	push_back(const value_type& val)
 				{
 					if (_capacity <= _size)
-						reserve(_size + 1);
+						reserve(_size);
 					_cont[_size] = val;
 					_size++;
 				}
@@ -346,97 +363,93 @@ namespace ft
 
 				iterator	insert(iterator position, const value_type& val)
 				{
-					int i = 0;
-					int j = 0;
+					size_t	save = _size + 1;
+					size_t	len = 0;
 					iterator	it;
-					iterator	ret;
 
-					value_type *tmp = new value_type[_size + 1];
-					for (it = begin(); it != end(); ++it)
+					for (it = position; it != end(); ++it)
+						len++;
+					if (_size <= _capacity)
 					{
-						if (it == position)
-						{
-							tmp[i++] = val;
-							ret = iterator(&tmp[i]);
-						}
-						tmp[i++] = _cont[j++];
+						reserve(_size + 1);
 					}
-					delete [] _cont;
-					_cont = tmp;
-					_size = _size + 1;
-					_capacity = _size;
-					std::cout << "yo" << *ret << std::endl;
-					return (ret);
+					while (len)
+					{
+						push_back(*(end() - 1));
+						if (_size < 2)
+						{
+							_size = 0;
+							break;
+						}
+						_size -= 2;
+						len--;
+					}
+					push_back(val);
+					it = iterator(&_cont[_size - 1]);
+					_size = save;
+					return it;
 				}
 
-				void	insert (iterator position, size_type n, const value_type& val)
+				void	insert(iterator position, size_type n, const value_type& val)
 				{
-					int i = 0;
-					int j = 0;
-					iterator it;
-
-					value_type *tmp = new value_type[_size + n];
-					for (it = begin(); it != end(); ++it)
-					{
-						if (it == position)
-							for (size_type k = 0; k < n; k++)
-								tmp[i++] = val;
-						tmp[i++] = _cont[j++];
-					}
-					delete [] _cont;
-					_cont = tmp;
-					_size = _size + n;
-					_capacity = _size;
+					for (size_type i = 0; i < n; ++i)
+						position = insert(position, val) + 1;
 				}
 
 				template <class InputIterator>
-					void insert (iterator position, InputIterator first, InputIterator last)
+					void insert (iterator position, InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 					{
-						std::cout << "implementer assign avant pour pouvoir utiliser vector a partir d'iterator" << std::endl;
-						size_t	i = 0;
-						iterator	pos = position;
-
-
-						for (iterator it = first; it != last; ++it)
+						while (first != last)
 						{
-							pos = insert(pos, *it);
-//							std::cout << *pos << std::endl;
-//							pos + i;
-							i++;
+							position = insert(position, *first) + 1;
+							++first;
 						}
-
-						(void)last;
-						(void)first;
-//						int	i = 0;
-//						int	j = 0;
-//						iterator	it = begin();
-//						iterator	it2;
-//
-//						size_type len = _size + last - first;
-//						value_type *tmp = new value_type[len];
-//						for (size_t pos = 0; pos < _size; ++pos)
-//						{
-//							std::cout <<"Yo" << std::endl;
-//							if (it == position)
-//							{
-//								for (it2 = first; it2 != last; ++it2)
-//									tmp[i++] = *it2;
-//								std::cout << "Wesh" << std::endl;
-//							}
-//							tmp[i++] = _cont[j++];
-//							it++;
-//						}
-//						delete [] _cont;
-//						_cont = tmp;
-//						_size = len;
-//						_capacity = _size;
-//
 					}
 
-//				iterator	erase(iterator position)
-//				{
-//
-//				}
+				iterator	erase(iterator position)
+				{
+					iterator	ret = position;
+					
+//					iterator it = ret + 1;
+					position++;
+					reserve(_size + 1);
+					int i = 0;
+					while (i < 4)
+					{
+//						std::cout << "test" << *it << std::endl;
+						insert(position - 1, *position);
+						position++;
+//						it++;
+//						_size--;
+						i++;
+					}
+					_size--;
+					return ret;
+				}
+
+				iterator	erase(iterator first, iterator last)
+				{
+					iterator	ret = first;
+
+					while (last != end())
+					{
+						insert(first, *last);
+						first++;
+						last++;
+					}
+					_size = _size - (last - first);
+					return ret;
+				}
+
+				void	swap(vector &x)
+				{
+					ft::vector<value_type> tmp(x);
+
+					x = assign(begin(), end());
+					this = assign(tmp.begin(), tmp.end());
+				}
+
+				void	clear(void) { _size = 0; }
 
 			private:
 				value_type	*_cont;
