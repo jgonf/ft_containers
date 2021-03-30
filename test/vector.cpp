@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/29 22:53:18 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/30 17:39:02 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ int main()
 //		std::cout << *it1 << std::endl;
 //
 	
-	t1.erase(t1.begin() + 5);
+	t1.erase(t1.begin() + 2, t1.begin() + 9);
 	std::cout << std::endl;
 	for (it = t1.begin(); it != t1.end(); ++it)
 		std::cout << *it << std::endl;

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:59:21 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/29 23:02:17 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/30 17:38:34 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,36 +408,22 @@ namespace ft
 
 				iterator	erase(iterator position)
 				{
-					iterator	ret = position;
-					
-//					iterator it = ret + 1;
-					position++;
-					reserve(_size + 1);
-					int i = 0;
-					while (i < 4)
-					{
-//						std::cout << "test" << *it << std::endl;
-						insert(position - 1, *position);
-						position++;
-//						it++;
-//						_size--;
-						i++;
-					}
-					_size--;
-					return ret;
+					iterator	end = this->end();
+
+					assign(begin(), position);
+					insert(position, position + 1, end);
+					return position;
 				}
 
 				iterator	erase(iterator first, iterator last)
 				{
 					iterator	ret = first;
 
-					while (last != end())
+					while (last != first)
 					{
-						insert(first, *last);
-						first++;
-						last++;
+						last--;
+						erase(last);
 					}
-					_size = _size - (last - first);
 					return ret;
 				}
 
