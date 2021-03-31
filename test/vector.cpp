@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/30 17:39:02 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/31 12:33:50 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,113 @@ void	test_iterator(void)
 
 }
 
+void	test_relational_operator(void)
+{
+	std::cout << std::endl << "test relation operator" << std::endl;
+
+	ft::vector<int> t1(4, 5);
+	ft::vector<int> t2(2, 8);
+	ft::vector<int> t3(4, 5);
+	ft::vector<int> copy(t1);
+	ft::vector<int> copy_operator = t1;
+
+	std::cout << "Test 1: ";
+	if (t1 == t2)
+		std::cout << "What?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+	
+	std::cout << "Test 2: ";
+	if (t1 == t3)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 3: ";
+	if (t1 == copy)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 4: ";
+	if (t1 == copy_operator)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 5: ";
+	if (t1 != t2)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+	
+	std::cout << "Test 6: ";
+	if (t1 != t3)
+		std::cout << "What?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	std::cout << "Test 7: ";
+	if (t1 != copy)
+		std::cout << "What?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	std::cout << "Test 8: ";
+	if (t1 != copy)
+		std::cout << "What?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	std::vector<int> s1(4, 5);
+	std::vector<int> s2(2, 8);
+	std::vector<int> s3(4, 5);
+
+	std::cout << "Test 9: ";
+	if ((t1 < t2) == (s1 < s2))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+	std::cout << "Test 10: ";
+	if ((t1 < t3) == (s1 < s3))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 11: ";
+	if ((t1 <= t2) == (s1 <= s2))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+	std::cout << "Test 12: ";
+	if ((t1 <= t3) == (s1 <= s3))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+	
+	std::cout << "Test 13: ";
+	if ((t1 > t2) == (s1 > s2))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+	std::cout << "Test 14: ";
+	if ((t1 > t3) == (s1 > s3))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 15: ";
+	if ((t1 >= t2) == (s1 >= s2))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+	std::cout << "Test 16: ";
+	if ((t1 <= t3) == (s1 <= s3))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+}
 
 int main()
 {
@@ -254,19 +361,19 @@ int main()
 	for (it2 = v1.begin(); it2 != v1.end(); ++it2)
 		std::cout << *it2 << std::endl;
 */
-
+//
 	ft::vector<int> t1(3,5);
 	ft::vector<int>::iterator it;
-	ft::vector<int> t2(20,56);
+	ft::vector<int> t2(8,56);
 	ft::vector<int>::iterator it2;
-	ft::vector<int>::iterator ite2;
-	t1.insert(t1.begin(), 2, 8);
-	it2 = t2.begin() + 3;
-	ite2 = it2 + 5;
-	t1.insert(t1.begin(), it2, ite2);
-	for (it = t1.begin(); it != t1.end(); ++it)
-		std::cout << *it << std::endl;
-
+//	ft::vector<int>::iterator ite2;
+//	t1.insert(t1.begin(), 2, 8);
+//	it2 = t2.begin() + 3;
+//	ite2 = it2 + 5;
+//	t1.insert(t1.begin(), it2, ite2);
+//	for (it = t1.begin(); it != t1.end(); ++it)
+//		std::cout << *it << std::endl;
+//
 //
 //	std::vector<int> s1(3,5);
 //	std::vector<int>::iterator it1;
@@ -280,12 +387,11 @@ int main()
 //	for (it1 = s1.begin(); it1 != s1.end(); ++it1)
 //		std::cout << *it1 << std::endl;
 //
-	
-	t1.erase(t1.begin() + 2, t1.begin() + 9);
-	std::cout << std::endl;
-	for (it = t1.begin(); it != t1.end(); ++it)
-		std::cout << *it << std::endl;
-
+//	t1.erase(t1.begin() + 2, t1.begin() + 9);
+//	std::cout << std::endl;
+//	for (it = t1.begin(); it != t1.end(); ++it)
+//		std::cout << *it << std::endl;
+//
 //	t1.erase(t1.begin(), t1.begin() + 4);
 //	std::cout << std::endl;
 //	for (it = t1.begin(); it != t1.end(); ++it)
@@ -296,6 +402,26 @@ int main()
 //	for (ft::vector<int>::iterator it = t1.begin(); it != t1.end(); ++it)
 //		std::cout << *it << std::endl;
 //
+	std::cout << std::endl << "t1" << std::endl;
+	for (it = t1.begin(); it != t1.end(); ++it)
+		std::cout << *it << std::endl;
+	
+	std::cout << std::endl << "t2" << std::endl;
+	for (it2 = t2.begin(); it2 != t2.end(); ++it2)
+		std::cout << *it2 << std::endl;
+	
+	swap(t1, t2);
+	std::cout << std::endl << "t1" << std::endl;
+	for (it = t1.begin(); it != t1.end(); ++it)
+		std::cout << *it << std::endl;
+	
+	std::cout << std::endl << "t2" << std::endl;
+	for (it2 = t2.begin(); it2 != t2.end(); ++it2)
+		std::cout << *it2 << std::endl;
+
+
+//	test_relational_operator();
+
 	return 1;
 }
 

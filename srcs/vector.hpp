@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:59:21 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/30 17:38:34 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/31 12:33:08 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <limits>
+# include <iterator>
 
 namespace ft
 {
@@ -36,6 +37,7 @@ namespace ft
 				typedef T		*pointer;
 				typedef T		*reference;
 				static const bool	input_iter;
+				typedef	std::random_access_iterator_tag	iterator_category;
 
 				VectorIterator(void): _ptr(NULL) {}
 				VectorIterator(VectorIterator const &src): _ptr(src._ptr) {};
@@ -195,10 +197,9 @@ namespace ft
 					assign(first, last);
 				}
 
-				vector(vector const & src)
+				vector(vector const & src): _cont(NULL), _size(0), _capacity(0)
 				{
-					(void)src;
-					*this = src;
+					assign(src.begin(), src.end());
 				}
 
 				virtual ~vector(void)
@@ -208,6 +209,7 @@ namespace ft
 
 				vector	& operator=(vector const & src)
 				{
+					clear();
 					assign(src.begin(), src.end());
 					return *this;
 				}
@@ -429,18 +431,61 @@ namespace ft
 
 				void	swap(vector &x)
 				{
-					ft::vector<value_type> tmp(x);
-
-					x = assign(begin(), end());
-					this = assign(tmp.begin(), tmp.end());
+					std::swap(_cont, x._cont);
+					std::swap(_size, x._size);
+					std::swap(_capacity, x._capacity);
 				}
 
-				void	clear(void) { _size = 0; }
+				void	clear() { _size = 0; }
 
 			private:
 				value_type	*_cont;
 				size_t		_size;
 				size_t		_capacity;
 		};
+
+		template <class T>
+			bool operator==(const vector<T>& lhs, const vector<T>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return false;
+			return std::equal(lhs.begin(), lhs.end(), rhs.begin());
+		}
+
+		template <class T>
+			bool operator!=(const vector<T>& lhs, const vector<T>& rhs)
+		{
+			return !(lhs == rhs);
+		}
+
+		template <class T>
+			bool operator<(const vector<T>& lhs, const vector<T>& rhs)
+		{
+			return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		}
+
+		template <class T>
+			bool operator<=(const vector<T>& lhs, const vector<T>& rhs)
+		{
+			return !(rhs < lhs);
+		}
+
+		template <class T>
+			bool operator>(const vector<T>& lhs, const vector<T>& rhs)
+		{
+			return rhs < lhs;
+		}
+
+		template <class T>
+			bool operator>=(const vector<T>& lhs, const vector<T>& rhs)
+		{
+			return !(lhs < rhs);
+		}
+
+		template <class T>
+			void swap(vector<T>& x, vector<T>& y)
+		{
+			x.swap(y);
+		}
 }
 #endif
