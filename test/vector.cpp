@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/31 12:33:50 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/31 22:23:06 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void	test_relational_operator(void)
 int main()
 {
 //	test_iterator();
-/*
+
 	ft::vector<int> v1;
 	ft::vector<int> v2(5,5);
 	ft::vector<char> v3(5,'a');
@@ -320,7 +320,7 @@ int main()
 	std::cout << v4.back() << std::endl;
 
 
-	std::cout << std::endl << "assing, push back and pop_back" << std::endl;
+	std::cout << std::endl << "assign, push back and pop_back" << std::endl;
 	v4.push_back("YOLO");
 	std::cout << v4.back() << std::endl;
 	v4.pop_back();
@@ -342,6 +342,7 @@ int main()
 	itstr++;
 	v4.insert(itstr, 3, "chouette");
 	std::cout << std::endl;
+	std::cout << "Here" << std::endl;
 	for (itstr = v4.begin(); itstr != v4.end(); ++itstr)
 		std::cout << *itstr << std::endl;
 
@@ -358,9 +359,9 @@ int main()
 //	for (it2 = v2.begin(); it2 != v2.end(); ++it2)
 //		std::cout << *it2 << std::endl;
 //	std::cout << "v1" << std::endl;
-	for (it2 = v1.begin(); it2 != v1.end(); ++it2)
-		std::cout << *it2 << std::endl;
-*/
+//	for (it2 = v1.begin(); it2 != v1.end(); ++it2)
+//		std::cout << *it2 << std::endl;
+/*
 //
 	ft::vector<int> t1(3,5);
 	ft::vector<int>::iterator it;
@@ -418,7 +419,7 @@ int main()
 	std::cout << std::endl << "t2" << std::endl;
 	for (it2 = t2.begin(); it2 != t2.end(); ++it2)
 		std::cout << *it2 << std::endl;
-
+*/
 
 //	test_relational_operator();
 

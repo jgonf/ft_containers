@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:59:21 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/31 12:33:08 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/03/31 22:39:24 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <iostream>
 # include <limits>
-# include <iterator>
+# include "ReverseIterator.hpp"
 
 namespace ft
 {
@@ -37,7 +37,7 @@ namespace ft
 				typedef T		*pointer;
 				typedef T		*reference;
 				static const bool	input_iter;
-				typedef	std::random_access_iterator_tag	iterator_category;
+				typedef	ft::random_access_iterator_tag	iterator_category;
 
 				VectorIterator(void): _ptr(NULL) {}
 				VectorIterator(VectorIterator const &src): _ptr(src._ptr) {};
@@ -182,14 +182,21 @@ namespace ft
 
 				vector(void): _size(0), _capacity(0)
 				{
-					_cont = new value_type[0];
+//					_cont = new value_type[0];
+					std::allocator<T> alloc;
+					_cont = alloc.allocate(0);
 				}
 
 				vector(size_t n, value_type val): _size(n), _capacity(n)
 				{
-					_cont = new value_type[n];
+//					_cont = new value_type[n];
+//					for (size_t i = 0; i < n; i++)
+//						_cont[i] = val;
+					std::allocator<T> alloc;
+					_cont = alloc.allocate(n);
 					for (size_t i = 0; i < n; i++)
-						_cont[i] = val;
+						alloc.construct(&_cont[i],val);
+
 				}
 
 				vector(iterator first, iterator last)
@@ -204,7 +211,11 @@ namespace ft
 
 				virtual ~vector(void)
 				{
-					delete [] _cont;
+//					delete [] _cont;
+					std::allocator<T> alloc;
+					for (size_type i = 0; i < _size; i++)
+						alloc.destroy(&_cont[i]);
+					alloc.deallocate(_cont, _capacity);
 				}
 
 				vector	& operator=(vector const & src)
@@ -286,10 +297,20 @@ namespace ft
 						return ;
 					if (n > this->max_size())
 						throw std::length_error("The size is too large");
-					value_type *tmp = new value_type[n];
+//					value_type *tmp = new value_type[n];
+//					for (size_type i = 0; i < _size; i++)
+//						tmp[i] = _cont[i];
+//					delete [] _cont;
+//					_cont = tmp;
+//					_capacity = n;
+					std::allocator<T> alloc;
+					T *tmp = alloc.allocate(n);
 					for (size_type i = 0; i < _size; i++)
-						tmp[i] = _cont[i];
-					delete [] _cont;
+					{
+						alloc.construct(&tmp[i], _cont[i]);
+						alloc.destroy(&_cont[i]);
+					}
+					alloc.deallocate(_cont, _capacity);
 					_cont = tmp;
 					_capacity = n;
 				}
@@ -346,21 +367,24 @@ namespace ft
 
 				void	push_back(const value_type& val)
 				{
-					if (_capacity <= _size)
-						reserve(_size);
-					_cont[_size] = val;
+					std::allocator<T> alloc;
+					if (_capacity <= _size + 1)
+						reserve(_size + 1);
+					alloc.construct(&_cont[_size], val);
+//					_cont[_size] = val;
 					_size++;
 				}
 
 				void	pop_back(void)
 				{
-					_size = _size - 1;
-					value_type *tmp = new value_type[_size];
-					for (size_type i = 0; i < _size; i++)
-						tmp[i] = _cont[i];
-					delete [] _cont;
-					_cont = tmp;
-					_capacity = _size;
+//					_size = _size - 1;
+//					value_type *tmp = new value_type[_size];
+//					for (size_type i = 0; i < _size; i++)
+//						tmp[i] = _cont[i];
+//					delete [] _cont;
+//					_cont = tmp;
+//					_capacity = _size;
+					erase(end() - 1);
 				}
 
 				iterator	insert(iterator position, const value_type& val)
@@ -436,7 +460,13 @@ namespace ft
 					std::swap(_capacity, x._capacity);
 				}
 
-				void	clear() { _size = 0; }
+				void	clear()
+				{
+					std::allocator<T> alloc;
+					for (size_t i = 0; i < _size; i++)
+						alloc.destroy(&_cont[i]);
+					_size = 0;
+				}
 
 			private:
 				value_type	*_cont;
