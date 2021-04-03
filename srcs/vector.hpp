@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:59:21 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/03/31 22:39:24 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/03 18:22:31 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 				typedef T		value_type;
 				typedef std::ptrdiff_t 	difference_type;
 				typedef T		*pointer;
-				typedef T		*reference;
+				typedef T		&reference;
 				static const bool	input_iter;
 				typedef	ft::random_access_iterator_tag	iterator_category;
 
@@ -88,8 +88,8 @@ namespace ft
 					return !(*this == cmp);
 				}
 
-				value_type operator*(void) const { return *_ptr; }
-				value_type operator->(void) const { return _ptr; }
+				reference operator*(void) const { return *_ptr; }
+				pointer	operator->(void) const { return _ptr; }
 
 				VectorIterator operator+(difference_type n)
 				{
@@ -169,10 +169,10 @@ namespace ft
 				typedef value_type		*pointer;
 				typedef value_type const	*const_pointer;
 
-				typedef VectorIterator<value_type> iterator;
-				typedef iterator const	const_iterator;
-				typedef iterator	reverse_iterator;
-				typedef iterator const	const_reverse_iterator;
+				typedef VectorIterator<value_type>	iterator;
+				typedef iterator const			const_iterator;
+				typedef reverse_iterator<iterator>	reverse_iterator;
+				typedef reverse_iterator const		const_reverse_iterator;
 
 				typedef	std::ptrdiff_t	difference_type;
 				typedef	size_t		size_type;
@@ -242,26 +242,26 @@ namespace ft
 
 				reverse_iterator	rbegin(void)
 				{
-					std::cout << "need to implement reverse iterator" << std::endl;
-					return _cont;
+					return reverse_iterator(end());
+//					return _cont;
 				}
 
 				const_reverse_iterator	rbegin(void) const
 				{
-					std::cout << "need to implement reverse iterator" << std::endl;
-					return _cont;
+					return const_reverse_iterator(end());
+//					return _cont;
 				}
 
 				reverse_iterator	rend(void)
 				{
-					std::cout << "need to implement reverse iterator" << std::endl;
-					return &_cont[_size];
+					return reverse_iterator(begin());
+//					return &_cont[_size];
 				}
 
 				const_reverse_iterator	rend(void) const
 				{
-					std::cout << "need to implement reverse iterator" << std::endl;
-					return &_cont[_size];
+					return const_reverse_iterator(begin());
+//					return &_cont[_size];
 				}
 
 
