@@ -6,11 +6,11 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 15:08:00 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/03 19:53:23 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/04 11:09:30 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ReverseIterator.hpp"
+#include "reverse_iterator.hpp"
 #include "vector.hpp"
 #include <vector>
 
@@ -117,6 +117,73 @@ int main()
 	else
 		std::cout << "What?" << std::endl;
 
-	std::cout << revs[0] << std::endl;
-	std::cout << rev[0] << std::endl;
+	std::cout << "Test 15: ";
+	if (rev[0] == revs[0])
+		std::cout << "Sucess" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 16: ";
+	if (rev[-2] == revs[-2])
+		std::cout << "Sucess" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	ft::vector<int>	v2(4,3);
+	ft::reverse_iterator<it_type>	copy(rev);
+	ft::reverse_iterator<it_type>	rev2(v1.rend());
+
+	std::vector<int>	s2(4,3);
+	std::reverse_iterator<its_type>	copys(revs);
+	std::reverse_iterator<its_type>	revs2(s1.rend());
+
+	std::cout << "Test 17: ";
+	if ((copy == rev) == (copys == revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 18: ";
+	if ((copy != rev) == (copys != revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 19: ";
+	if ((rev2 == rev) == (revs2 == revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 20: ";
+	if ((rev2 != rev) == (revs2 != revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 21: ";
+	if ((copy <= rev) == (copys <= revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 22: ";
+	if ((copy < rev) == (copys < revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 23: ";
+	if ((rev2 >= rev) == (revs2 >= revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 24: ";
+	if ((rev2 > rev) == (revs2 > revs))
+		std::cout <<  "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+
 }
