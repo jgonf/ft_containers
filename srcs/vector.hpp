@@ -394,6 +394,7 @@ namespace ft
                                	{
 					iterator        start(begin());
 					iterator        ending(begin() + n);
+					std::allocator<T>	alloc;
 
 					if (n < _size)
 					{
@@ -401,7 +402,14 @@ namespace ft
 						assign(start, ending);
 					}
 					else
-						insert(end(), n, val);
+					{
+						if (_capacity < n)
+							reserve(n);
+						for (; _size < n; ++_size)
+							alloc.construct(&_cont[_size], val);
+
+					}
+//						insert(end(), n, val);
 					_size = n;
 				}
 
