@@ -391,11 +391,14 @@ namespace ft
 				size_t	max_size(void) const { return std::allocator<T>().max_size(); }
 
 				void	resize(size_type n, value_type val = value_type())
-				{
+                               	{
+					iterator        start(begin());
+					iterator        ending(begin() + n);
+
 					if (n < _size)
 					{
-						for (size_type i = 0; i < n ; i++)
-							pop_back();
+						clear();
+						assign(start, ending);
 					}
 					else
 						insert(end(), n, val);
@@ -486,6 +489,7 @@ namespace ft
 
 				void	push_back(const value_type& val)
 				{
+
 					size_t	new_capa = _capacity;
 					if (new_capa == 0)
 						new_capa = 1;
@@ -500,17 +504,14 @@ namespace ft
 
 				void	pop_back(void)
 				{
-					std::allocator<T> alloc;
-					alloc.destroy(&_cont[_size - 1]);
-					_size = _size - 1;
-
+					resize(_size - 1);
 				}
 
 				iterator	insert(iterator position, const value_type& val)
 				{
-					size_t	save = _size + 1;
-					size_t	len = 0;
-					iterator	it;
+                                      size_t  save = _size + 1;
+                                      size_t  len = 0;
+                                      iterator        it;
 
 					for (it = position; it != end(); ++it)
 						len++;
@@ -531,25 +532,6 @@ namespace ft
 					it = iterator(&_cont[_size - 1]);
 					_size = save;
 					return it;
-//                                        std::allocator<T> alloc;
-//                                        size_type i = 0;
-//                                        iterator it = begin();
-//                                        while (it + i != position && i < _size)
-//                                                i++;
-//                                        if (_capacity < _size + 1)
-//                                                reserve(_size + 1);
-//                                        size_type j = _capacity - 1;
-//                                        while (j > i)
-//                                        {
-//                                                alloc.destroy(&_cont[j]);
-//                                                alloc.construct(&_cont[j], _cont[j-1]);
-////                                              _cont[j] = _cont[j - 1];
-//                                                j--;
-//                                        }
-//                                        _cont[i] = val;
-//                                        _size++;
-//                                        return (iterator(&_cont[i]));
-
 				}
 
 				void	insert(iterator position, size_type n, const value_type& val)

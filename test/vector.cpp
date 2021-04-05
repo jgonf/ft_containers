@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/04 23:45:26 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/05 10:34:00 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,14 +263,23 @@ int main()
 {
 //	test_iterator();
 
-	ft::vector<int> test(3, 3);
-	ft::vector<ft::vector<int> > v1(8, test);
+//	ft::vector<int> test;
+//	test.reserve(5);
+//	test.push_back(3);
+//	test.push_back(3);
+//	test.push_back(3);
+//
+//	std::cout << test.size() << std::endl;
+//	ft::vector<ft::vector<int> > v1;
+//	v1.reserve(20);
+//	for (int i = 0; i < 6; ++i)
+//		v1.push_back(test);
 //	v1.erase(v1.begin() + 2);
 
-	v1.resize(1);
+//	v1.resize(1);
 //	std::vector<int> t1;
 //	std::cout << t1.back() << std::endl;
-/*
+
 	ft::vector<int> v1;
 	ft::vector<int> v2(5,5);
 	ft::vector<char> v3(5,'a');
@@ -363,7 +372,7 @@ int main()
 	v1.push_back(18);
 	v1.insert(it2, 29);
 	v1.insert(it2, v2.begin(), v2.end());
-*///	std::cout << "v2" << std::endl;
+//	std::cout << "v2" << std::endl;
 //	for (it2 = v2.begin(); it2 != v2.end(); ++it2)
 //		std::cout << *it2 << std::endl;
 //	std::cout << "v1" << std::endl;
