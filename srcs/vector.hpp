@@ -14,6 +14,7 @@
 
 # include <iostream>
 # include <limits>
+# include <sstream>
 # include "reverse_iterator.hpp"
 
 namespace ft
@@ -219,7 +220,7 @@ namespace ft
 			const value_type  &operator*(void) const { return *_ptr; }
 			pointer	operator->(void) const { return _ptr; }
 
-/*			ConstVectorIterator operator+(difference_type n)
+			ConstVectorIterator operator+(difference_type n)
 			{
 				value_type *tmp = _ptr;
 				return tmp +=n;
@@ -231,11 +232,11 @@ namespace ft
 				return tmp -=n;
 			}
 
-			difference_type operator-(ConstVectorIterator const &cmp)
+			difference_type operator-(ConstVectorIterator const &cmp) const
 			{
 				return _ptr - cmp._ptr;
 			}
-*/
+
 			bool operator<(ConstVectorIterator const &cmp) const
 			{
 				return (_ptr < cmp._ptr);
@@ -424,11 +425,18 @@ namespace ft
 
 				void	reserve(size_type n)
 				{
+//					size_t	new_capa = _capacity;
+					std::allocator<T> alloc;
+
 					if (n <= _capacity)
 						return ;
 					if (n > this->max_size())
 						throw std::length_error("vector::reserve");
-					std::allocator<T> alloc;
+//					if (new_capa == 0)
+//						new_capa = 1;
+//					while (n > new_capa)
+//						new_capa = new_capa * 2;
+//					T *tmp = alloc.allocate(new_capa);
 					T *tmp = alloc.allocate(n);
 					for (size_type i = 0; i < _size; i++)
 					{
@@ -437,6 +445,7 @@ namespace ft
 					}
 					alloc.deallocate(_cont, _capacity);
 					_cont = tmp;
+//					_capacity = new_capa;
 					_capacity = n;
 				}
 
@@ -454,16 +463,25 @@ namespace ft
 
 				reference	at(size_type n)
 				{
+					std::ostringstream error;
+					error << "vector::_M_range_check: __n (which is " << n;
+					error << ") >= this->size() (which is " << this->_size << ")";
 					if (n >= _size)
-						throw std::out_of_range("The index is out of range");
+					{
+						throw std::out_of_range(error.str());
+					}
 					return _cont[n];
 				}
 
 				const_reference	at(size_type n) const
 				{
+					std::ostringstream error;
+					error << "vector::_M_range_check: __n (which is " << n;
+					error << ") >= this->size() (which is " << this->_size << ")";
 					if (n >= _size)
-						throw std::out_of_range("The index is out of range");
-
+					{
+						throw std::out_of_range(error.str());
+					}
 					return _cont[n];
 				}
 
@@ -505,9 +523,12 @@ namespace ft
 						new_capa = new_capa * 2;
 
 					std::allocator<T> alloc;
-					reserve(new_capa);
+					if (_size + 1 > _capacity)
+//						reserve(_size + 1);
+						reserve(new_capa);
 					alloc.construct(&_cont[_size], val);
 					_size++;
+//					resize(_size + 1, val);
 				}
 
 				void	pop_back(void)
@@ -517,14 +538,31 @@ namespace ft
 
 				iterator	insert(iterator position, const value_type& val)
 				{
+				/*
+					difference_type const	idx = position - this->begin();
+					difference_type const	old_end_idx = this->end() - this->begin();
+					iterator				old_end, end;
+
+					this->resize(this->_size + 1);
+
+					end = this->end();
+					position = this->begin() + idx;
+					old_end = this->begin() + old_end_idx;
+					while (old_end != position)
+						*--end = *--old_end;
+					*position = val;
+					return (position);
+*/
+
                                       size_t  save = _size + 1;
                                       size_t  len = 0;
                                       iterator        it;
 
 					for (it = position; it != end(); ++it)
 						len++;
-					if (_capacity < _size + 1)
-						reserve(_size + 1);
+
+
+					reserve(_size + 1);
 					while (len)
 					{
 						push_back(*(end() - 1));
@@ -540,10 +578,17 @@ namespace ft
 					it = iterator(&_cont[_size - 1]);
 					_size = save;
 					return it;
+
 				}
 
 				void	insert(iterator position, size_type n, const value_type& val)
 				{
+					int	index = 0;
+
+					for (iterator it = begin(); it != position; ++it)
+						index++;
+					reserve(_size + n);
+					position = begin() + index;
 					for (size_type i = 0; i < n; ++i)
 						position = insert(position, val) + 1;
 				}
