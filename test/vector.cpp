@@ -261,13 +261,15 @@ void	test_relational_operator(void)
 
 void	test_constructor(void)
 {
-	std::cout << std::endl << "Constructor and copy" << std::endl;
+	std::cout << "Constructor and copy" << std::endl;
 	ft::vector<std::string> empty;
 	std::vector<std::string> emptystd;
 	ft::vector<std::string> v1(5);
 	std::vector<std::string> s1(5);
 	ft::vector<std::string> v2(5, "toto");
 	std::vector<std::string> s2(5, "toto");
+	ft::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
+	std::vector<std::string> s3(s2.begin()+1, s2.end() - 2);
 	ft::vector<std::string> copy(v2);
 	ft::vector<std::string> assignation;
 	assignation = v2;
@@ -290,51 +292,91 @@ void	test_constructor(void)
 	else
 		std::cout << "What?" << std::endl;
 
+	std::cout << "Test 4: ";
+	if (v3.size() == s3.size() && v3[0] == s3[0])
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 5: ";
+	if (v2 == copy)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 6: ";
+	if (v2 == assignation)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+
+}
+
+void	test_size_capacity(void)
+{
+	std::cout << "Test size, max_size, resize, capacity, empty and reserve" << std::endl;
+	ft::vector<int> v1(3);
+	std::vector<int> s1(3);
+
+	std::cout << "Test 1: ";
+	if (v1.size() == 3)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 2: ";
+	if (v1.max_size() == s1.max_size())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	v1.resize(9, 5);
+	std::cout << "Test 3: ";
+	if (v1.size() == 9 && *(v1.end() -1) == 5)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	v1.resize(4, 9);
+	std::cout << "Test 3: ";
+	if (v1.size() == 4 && *(v1.end()-1) == 5)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	v1.reserve(20);
+	std::cout << "Test 4: ";
+	if (v1.capacity() == 20)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	v1.reserve(10);
+	std::cout << "Test 5: ";
+	if (v1.capacity() == 20)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 6: ";
+	if (!v1.empty())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+
 }
 
 int main()
 {
-	//	test_iterator();
-
 	test_constructor();
-//	ft::vector<std::string>test(5, "Youhou");
+	std::cout << std::endl;
 
-	//	test.reserve(20);
-//	test.resize(9, "Mangez vos morts");
+	test_iterator();
+	std::cout << std::endl;
 
-	//	ft::vector<int> test;
-	//	test.reserve(5);
-	//	test.push_back(3);
-	//	test.push_back(3);
-	//	test.push_back(3);
-	//
-	//	std::cout << test.size() << std::endl;
-	//	ft::vector<ft::vector<int> > v1;
-	//	v1.reserve(20);
-	//	for (int i = 0; i < 6; ++i)
-	//		v1.push_back(test);
-	//	v1.erase(v1.begin() + 2);
-
-	//	v1.resize(1);
-	//	std::vector<int> t1;
-	//	std::cout << t1.back() << std::endl;
-	//
-	//	ft::vector<int> v1;
-	//	ft::vector<int> v2(5,5);
-	//	ft::vector<char> v3(5,'a');
-	//	ft::vector<std::string> v4(5,"yo");
-	//
-	//	ft::vector<int> copy(v1);
-	//	copy = v2;
-	//
-	//	std::cout << std::endl << "Iterartors " << std::endl;
-	//
-	//	ft::vector<int>::iterator it;
-	//	for (it = v2.begin(); it != v2.end(); ++it)
-	//		std::cout << *it << std::endl;
-	//	v3.rbegin();
-	//	v3.rend();
-	//
+	test_size_capacity();
 	//
 	//	std::cout << std::endl << "Size, masx_size and resize " << std::endl;
 	//	std::cout << "size v4 : " << v4.size() << std::endl;
