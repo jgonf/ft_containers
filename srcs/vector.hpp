@@ -497,13 +497,21 @@ namespace ft
 					void assign(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 
 					{
+						size_t size = 0;
+
+						for (iterator it(first); it != last; ++it)
+							size++;
 						clear();
+						if (_capacity < size)
+							reserve(size);
 						insert(begin(), first, last);
 					}
 
 				void	assign(size_type n, const value_type& val)
 				{
 					clear();
+					if (_capacity < n)
+						reserve(n);
 					insert(begin(), n, val);
 
 				}
@@ -561,8 +569,8 @@ namespace ft
 					for (it = position; it != end(); ++it)
 						len++;
 
-
-					reserve(_size + 1);
+					if (_capacity < _size + 1)
+						reserve(_size * 2);
 					while (len)
 					{
 						push_back(*(end() - 1));
@@ -596,6 +604,12 @@ namespace ft
 				template <class InputIterator>
 					void insert (iterator position, InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 					{
+						int	index = 0;
+						for (iterator it = begin(); it != position; ++it)
+							index++;
+						reserve(_size + index + 1);
+						position = begin() + index;
+
 						while (first != last)
 						{
 							position = insert(position, *first) + 1;
