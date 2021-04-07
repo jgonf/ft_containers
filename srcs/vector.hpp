@@ -26,7 +26,11 @@ namespace ft
 
 	template < typename T>
 		class vector;
+	
+	template < typename T>
+		class ConstVectorIterator;
 
+	
 	template < typename T>
 		class VectorIterator
 		{
@@ -83,7 +87,17 @@ namespace ft
 					return (_ptr == cmp._ptr);
 				}
 
+				bool operator==(ConstVectorIterator<T> const &cmp) const
+				{
+					return (_ptr == cmp.getPtr());
+				}
+
 				bool operator!=(VectorIterator const &cmp) const
+				{
+					return !(*this == cmp);
+				}
+				
+				bool operator!=(ConstVectorIterator<T> const &cmp) const
 				{
 					return !(*this == cmp);
 				}
@@ -107,25 +121,52 @@ namespace ft
 				{
 					return _ptr - cmp._ptr;
 				}
+				
+		/*		difference_type operator-(ConstVectorIterator<T> const &cmp)
+				{
+					return _ptr - cmp.getPtr();
+				}
+		*/
 
 				bool operator<(VectorIterator const &cmp) const
 				{
 					return (_ptr < cmp._ptr);
 				}
+				
+				bool operator<(ConstVectorIterator<T> const &cmp) const
+				{
+					return (_ptr < cmp.getPtr());
+				}
+
 
 				bool operator>(VectorIterator const &cmp) const
 				{
 					return (_ptr > cmp._ptr);
+				}
+				
+				bool operator>(ConstVectorIterator<T> const &cmp) const
+				{
+					return (_ptr > cmp.getPtr());
 				}
 
 				bool operator<=(VectorIterator const &cmp) const
 				{
 					return (_ptr <= cmp._ptr);
 				}
+				
+				bool operator<=(ConstVectorIterator<T> const &cmp) const
+				{
+					return (_ptr <= cmp.getPtr());
+				}
 
 				bool operator>=(VectorIterator const &cmp) const
 				{
-					return (_ptr <= cmp._ptr);
+					return (_ptr >= cmp._ptr);
+				}
+			
+				bool operator>=(ConstVectorIterator<T> const &cmp) const
+				{
+					return (_ptr >= cmp.getPtr());
 				}
 
 				VectorIterator operator+=(difference_type n)
@@ -162,8 +203,8 @@ namespace ft
 		public:
 			typedef T		value_type;
 			typedef std::ptrdiff_t 	difference_type;
-			typedef T		*pointer;
-			typedef T		&reference;
+			typedef  T		*pointer;
+			typedef  T		&reference;
 			static const bool	input_iter;
 			typedef	ft::random_access_iterator_tag	iterator_category;
 
@@ -218,7 +259,7 @@ namespace ft
 			}
 
 			const value_type  &operator*(void) const { return *_ptr; }
-			pointer	operator->(void) const { return _ptr; }
+			const T	*operator->(void) const { return _ptr; }
 
 			ConstVectorIterator operator+(difference_type n)
 			{
@@ -254,7 +295,7 @@ namespace ft
 
 			bool operator>=(ConstVectorIterator const &cmp) const
 			{
-				return (_ptr <= cmp._ptr);
+				return (_ptr >= cmp._ptr);
 			}
 
 			ConstVectorIterator operator+=(difference_type n)
@@ -604,10 +645,17 @@ namespace ft
 				template <class InputIterator>
 					void insert (iterator position, InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 					{
+						int	len = 0;
 						int	index = 0;
+						
 						for (iterator it = begin(); it != position; ++it)
 							index++;
-						reserve(_size + index + 1);
+						for (iterator it = first; it != last; ++it)
+							len++;
+						if (_size == 0 || _size * 2 < _size + len)
+							reserve(_size + len);
+						else
+							reserve(_size * 2);
 						position = begin() + index;
 
 						while (first != last)

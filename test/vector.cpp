@@ -508,11 +508,25 @@ void	test_relational_operator(void)
 
 }
 
+void	test_debug(void)
+{
+	ft::vector<std::string> empty;
+	std::vector<std::string> emptystd;
+	ft::vector<std::string> v1(5);
+	std::vector<std::string> s1(5);
+	ft::vector<std::string> v2(5, "toto");
+	std::vector<std::string> s2(5, "toto");
+	ft::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
+	std::vector<std::string> s3(s2.begin()+1, s2.end() - 2);
+
+}
 
 int main()
 {
-//	test_constructor();
-//	std::cout << std::endl;
+	test_debug();
+/*
+	test_constructor();
+	std::cout << std::endl;
 
 	test_iterator();
 	std::cout << std::endl;
@@ -531,7 +545,7 @@ int main()
 
 	test_relational_operator();
 	std::cout << std::endl;
-
+*/
 	return 1;
 }
 
