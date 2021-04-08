@@ -24,13 +24,13 @@ namespace ft
 	template<class T>
 		struct enable_if<true, T> { typedef T type; };
 
-	template < typename T>
+	template < typename T, typename Alloc=std::allocator<T> >
 		class vector;
-	
+
 	template < typename T>
 		class ConstVectorIterator;
 
-	
+
 	template < typename T>
 		class VectorIterator
 		{
@@ -96,7 +96,7 @@ namespace ft
 				{
 					return !(*this == cmp);
 				}
-				
+
 				bool operator!=(ConstVectorIterator<T> const &cmp) const
 				{
 					return !(*this == cmp);
@@ -121,7 +121,7 @@ namespace ft
 				{
 					return _ptr - cmp._ptr;
 				}
-				
+
 		/*		difference_type operator-(ConstVectorIterator<T> const &cmp)
 				{
 					return _ptr - cmp.getPtr();
@@ -132,7 +132,7 @@ namespace ft
 				{
 					return (_ptr < cmp._ptr);
 				}
-				
+
 				bool operator<(ConstVectorIterator<T> const &cmp) const
 				{
 					return (_ptr < cmp.getPtr());
@@ -143,7 +143,7 @@ namespace ft
 				{
 					return (_ptr > cmp._ptr);
 				}
-				
+
 				bool operator>(ConstVectorIterator<T> const &cmp) const
 				{
 					return (_ptr > cmp.getPtr());
@@ -153,7 +153,7 @@ namespace ft
 				{
 					return (_ptr <= cmp._ptr);
 				}
-				
+
 				bool operator<=(ConstVectorIterator<T> const &cmp) const
 				{
 					return (_ptr <= cmp.getPtr());
@@ -163,7 +163,7 @@ namespace ft
 				{
 					return (_ptr >= cmp._ptr);
 				}
-			
+
 				bool operator>=(ConstVectorIterator<T> const &cmp) const
 				{
 					return (_ptr >= cmp.getPtr());
@@ -199,6 +199,7 @@ namespace ft
 
 	template <class T>
 		class ConstVectorIterator: public VectorIterator<T>
+//		class ConstVectorIterator
 	{
 		public:
 			typedef T		value_type;
@@ -210,7 +211,7 @@ namespace ft
 
 			ConstVectorIterator(void): _ptr(NULL) {}
 			ConstVectorIterator(VectorIterator<T> const &src): _ptr(src.getPtr()) {};
-			ConstVectorIterator(ConstVectorIterator const &src): _ptr(src._ptr) {};
+//			ConstVectorIterator(ConstVectorIterator const &src): _ptr(src._ptr) {};
 			ConstVectorIterator(pointer ptr): _ptr(ptr) {};
 			virtual ~ConstVectorIterator(void) {}
 
@@ -321,7 +322,7 @@ namespace ft
 	template < class T>
 		const bool ConstVectorIterator<T>::input_iter = true;
 
-	template < typename T>
+	template < typename T, typename Alloc>
 		class vector {
 
 			public:
@@ -335,11 +336,11 @@ namespace ft
 				typedef value_type const	*const_pointer;
 
 				typedef VectorIterator<value_type>	iterator;
-				//				typedef iterator const			const_iterator;
 				typedef ConstVectorIterator<value_type>		const_iterator;
+				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>	reverse_iterator;
-				typedef reverse_iterator const		const_reverse_iterator;
 
+//				typedef const reverse_iterator	const_reverse_iterator;
 				typedef	std::ptrdiff_t	difference_type;
 				typedef	size_t		size_type;
 
