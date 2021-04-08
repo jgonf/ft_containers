@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 21:12:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/04 12:23:23 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/08 23:02:16 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ namespace ft
 	struct BidirectionalIteratorTag : public ForwardIteratorTag {};
 	struct random_access_iterator_tag : public BidirectionalIteratorTag {};
 
+	template < typename T>
+		class RandomIterator;
+
 	template <class Iterator>
 		class reverse_iterator {
 
@@ -35,16 +38,19 @@ namespace ft
 				typedef typename Iterator::reference		reference;
 
 				reverse_iterator(void): _base(NULL) {};
-				reverse_iterator(iterator_type it): _base(it) {};
-				reverse_iterator(reverse_iterator<Iterator> const & src): _base(src.base()) {};
+				reverse_iterator(RandomIterator<value_type> it): _base(it) {};
+				reverse_iterator(reverse_iterator<RandomIterator<value_type> > const & src): _base(src.base()) {};
 				virtual ~reverse_iterator(void) {};
 
 				iterator_type	base() const { return _base; }
 
-				reference	operator*(void) const
+				reference	operator*(void)
 				{
-					iterator_type	tmp(_base);
-					return *--tmp;
+//					iterator_type	tmp(_base);
+//					return *--tmp;
+					value_type	*ptr = _base.getPtr();
+					RandomIterator<value_type> it(ptr);
+					return *--it;
 				}
 
 				reverse_iterator	operator+(difference_type n) const
@@ -78,6 +84,12 @@ namespace ft
 					return tmp + n;
 				}
 
+				difference_type operator-(reverse_iterator const& src)
+				{
+//					return _base - src.base();
+					return src.base() - _base;
+				}
+
 				reverse_iterator&	operator--(void)
 				{
 					++_base;
@@ -105,6 +117,11 @@ namespace ft
 				reference	operator[](difference_type n) const
 				{
 					return base()[-n - 1];
+				}
+
+				bool operator==(reverse_iterator const & src)
+				{
+					return _base == src.base();
 				}
 
 			private:
@@ -145,6 +162,15 @@ namespace ft
 		bool operator>=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 		{
 			return lhs.base() <= rhs.base();
+		}
+
+	        template <class Iterator>
+                reverse_iterator<Iterator> operator+(int n, reverse_iterator<Iterator> &src) { return src + n; }
+
+		template <class Iterator>
+		typename reverse_iterator<Iterator>::difference_type operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{
+			return lhs.base() - rhs.base();
 		}
 
 }
