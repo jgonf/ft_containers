@@ -365,13 +365,24 @@ namespace ft
 				template <class InputIterator>
 					vector(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 					{
+						std::allocator<T> alloc;
+						_cont = alloc.allocate(0);
 						assign(first, last);
 					}
 
 				vector(vector const & x): _cont(NULL), _size(0), _capacity(0)
-			{
-				assign(x.begin(), x.end());
-			}
+				{
+					std::allocator<T> alloc;
+					size_type src_size = x.size();
+			
+					_cont = alloc.allocate(src_size);
+					_capacity = src_size;
+					
+					for (size_t i  = 0 ; i < src_size; ++i)
+						alloc.construct(&_cont[i], x[i]);
+					_size = src_size;
+
+				}
 
 				virtual ~vector(void)
 				{
@@ -383,8 +394,21 @@ namespace ft
 
 				vector	& operator=(vector const & src)
 				{
+					std::allocator<T> alloc;
+					size_type src_size = src.size();
+
 					clear();
-					assign(src.begin(), src.end());
+					/*
+					if (_cont)
+						alloc.deallocate(_cont, _capacity);
+					_cont = alloc.allocate(src_size);
+					_capacity = src_size;
+					*/
+					if (_capacity < src_size)
+						reserve(src_size);
+					for (size_t i  = 0 ; i < src_size; ++i)
+						alloc.construct(&_cont[i], src[i]);
+					_size = src_size;
 					return *this;
 				}
 
@@ -446,8 +470,10 @@ namespace ft
 					}
 					else
 					{
-						if (_capacity < n)
+						if (_size == 0 || _size * 2 < n)
 							reserve(n);
+						else
+							reserve(_size * 2);
 						for (; _size < n; ++_size)
 							alloc.construct(&_cont[_size], val);
 
