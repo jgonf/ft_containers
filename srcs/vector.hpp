@@ -33,6 +33,7 @@ namespace ft
 				//variables
 
 				typedef T			value_type;
+				typedef Alloc			allocator_type;
 				typedef value_type		&reference;
 				typedef value_type const	&const_reference;
 				typedef value_type		*pointer;
