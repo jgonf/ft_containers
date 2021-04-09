@@ -356,6 +356,7 @@ namespace ft
 				explicit vector(size_t n, value_type val = value_type()): _size(n), _capacity(n)
 			{
 				std::allocator<T> alloc;
+
 				_cont = alloc.allocate(n);
 				for (size_t i = 0; i < n; i++)
 					alloc.construct(&_cont[i],val);
@@ -365,9 +366,18 @@ namespace ft
 				template <class InputIterator>
 					vector(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 					{
+						size_type	size = 0;
 						std::allocator<T> alloc;
-						_cont = alloc.allocate(0);
-						assign(first, last);
+						
+						for (iterator it = first; it != last; ++it)
+							size++;
+						_cont = alloc.allocate(size);
+						_capacity = size;
+				
+						for (size_t i  = 0 ; i < size; ++i)
+							alloc.construct(&_cont[i], *first++);
+						_size = size;
+					
 					}
 
 				vector(vector const & x): _cont(NULL), _size(0), _capacity(0)

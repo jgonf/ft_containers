@@ -1,6 +1,6 @@
 NAME		= ft_containers
 
-CC		= clang++
+CC		= clang++-9
 CFLAGS		= -Werror -Wextra -Wall -std=c++98
 RM		= rm -rf
 
@@ -8,8 +8,8 @@ DIR_SRCS	= test/
 DIR_OBJS	= objs/
 DIR_INC		= ./srcs/
 
-F_SRCS		= ite_n1.cpp
-#F_SRCS		= vector.cpp
+#F_SRCS		= ite_n1.cpp
+F_SRCS		= vector.cpp
 #F_SRCS		= reverse_iterator.cpp
 SRCS		= $(addprefix $(DIR_SRCS), $(F_SRCS))
 
