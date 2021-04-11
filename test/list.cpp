@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../srcs/list.hpp"
+#include <list>
 
 void	test_constructor(void)
 {
@@ -64,7 +65,51 @@ void	test_constructor(void)
 
 //void	test_iterators(void) {}
 
-void	test_capacity(void) {}
+void	test_capacity(void)
+{
+	ft::list<int>	l1;
+	ft::list<int>	l2(6, 12);
+	std::list<int>	s1;
+
+	std::cout << "Test 1: ";
+	if (l1.empty())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "Test 2: ";
+	if (!(l2.empty()))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "Test 3: ";
+	if (!(l1.size()))
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "Test 4: ";
+	if (l2.size() == 6)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	std::cout << "Test 5: ";
+	if (l1.max_size() == s1.max_size())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+}
+
+void	test_access(void)
+{
+	ft::list<int>	l1(5,4);
+
+	l1.front();
+	l1.back();
+}
 
 int main()
 {
@@ -74,6 +119,9 @@ int main()
 	std::cout << std::endl;
 	test_capacity();
 	std::cout << std::endl;
+	test_access();
+	std::cout << std::endl;
+
 	return 0;
 }
 

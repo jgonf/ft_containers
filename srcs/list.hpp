@@ -61,10 +61,10 @@ namespace ft {
 					_tail.prev = &_head;
 				}
 
-				explicit list (size_type n, const value_type& val = value_type())
-				{
-					list();
-					(void)n;
+				explicit list (size_type n, const value_type& val = value_type()): _size(n)
+				{	
+					_head.next = &_tail;
+					_tail.prev = &_head;
 					(void)val;
 //					assign(n, val);
 				}
@@ -72,16 +72,22 @@ namespace ft {
 				template <class InputIterator>
 					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 				{
-					list();
-					(void)first;
-					(void)last;
+					size_type	size = 0;
+					iterator	it;
+
+					for (it = first; it != last; ++it)
+						size++;
+					_size = size;
+					_head.next = &_tail;
+					_tail.prev = &_head;
 //					assign(first, last);
 				}
 
 				list (const list &x)
 				{
-					list();
-					(void)x;
+					_size = x._size;
+					_head.next = &_tail;
+					_tail.prev = &_head;
 //					assign(x.begin(), x.end());
 				}
 
@@ -91,8 +97,10 @@ namespace ft {
 
 				list	&operator=(const list &x)
 				{
-					(void)x;
+					_size = x.size();
 //					clear();
+					_head.next = &_tail;
+					_tail.prev = &_head;
 //					assign(x.begin(), x.end());
 					return *this;
 				}
@@ -124,6 +132,22 @@ namespace ft {
 						return true;
 					return false;
 				}
+
+				size_type	size(void) const { return _size; }
+				
+				size_type	max_size(void) const
+				{
+					std::allocator<ft::node_list<T> > alloc;
+					return alloc.max_size();
+				}
+
+//element access
+				reference front(void) { return _head->next; }
+				const_reference front(void) const { return _head->next; }
+				reference back(void) { return _tail->prev; }
+				const_reference back(void) const { return _tail->prev; }
+
+
 			private:
 				node_type	_head;
 				node_type	_tail;
