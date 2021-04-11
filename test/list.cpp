@@ -64,7 +64,7 @@ void	test_constructor(void)
 
 //void	test_iterators(void) {}
 
-void	test_capacity(void)
+void	test_capacity(void) {}
 
 int main()
 {

@@ -181,13 +181,13 @@ void	test_constructor(void)
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What?" << std::endl;
-/*
+
 	std::cout << "Test 4: ";
 	if (v3.size() == s3.size() && v3[0] == s3[0])
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What?" << std::endl;
-*/
+
 	std::cout << "Test 5: ";
 	if (v2 == copy)
 		std::cout << "Success" << std::endl;

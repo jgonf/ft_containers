@@ -3,6 +3,9 @@
 
 namespace ft
 {
+	template <class T>
+		class ConstBidirectionalIterator;
+
 	template < typename T>
 		class BidirectionalIterator
 		{
@@ -13,7 +16,7 @@ namespace ft
 				typedef T		*pointer;
 				typedef T		&reference;
 				static const bool	input_iter;
-				typedef	ft::random_access_iterator_tag	iterator_category;
+//				typedef	ft::random_access_iterator_tag	iterator_category;
 
 				BidirectionalIterator(void): _ptr(NULL) {}
 				BidirectionalIterator(BidirectionalIterator const &src): _ptr(src._ptr) {};
@@ -93,7 +96,7 @@ namespace ft
 			typedef  T		*pointer;
 			typedef  T		&reference;
 			static const bool	input_iter;
-			typedef	ft::random_access_iterator_tag	iterator_category;
+//			typedef	ft::random_access_iterator_tag	iterator_category;
 
 			ConstBidirectionalIterator(void): _ptr(NULL) {}
 			ConstBidirectionalIterator(BidirectionalIterator<T> const &src): _ptr(src.getPtr()) {};
