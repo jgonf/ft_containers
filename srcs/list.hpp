@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/11 20:47:19 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/11 21:11:19 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,13 @@ namespace ft {
 				reference back(void) { return _tail.prev->data; }
 				const_reference back(void) const { return _tail.prev->data; }
 
+
+//modifiers
+				template <class InputIterator>
+					void assign (InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+				{
+
+				}
 
 			private:
 				node_type	_head;
