@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/10 19:17:15 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/11 13:48:32 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,64 @@ namespace ft {
 				explicit list (size_type n, const value_type& val = value_type())
 				{
 					list();
+					(void)n;
+					(void)val;
 //					assign(n, val);
 				}
 
-				template <class InputIterator>
-					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
-				{
-					list();
-					assign(first, last);
-				}
+//				template <class InputIterator>
+//					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+//				{
+//					list();
+//					assign(first, last);
+//				}
 
 				list (const list &x)
 				{
 					list();
-					assgin(x.begin(), x.end());
+					(void)x;
+//					assign(x.begin(), x.end());
 				}
 
-				~list (void) { clear() }
+				~list (void) {
+//					clear()
+				}
 
 				list	&operator=(const list &x)
 				{
-					clear();
-					assign(x.begin(), x.end());
+					(void)x;
+//					clear();
+//					assign(x.begin(), x.end());
 					return *this;
 				}
 
 
+//iterators
+				iterator	begin(void) { return iterator(_head->next); }
+				const_iterator	begin(void) const { return iterator(_head->next); }
+
+				iterator	end(void) { return iterator(_tail); }
+				const_iterator	end(void) const { return iterator(_tail); }
+
+				reverse_iterator	rbegin(void)
+				{ return reverse_iterator(end()); }
+
+				const_reverse_iterator	rbegin(void) const
+				{ return reverse_iterator(end()); }
+
+				reverse_iterator	rend(void)
+				{ return reverse_iterator(begin()); }
+
+				const_reverse_iterator	rend(void) const
+				{ return reverse_iterator(begin()); }
+
+//capacity
+				bool	empty(void)	const
+				{
+					if (_size == 0)
+						return true;
+					return false;
+				}
 			private:
 				node_type	_head;
 				node_type	_tail;
