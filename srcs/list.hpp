@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/11 13:48:32 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/11 20:47:19 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ namespace ft {
 				}
 
 				explicit list (size_type n, const value_type& val = value_type()): _size(n)
-				{	
+				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
 					(void)val;
@@ -134,7 +134,7 @@ namespace ft {
 				}
 
 				size_type	size(void) const { return _size; }
-				
+
 				size_type	max_size(void) const
 				{
 					std::allocator<ft::node_list<T> > alloc;
@@ -142,10 +142,10 @@ namespace ft {
 				}
 
 //element access
-				reference front(void) { return _head->next; }
-				const_reference front(void) const { return _head->next; }
-				reference back(void) { return _tail->prev; }
-				const_reference back(void) const { return _tail->prev; }
+				reference front(void) { return _head.next->data; }
+				const_reference front(void) const { return _head.next->data; }
+				reference back(void) { return _tail.prev->data; }
+				const_reference back(void) const { return _tail.prev->data; }
 
 
 			private:
