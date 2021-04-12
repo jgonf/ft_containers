@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/11 21:11:19 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/12 23:48:49 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ namespace ft {
 				typedef value_type		*pointer;
 				typedef value_type const	*const_pointer;
 
-				typedef BidirectionalIterator<value_type>	iterator;
+				typedef node_list<value_type>	node_type;
+				typedef BidirectionalIterator<node_type>	iterator;
 				typedef BidirectionalIterator<const value_type>		const_iterator;
 				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>	reverse_iterator;
@@ -51,7 +52,6 @@ namespace ft {
 				typedef	std::ptrdiff_t		difference_type;
 				typedef	size_t			size_type;
 
-				typedef node_list<value_type>	node_type;
 
 
 				//constructors and destructor
@@ -80,7 +80,7 @@ namespace ft {
 					_size = size;
 					_head.next = &_tail;
 					_tail.prev = &_head;
-//					assign(first, last);
+					assign(first, last);
 				}
 
 				list (const list &x)
@@ -88,7 +88,7 @@ namespace ft {
 					_size = x._size;
 					_head.next = &_tail;
 					_tail.prev = &_head;
-//					assign(x.begin(), x.end());
+					assign(x.begin(), x.end());
 				}
 
 				~list (void) {
@@ -101,17 +101,19 @@ namespace ft {
 //					clear();
 					_head.next = &_tail;
 					_tail.prev = &_head;
-//					assign(x.begin(), x.end());
+					assign(x.begin(), x.end());
 					return *this;
 				}
 
 
 //iterators
-				iterator	begin(void) { return iterator(_head->next); }
-				const_iterator	begin(void) const { return iterator(_head->next); }
+				iterator	begin(void) { return iterator(_head.next); }
+
+				const_iterator	begin(void) const { return _head.next; }
+
 
 				iterator	end(void) { return iterator(_tail); }
-				const_iterator	end(void) const { return iterator(_tail); }
+				const_iterator	end(void) const { return const_iterator(_tail); }
 
 				reverse_iterator	rbegin(void)
 				{ return reverse_iterator(end()); }
@@ -153,6 +155,14 @@ namespace ft {
 					void assign (InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 				{
 
+					while (first != last)
+					{
+						node_type	*tmp = new node_type();
+						tmp->data = first.val;
+						tmp->next = &_tail;
+						_tail.prev->next = tmp;
+						first++;
+					}
 				}
 
 			private:

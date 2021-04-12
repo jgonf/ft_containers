@@ -1,8 +1,13 @@
 #ifndef BIDIRECTIONALITERATOR_HPP
 #define BIDIRECTIONALITERATOR_HPP
 
+# include "list.hpp"
+
 namespace ft
 {
+	template <class T>
+		struct node_list;
+
 	template <class T>
 		class ConstBidirectionalIterator;
 
@@ -13,7 +18,7 @@ namespace ft
 
 				typedef T		value_type;
 				typedef std::ptrdiff_t 	difference_type;
-				typedef T		*pointer;
+				typedef node_list<T>	*pointer;
 				typedef T		&reference;
 				static const bool	input_iter;
 //				typedef	ft::random_access_iterator_tag	iterator_category;
@@ -93,7 +98,7 @@ namespace ft
 		public:
 			typedef T		value_type;
 			typedef std::ptrdiff_t 	difference_type;
-			typedef  T		*pointer;
+			typedef node_list<T>	*pointer;
 			typedef  T		&reference;
 			static const bool	input_iter;
 //			typedef	ft::random_access_iterator_tag	iterator_category;
