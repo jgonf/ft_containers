@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/11 14:45:59 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/13 18:06:31 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	test_constructor(void)
 
 void	test_capacity(void)
 {
+	std::cout << "Test capacity :" << std::endl;
+
 	ft::list<int>	l1;
 	ft::list<int>	l2(6, 12);
 	std::list<int>	s1;
@@ -105,10 +107,45 @@ void	test_capacity(void)
 
 void	test_access(void)
 {
+	std::cout << "Test access :" << std::endl;
+
 	ft::list<int>	l1(5,4);
+
+	std::cout << "Test 1: ";
+	if (l1.front())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
 
 	l1.front();
 	l1.back();
+	std::cout << "En construction" << std::endl;
+}
+
+void	test_modifiers(void)
+{
+	std::cout << "Test modifiers :" << std::endl;
+
+	ft::list<int>	l1;
+	ft::list<int>	l2;
+
+	l1.assign(4, 12);
+	l2.assign(3, 1);
+
+	std::cout << "Test 1: ";
+	if (l1.front() == 12 && l1.size() == 4 && l2.size() == 3 && l2.back() == 1)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l2.assign(l1.begin(), l1.end());
+	std::cout << "Test 2: ";
+	std::cout << "FRONT " << l2.back() << std::endl;
+	if (l2.front() == 12 && l2.back() == 12 && l2.size() == 4)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
 }
 
 int main()
@@ -121,7 +158,8 @@ int main()
 	std::cout << std::endl;
 	test_access();
 	std::cout << std::endl;
-
+	test_modifiers();
+	std::cout << std::endl;
 	return 0;
 }
 

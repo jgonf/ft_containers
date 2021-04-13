@@ -38,27 +38,27 @@ namespace ft
 
 				BidirectionalIterator	&operator++(void)
 				{
-					_ptr++;
+					_ptr = _ptr->next;
 					return *this;
 				}
 
 				BidirectionalIterator	&operator--(void)
 				{
-					_ptr--;
+					_ptr = _ptr->prev;
 					return *this;
 				}
 
 				BidirectionalIterator	operator++(int)
 				{
 					BidirectionalIterator<value_type> tmp = *this;
-					_ptr++;
+					_ptr = _ptr->next;
 					return tmp;
 				}
 
 				BidirectionalIterator	operator--(int)
 				{
 					BidirectionalIterator<value_type> tmp = *this;
-					_ptr--;
+					_ptr = _ptr->prev;
 					return tmp;
 				}
 
@@ -106,7 +106,9 @@ namespace ft
 			ConstBidirectionalIterator(void): _ptr(NULL) {}
 			ConstBidirectionalIterator(BidirectionalIterator<T> const &src): _ptr(src.getPtr()) {};
 //			ConstBidirectionalIterator(ConstBidirectionalIterator const &src): _ptr(src._ptr) {};
-			ConstBidirectionalIterator(pointer ptr): _ptr(ptr) {};
+//			ConstBidirectionalIterator(pointer ptr): _ptr(ptr) {};
+			ConstBidirectionalIterator(node_list<T> *src): _ptr(src) {};
+			ConstBidirectionalIterator(node_list<T> src): _ptr(&src) {};
 			virtual ~ConstBidirectionalIterator(void) {}
 
 			pointer	getPtr(void) const { return _ptr; }

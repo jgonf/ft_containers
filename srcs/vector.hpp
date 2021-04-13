@@ -328,22 +328,7 @@ namespace ft
 
 				iterator	insert(iterator position, const value_type& val)
 				{
-				/*
-					difference_type const	idx = position - this->begin();
-					difference_type const	old_end_idx = this->end() - this->begin();
-					iterator				old_end, end;
-
-					this->resize(this->_size + 1);
-
-					end = this->end();
-					position = this->begin() + idx;
-					old_end = this->begin() + old_end_idx;
-					while (old_end != position)
-						*--end = *--old_end;
-					*position = val;
-					return (position);
-*/
-
+		
                                       size_t  save = _size + 1;
                                       size_t  len = 0;
                                       iterator        it;
