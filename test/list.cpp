@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/13 18:06:31 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/14 21:52:54 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,18 +130,58 @@ void	test_modifiers(void)
 	ft::list<int>	l2;
 
 	l1.assign(4, 12);
-	l2.assign(3, 1);
 
 	std::cout << "Test 1: ";
-	if (l1.front() == 12 && l1.size() == 4 && l2.size() == 3 && l2.back() == 1)
+	if (l1.front() == 12 && l1.front() == 12 && l1.size() == 4)
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What ?" << std::endl;
 
 	l2.assign(l1.begin(), l1.end());
 	std::cout << "Test 2: ";
-	std::cout << "FRONT " << l2.back() << std::endl;
 	if (l2.front() == 12 && l2.back() == 12 && l2.size() == 4)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.assign(9, 36);
+	std::cout << "Test 3: ";
+	if (l1.front() == 36 && l1.back() == 36 && l1.size() == 9)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l2.assign(l1.begin(), l1.end());
+	std::cout << "Test 4: ";
+	if (l2.front() == 36 && l2.back() == 36 && l2.size() == 9)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.push_front(45);
+	std::cout << "Test 5: ";
+	if (l1.front() == 45 && l1.size() == 10)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.pop_front();
+	std::cout << "Test 6: ";
+	if (l1.front() == 36 && l1.size() == 9)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.push_back(58);
+	std::cout << "Test 7: ";
+	if (l1.back() == 58 && l1.size() == 10)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.pop_back();
+	std::cout << "Test 8: ";
+	if (l1.back() == 36 && l1.size() == 9)
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What ?" << std::endl;

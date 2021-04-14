@@ -121,27 +121,27 @@ namespace ft
 
 			ConstBidirectionalIterator	&operator++(void)
 			{
-				_ptr++;
+				_ptr = _ptr->next;
 				return *this;
 			}
 
 			ConstBidirectionalIterator	&operator--(void)
 			{
-				_ptr--;
+				_ptr = _ptr->prev;
 				return *this;
 			}
 
 			ConstBidirectionalIterator	operator++(int)
 			{
 				ConstBidirectionalIterator<value_type> tmp = *this;
-				_ptr++;
+				_ptr = _ptr->next;
 				return tmp;
 			}
 
 			ConstBidirectionalIterator	operator--(int)
 			{
 				ConstBidirectionalIterator<value_type> tmp = *this;
-				_ptr--;
+				_ptr = _ptr->prev;
 				return tmp;
 			}
 

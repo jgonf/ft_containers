@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/13 18:03:52 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/14 21:52:13 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,39 +161,81 @@ namespace ft {
 
 //modifiers
 				template <class InputIterator>
-					void assign (InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+					void assign(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 				{
-					size_type	size = 0;
 	//				clear();
 					while (first != last)
 					{
-						node_type	*tmp = new node_type();
-						tmp->data = first.getPtr()->data;
-						tmp->next = &_tail;
+						push_back(first.getPtr()->data);
+//						node_type	*tmp = new node_type();
+//						tmp->data = first.getPtr()->data;
+//						_tail.prev->next = tmp;
+//						_tail.prev = tmp;
 						first++;
-						size++;
 					}
-					_size = size;
 				}
 
 				void	assign(size_type n, const value_type &val)
 				{
 				//	clear();
 					for (size_type i = 0; i < n; ++i)
-					{
-						node_type	*tmp = new node_type();
-						tmp->data = val;
-						tmp->next = &_tail;
-						_tail.prev->next = tmp;
-						_tail.prev = tmp;
-					}
-					_size = n;
+						push_back(val);
+//						node_type	*tmp = new node_type();
+//						tmp->data = val;
+//						tmp->next = &_tail;
+//						_tail.prev->next = tmp;
+//						_tail.prev = tmp;
+				}
+
+				void	push_front(const value_type &val)
+				{
+					node_type	*tmp = new node_type();
+
+					tmp->data = val;
+					tmp->next = _head.next;
+					tmp->prev = &_head;
+					_head.next->prev = tmp;
+					_head.next = tmp;
+					_size++;
+				}
+
+				void	pop_front(void)
+				{
+					node_type *save = _head.next;
+
+					_head.next = save->next;
+					_head.next->prev = &_head;
+					_size--;
+					delete save;
+				}
+
+				void	push_back(const value_type& val)
+				{
+					node_type	*tmp = new node_type();
+
+					tmp->data = val;
+					tmp->next = &_tail;
+					tmp->prev = _tail.prev;
+					_tail.prev->next = tmp;
+					_tail.prev = tmp;
+					_size++;
+				}
+
+				void	pop_back(void)
+				{
+					node_type *save = _tail.prev;
+
+					_tail.prev = save->prev;
+					_tail.prev->next = &_tail;
+					_size--;
+					delete save;
 				}
 
 			private:
 				node_type	_head;
 				node_type	_tail;
 				size_type	_size;
+
 	};
 }
 
