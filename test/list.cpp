@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/17 15:17:26 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/17 17:22:22 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	test_constructor(void)
 
 }
 
-//void	test_iterators(void) {}
+void	test_iterators(void) { std::cout << "A faire" << std::endl;}
 
 void	test_capacity(void)
 {
@@ -190,15 +190,17 @@ void	test_modifiers_partA(void)
 
 void	test_modifiers_partB(void)
 {
-	std::cout << "Test insert :" << std::endl;
+	std::cout << "Test insert, erase :" << std::endl;
 
 	bool error = false;
 
 	ft::list<int>	l1(3, 12);
 	ft::list<int>::iterator	it;
+	ft::list<int>::iterator	it2;
 
 	std::list<int>	s1(3, 12);
 	std::list<int>::iterator	sit;
+	std::list<int>::iterator	sit2;
 
 	l1.push_back(28);
 	l1.push_front(45);
@@ -246,6 +248,7 @@ void	test_modifiers_partB(void)
 	s1.insert(sit, 3, 106);
 
 	std::cout << "Test 2: ";
+	error = false;
 	if (l1.size() != s1.size())
 		error = true;
 	sit = s1.begin();
@@ -266,23 +269,140 @@ void	test_modifiers_partB(void)
 		std::cout << "Success" << std::endl;
 
 
+	ft::list<int>	l2(1, 8);
+	l2.push_back(4);
+	l2.push_back(3);
+
+	std::list<int>	s2(1, 8);
+	s2.push_back(4);
+	s2.push_back(3);
+
+	it = l1.begin();
+	it++;
+	l1.insert(it, l2.begin(), l2.end());
+	sit = s1.begin();
+	sit++;
+	s1.insert(sit, s2.begin(), s2.end());
+
+	std::cout << "Test 3: ";
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
+	sit = s1.begin();
+	for (it = l1.begin(); it != l1.end(); ++it)
+	{
+		if (sit == s1.end())
+			error = true;
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	it = ++(++l1.begin());
+	sit = ++(++s1.begin());
+	l1.erase(it);
+	s1.erase(sit);
+	std::cout << "Test 4: ";
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
+	sit = s1.begin();
+	for (it = l1.begin(); it != l1.end(); ++it)
+	{
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	it2 = ++(++it);
+	sit2 = ++(++sit);
+	l1.erase(it, it2);
+	s1.erase(sit, sit2);
+	std::cout << "Test 5: ";
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
+	sit = s1.begin();
+	for (it = l1.begin(); it != l1.end(); ++it)
+	{
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+}
+
+void	test_modifiers_partC(void)
+{
+	std::cout << "Test swap, resize and clear :" << std::endl;
+
+	ft::list<int>	l1(3, 8);
+	ft::list<int>	l2(6, 12);
+	std::list<int>	s1(3, 8);
+	std::list<int>	s2(6, 12);
+
+	l1.swap(l2);
+	s1.swap(s2);
+
+	std::cout << "Test 1: ";
+	if (l1.size() == s1.size() && l2.size() == s2.size() &&
+		l1.front() == s1.front() && l2.back() == s2.back())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.resize(9, 5);
+	s1.resize(9, 5);
+
+	for (ft::list<int>::iterator it = l1.begin(); it != l1.end(); ++it)
+		std::cout << *it << std::endl;
+
+	std::cout << "Test 2: ";
+	if (l1.size() == s1.size() && l1.back() == s1.back())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
 
 }
 
 int main()
 {
-	test_constructor();
-	std::cout << std::endl;
+//	test_constructor();
+//	std::cout << std::endl;
 //	test_iterators();
+//	std::cout << std::endl;
+//	test_capacity();
+//	std::cout << std::endl;
+//	test_access();
+//	std::cout << std::endl;
+//	test_modifiers_partA();
+//	std::cout << std::endl;
+//	test_modifiers_partB();
+//	std::cout << std::endl;
+	test_modifiers_partC();
 	std::cout << std::endl;
-	test_capacity();
-	std::cout << std::endl;
-	test_access();
-	std::cout << std::endl;
-	test_modifiers_partA();
-	std::cout << std::endl;
-	test_modifiers_partB();
-	std::cout << std::endl;
+
 	return 0;
 }
 

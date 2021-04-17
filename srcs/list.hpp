@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/17 15:16:10 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/17 17:26:19 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,8 +247,50 @@ namespace ft {
 				template <class InputIterator>
 					void insert (iterator position, InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 				{
+					position--;
 					for (; first != last; ++first)
-						position = insert(position++, *first);
+						position = insert(++position, *first);
+				}
+
+				iterator erase(iterator position)
+				{
+					node_type	*ptr = position.getPtr();
+					iterator	ret(ptr->next);
+
+					ptr->next->prev = ptr->prev;
+					ptr->prev->next = ptr->next;
+					_size--;
+					delete ptr;
+
+					return ret;
+				}
+
+				iterator erase(iterator first, iterator last)
+				{
+					for (; first != last; ++first)
+						erase(first);
+					return last;
+				}
+
+				void swap(list &x)
+				{
+					std::swap(_head, x._head);
+					std::swap(_tail, x._tail);
+					std::swap(_size, x._size);
+				}
+
+				void resize (size_type n, value_type val = value_type())
+				{
+					iterator	it = begin();
+
+					if (n < _size)
+					{
+						for (size_type i = 0; i < n; ++i)
+							++it;
+						erase(it, end());
+					}
+					if (n > _size)
+						insert(it, n - _size, val);
 				}
 
 			private:
