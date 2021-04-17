@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/14 21:52:13 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/17 15:16:10 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,16 @@ namespace ft {
 					_tail.prev = &_head;
 				}
 
-				explicit list (size_type n, const value_type& val = value_type()): _size(n)
+				explicit list (size_type n, const value_type& val = value_type()): _size(0)
 				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
-					(void)val;
-//					assign(n, val);
+					assign(n, val);
 				}
 
 				template <class InputIterator>
 					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 				{
-					size_type	size = 0;
-					iterator	it;
-
-					for (it = first; it != last; ++it)
-						size++;
-					_size = size;
 					_head.next = &_tail;
 					_tail.prev = &_head;
 					assign(first, last);
@@ -85,7 +78,6 @@ namespace ft {
 
 				list (const list &x)
 				{
-					_size = x._size;
 					_head.next = &_tail;
 					_tail.prev = &_head;
 					assign(x.begin(), x.end());
@@ -97,7 +89,6 @@ namespace ft {
 
 				list	&operator=(const list &x)
 				{
-					_size = x.size();
 //					clear();
 					_head.next = &_tail;
 					_tail.prev = &_head;
@@ -111,7 +102,7 @@ namespace ft {
 
 				const_iterator	begin(void) const
 				{
-					ConstBidirectionalIterator<T> tmp(_head.next); 
+					ConstBidirectionalIterator<T> tmp(_head.next);
 					return tmp;
 				}
 
@@ -120,7 +111,7 @@ namespace ft {
 
 				const_iterator	end(void) const
 				{
-					ConstBidirectionalIterator<T> tmp(_tail.prev->next); 
+					ConstBidirectionalIterator<T> tmp(_tail.prev->next);
 					return tmp;
 				}
 
@@ -229,6 +220,35 @@ namespace ft {
 					_tail.prev->next = &_tail;
 					_size--;
 					delete save;
+				}
+
+				iterator insert(iterator position, const value_type &val)
+				{
+					node_type	*tmp = new node_type();
+
+					tmp->data = val;
+					tmp->next = position.getPtr();
+					tmp->prev = position.getPtr()->prev;
+					position.getPtr()->prev = tmp;
+					tmp->prev->next = tmp;
+					_size++;
+
+					return (iterator(tmp));
+				}
+
+				void insert(iterator position, size_type n, const value_type& val)
+				{
+					size_type	i;
+
+					for (i = 0; i < n; ++i)
+						position = insert(position, val);
+				}
+
+				template <class InputIterator>
+					void insert (iterator position, InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+				{
+					for (; first != last; ++first)
+						position = insert(position++, *first);
 				}
 
 			private:

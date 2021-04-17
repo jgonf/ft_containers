@@ -82,8 +82,8 @@ namespace ft
 					return !(*this == cmp);
 				}
 
-				reference operator*(void) const { return *_ptr; }
-				pointer	operator->(void) const { return _ptr; }
+				reference operator*(void) const { return _ptr->data; }
+				T	*operator->(void) const { return _ptr->data; }
 
 			protected:
 				pointer	_ptr;
@@ -155,8 +155,8 @@ namespace ft
 				return !(*this == cmp);
 			}
 
-			const value_type  &operator*(void) const { return *_ptr; }
-			const T	*operator->(void) const { return _ptr; }
+			reference	operator*(void) const { return _ptr->data; }
+			const T	*operator->(void) const { return _ptr->data; }
 
 		private:
 			pointer	_ptr;
