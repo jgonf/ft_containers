@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/18 16:55:19 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/18 18:13:39 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,8 +316,35 @@ namespace ft {
 //operations
 				void splice(iterator position, list &x)
 				{
-					insert(position, x.begin(), x.end());
-					clear(x);
+					node_type	*end_insert = position.getPtr();
+					node_type	*start_insert = end_insert->prev;
+					node_type	*first = x.begin().getPtr();
+					node_type	*last = (--x.end()).getPtr();
+
+					start_insert->next = first;
+					first->prev = start_insert;
+					end_insert->prev = last;
+					last->next = end_insert;
+					_size += x._size;
+					x._head.next = &x._tail;
+					x._tail.prev = &x._head;
+					x._size = 0;
+				}
+
+				void splice(iterator position, list &x, iterator i)
+				{
+					node_type	*end_insert = position.getPtr();
+					node_type	*start_insert = end_insert->prev;
+					node_type	*to_insert = i.getPtr();
+
+					to_insert->prev->next = to_insert->next;
+					to_insert->next->prev = to_insert->prev;
+					start_insert->next = to_insert;
+					to_insert->prev = start_insert;
+					end_insert->prev = to_insert;
+					to_insert->next = end_insert;
+					_size++;
+					x._size--;
 				}
 
 			private:

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/18 17:00:23 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/18 18:15:53 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,77 @@ void	test_modifiers_partC(void)
 
 void	test_operations(void)
 {
-	ft::
+	bool	error;
+	ft::list<int> l1, l2;
+	ft::list<int>::iterator it;
+	ft::list<int>::iterator it2;
+	std::list<int> s1, s2;
+	std::list<int>::iterator sit;
+	std::list<int>::iterator sit2;
+
+	for (int i=1; i<=4; ++i)
+		l1.push_back(i);
+	for (int i=1; i<=3; ++i)
+		l2.push_back(i*10);
+	for (int i=1; i<=4; ++i)
+		s1.push_back(i);
+	for (int i=1; i<=3; ++i)
+		s2.push_back(i*10);
+
+	it = l1.begin();
+	++it;
+	l1.splice (it, l2);
+	sit = s1.begin();
+	++sit;
+	s1.splice(sit, s2);
+
+	std::cout << "Test 1: ";
+	error = false;
+	if (l2.empty() != s2.empty())
+		error = true;
+	if (*it != *sit)
+		error = true;
+	if (l1.size() != s1.size())
+		error = true;
+	sit2 = s1.begin();
+	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	std::cout << "Test 2: ";
+	l2.splice (l2.begin(), l1, it);
+	s2.splice (s2.begin(), s1, sit);
+	error = false;
+	if (l1.size() != s1.size() || l2.size() != s2.size())
+		error = true;
+	if (l2.front() != s2.front())
+		error = true;
+	sit = s1.begin();
+	for (it = l1.begin(); it != l1.end(); ++it)
+	{
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+
 }
 
 int main()
