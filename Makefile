@@ -1,7 +1,7 @@
 NAME		= ft_containers
 
-CC		= clang++-9
-CFLAGS		= -Werror -Wextra -Wall -std=c++98
+CC		= clang++
+CFLAGS		= -Werror -Wextra -Wall -std=c++98 -g -fsanitize=address
 RM		= rm -rf
 
 DIR_SRCS	= test/

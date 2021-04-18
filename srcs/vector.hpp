@@ -72,26 +72,23 @@ namespace ft
 					{
 						size_type	size = 0;
 						std::allocator<T> alloc;
-						
+
 						for (iterator it = first; it != last; ++it)
 							size++;
 						_cont = alloc.allocate(size);
 						_capacity = size;
-				
 						for (size_t i  = 0 ; i < size; ++i)
 							alloc.construct(&_cont[i], *first++);
 						_size = size;
-					
 					}
 
 				vector(vector const & x): _cont(NULL), _size(0), _capacity(0)
 				{
 					std::allocator<T> alloc;
 					size_type src_size = x.size();
-			
+
 					_cont = alloc.allocate(src_size);
 					_capacity = src_size;
-					
 					for (size_t i  = 0 ; i < src_size; ++i)
 						alloc.construct(&_cont[i], x[i]);
 					_size = src_size;

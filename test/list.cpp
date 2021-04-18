@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/18 15:34:27 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/18 17:00:23 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,19 @@ void	test_access(void)
 	ft::list<int>	l1(5,4);
 
 	std::cout << "Test 1: ";
-	if (l1.front())
+	if (l1.front() == 4 && l1.back() == 4)
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What ?" << std::endl;
 
-	l1.front();
-	l1.back();
-	std::cout << "En construction" << std::endl;
+	l1.push_front(20);
+	l1.push_back(12);
+	std::cout << "Test 2: ";
+	if (l1.front() == 20 && l1.back() == 12)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
 }
 
 void	test_modifiers_partA(void)
@@ -390,6 +395,18 @@ void	test_modifiers_partC(void)
 
 	l1.clear();
 	l2.clear();
+
+	std::cout << "Test 4: ";
+	if (l1.empty() && l2.empty())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+}
+
+void	test_operations(void)
+{
+	ft::
 }
 
 int main()
@@ -406,9 +423,10 @@ int main()
 //	std::cout << std::endl;
 //	test_modifiers_partB();
 //	std::cout << std::endl;
-	test_modifiers_partC();
-	std::cout << std::endl;
-
+//	test_modifiers_partC();
+//	std::cout << std::endl;
+	test_operations();
+//	std::cout << std::endl;
 	return 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/18 15:36:16 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/18 16:55:19 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ namespace ft {
 				}
 
 				~list (void) {
-//					clear()
+					clear();
 				}
 
 				list	&operator=(const list &x)
 				{
-//					clear();
+					clear();
 					_head.next = &_tail;
 					_tail.prev = &_head;
 					assign(x.begin(), x.end());
@@ -154,7 +154,7 @@ namespace ft {
 				template <class InputIterator>
 					void assign(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
 				{
-	//				clear();
+					clear();
 					while (first != last)
 					{
 						push_back(first.getPtr()->data);
@@ -168,7 +168,7 @@ namespace ft {
 
 				void	assign(size_type n, const value_type &val)
 				{
-				//	clear();
+					clear();
 					for (size_type i = 0; i < n; ++i)
 						push_back(val);
 //						node_type	*tmp = new node_type();
@@ -309,6 +309,15 @@ namespace ft {
 						to_del = save;
 						_size--;
 					}
+					_head.next= &_tail;
+					_tail.prev = &_head;
+				}
+
+//operations
+				void splice(iterator position, list &x)
+				{
+					insert(position, x.begin(), x.end());
+					clear(x);
 				}
 
 			private:
