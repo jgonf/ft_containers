@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/17 17:22:22 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/18 15:34:27 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,16 +374,22 @@ void	test_modifiers_partC(void)
 
 	l1.resize(9, 5);
 	s1.resize(9, 5);
-
-	for (ft::list<int>::iterator it = l1.begin(); it != l1.end(); ++it)
-		std::cout << *it << std::endl;
-
 	std::cout << "Test 2: ";
 	if (l1.size() == s1.size() && l1.back() == s1.back())
 		std::cout << "Success" << std::endl;
 	else
 		std::cout << "What ?" << std::endl;
 
+	l2.resize(4, 5);
+	s2.resize(4, 5);
+	std::cout << "Test 3: ";
+	if (l2.size() == s2.size() && l2.back() == s2.back())
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What ?" << std::endl;
+
+	l1.clear();
+	l2.clear();
 }
 
 int main()

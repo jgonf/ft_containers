@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/17 17:26:19 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/18 15:36:16 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,10 @@ namespace ft {
 				{
 					std::swap(_head, x._head);
 					std::swap(_tail, x._tail);
+					_head.next->prev = &_head;
+					_tail.prev->next = &_tail;
+					x._head.next->prev = &x._head;
+					x._tail.prev->next = &x._tail;
 					std::swap(_size, x._size);
 				}
 
@@ -290,7 +294,21 @@ namespace ft {
 						erase(it, end());
 					}
 					if (n > _size)
-						insert(it, n - _size, val);
+						insert(end(), n - _size, val);
+				}
+
+				void clear()
+				{
+					node_type	*save;
+					node_type	*to_del = _head.next;
+
+					while (_size > 0)
+					{
+						save = to_del->next;
+						delete to_del;
+						to_del = save;
+						_size--;
+					}
 				}
 
 			private:
