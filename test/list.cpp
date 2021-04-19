@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/18 18:15:53 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/19 10:50:49 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -461,6 +461,30 @@ void	test_operations(void)
 		error = true;
 	if (l2.front() != s2.front())
 		error = true;
+	sit2 = s1.begin();
+	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+
+	std::cout << "Test 3: ";
+	it = ++(++(l1.begin()));
+	sit= ++(++(s1.begin()));
+	l1.splice(l1.begin(), l1, it, l1.end());
+	s1.splice(s1.begin(), s1, sit, s1.end());
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
 	sit = s1.begin();
 	for (it = l1.begin(); it != l1.end(); ++it)
 	{
@@ -475,7 +499,6 @@ void	test_operations(void)
 		std::cout << "What ?" << std::endl;
 	else
 		std::cout << "Success" << std::endl;
-
 
 }
 

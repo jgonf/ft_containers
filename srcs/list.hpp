@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/18 18:13:39 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/19 10:44:43 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,6 +345,28 @@ namespace ft {
 					to_insert->next = end_insert;
 					_size++;
 					x._size--;
+				}
+
+				void splice(iterator position, list &x, iterator first, iterator last)
+				{
+					size_type	size = 0;
+					node_type	*end_insert = position.getPtr();
+					node_type	*start_insert = end_insert->prev;
+					node_type	*first_ptr = first.getPtr();
+					node_type	*last_ptr = (--last).getPtr();
+
+
+					for (;first != last; ++first)
+						size++;
+
+					first_ptr->prev->next = last_ptr->next;
+					last_ptr->next->prev = first_ptr->prev;
+					start_insert->next = first_ptr;
+					first_ptr->prev = start_insert;
+					end_insert->prev = last_ptr;
+					last_ptr->next = end_insert;
+					_size += size;
+					x._size -= size;
 				}
 
 			private:
