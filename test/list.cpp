@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/20 12:17:05 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/20 14:22:08 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,7 @@ void	test_modifiers_partC(void)
 
 }
 
-void	test_operations(void)
+void	test_operations_partA(void)
 {
 	bool	error;
 	ft::list<int> l1, l2;
@@ -551,6 +551,46 @@ void	test_operations(void)
 
 }
 
+void	test_operations_partB(void)
+{
+	bool	error;
+	ft::list<int>	l1;
+	ft::list<int>::iterator	it;
+	std::list<int>	s1;
+	std::list<int>::iterator	sit;
+
+
+	for (int i = 0; i < 10; ++i)
+	{
+		l1.push_back(i);
+		l1.push_back(i);
+		s1.push_back(i);
+		s1.push_back(i);
+	}
+
+	std::cout << "Test 1: ";
+	l1.unique();
+	s1.unique();
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
+	sit = s1.begin();
+	for (it = l1.begin(); it != l1.end(); ++it)
+	{
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+}
+
 int main()
 {
 //	test_constructor();
@@ -569,6 +609,9 @@ int main()
 //	std::cout << std::endl;
 //	test_operations_partA();
 //	std::cout << std::endl;
+	test_operations_partB();
+	std::cout << std::endl;
+
 	return 0;
 }
 

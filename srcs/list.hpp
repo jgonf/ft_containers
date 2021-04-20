@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/20 12:17:02 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/20 14:19:18 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -394,12 +394,15 @@ namespace ft {
 
 				void unique(void)
 				{
-					iterator	it;
+					iterator	it = ++begin();
+					iterator	cmp = begin();
 
-					for (it = ++begin(); it != end(); ++it)
+					for (; it != end(); ++it)
 					{
-						if (*it == *(--it))
-							erase(it);
+						if (*it == *cmp)
+							erase(cmp++);
+						else
+							cmp++;
 					}
 				}
 
