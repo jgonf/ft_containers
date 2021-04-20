@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/19 10:44:43 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/20 12:17:02 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,6 +367,40 @@ namespace ft {
 					last_ptr->next = end_insert;
 					_size += size;
 					x._size -= size;
+				}
+
+				void remove(const value_type& val)
+				{
+					iterator	it;
+
+					for (it = begin(); it != end(); ++it)
+					{
+						if (*it == val)
+							erase(it);
+					}
+				}
+
+				template <class Predicate>
+					void remove_if(Predicate pred)
+				{
+					iterator	it;
+
+					for (it = begin(); it != end(); ++it)
+					{
+						if (pred(*it))
+							erase(it);
+					}
+				}
+
+				void unique(void)
+				{
+					iterator	it;
+
+					for (it = ++begin(); it != end(); ++it)
+					{
+						if (*it == *(--it))
+							erase(it);
+					}
 				}
 
 			private:

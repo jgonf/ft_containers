@@ -6,12 +6,14 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/19 10:50:49 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/20 12:17:05 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/list.hpp"
 #include <list>
+
+bool multiple_digit (const int& value) { return (value>=10); }
 
 void	test_constructor(void)
 {
@@ -485,20 +487,67 @@ void	test_operations(void)
 	error = false;
 	if (l1.size() != s1.size())
 		error = true;
-	sit = s1.begin();
-	for (it = l1.begin(); it != l1.end(); ++it)
+	sit2 = s1.begin();
+	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
 	{
-		if (*it != *sit)
+		if (*it2 != *sit2)
 		{
 			error = true;
 			break;
 		}
-		++sit;
+		++sit2;
 	}
 	if (error)
 		std::cout << "What ?" << std::endl;
 	else
 		std::cout << "Success" << std::endl;
+
+	std::cout << "Test 4: ";
+	l1.push_back(4);
+	l1.push_front(4);
+	l1.remove(4);
+	s1.push_back(4);
+	s1.push_front(4);
+	s1.remove(4);
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
+	sit2 = s1.begin();
+	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	std::cout << "Test 5: ";
+	l1.remove_if(multiple_digit);
+	s1.remove_if(multiple_digit);
+	error = false;
+	if (l1.size() != s1.size())
+		error = true;
+	sit2 = s1.begin();
+	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
 
 }
 
@@ -518,7 +567,7 @@ int main()
 //	std::cout << std::endl;
 //	test_modifiers_partC();
 //	std::cout << std::endl;
-	test_operations();
+//	test_operations_partA();
 //	std::cout << std::endl;
 	return 0;
 }
