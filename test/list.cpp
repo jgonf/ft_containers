@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/20 14:22:08 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/21 22:16:07 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -589,6 +589,14 @@ void	test_operations_partB(void)
 	else
 		std::cout << "Success" << std::endl;
 
+	l1.push_back(3);
+	l1.push_back(8);
+	l1.push_back(-5);
+	l1.push_back(12);
+	l1.push_back(0);
+	l1.sort();
+	for (it = l1.begin(); it != l1.end(); ++it)
+		std::cout << *it << std::endl;
 }
 
 int main()

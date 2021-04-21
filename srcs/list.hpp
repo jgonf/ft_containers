@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/20 14:19:18 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/21 22:15:39 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,6 +403,26 @@ namespace ft {
 							erase(cmp++);
 						else
 							cmp++;
+					}
+				}
+
+				void	sort(void)
+				{
+					iterator	it;
+					node_type	cmp;
+
+					it = begin()
+					while (it != end())
+					{
+						cmp = it.getPtr()->next;
+						if (*it < cmp->data)
+						{
+							//swap;
+							it = begin();
+						}
+						else
+							tmp = tmp->next;
+						i++;
 					}
 				}
 
