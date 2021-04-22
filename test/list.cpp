@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/21 22:16:07 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/22 12:51:12 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <list>
 
 bool multiple_digit (const int& value) { return (value>=10); }
+bool cmp_length(const std::string& s1, const std::string& s2) { return (s1.size() < s2.size()); }
 
 void	test_constructor(void)
 {
@@ -554,11 +555,15 @@ void	test_operations_partA(void)
 void	test_operations_partB(void)
 {
 	bool	error;
-	ft::list<int>	l1;
+	int		number;
+	ft::list<int>	l1, l2;
 	ft::list<int>::iterator	it;
-	std::list<int>	s1;
+	std::list<int>	s1, s2;
 	std::list<int>::iterator	sit;
-
+	ft::list<std::string>	l3;
+	ft::list<std::string>::iterator	it2;
+	std::list<std::string>	s3;
+	std::list<std::string>::iterator	sit2;
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -589,18 +594,66 @@ void	test_operations_partB(void)
 	else
 		std::cout << "Success" << std::endl;
 
-	l1.push_back(3);
-	l1.push_back(8);
-	l1.push_back(-5);
-	l1.push_back(12);
-	l1.push_back(0);
-	l1.sort();
-	for (it = l1.begin(); it != l1.end(); ++it)
-		std::cout << *it << std::endl;
+	for (int i = 0 ; i < 10 ; ++i)
+	{
+		number = rand() % 100;
+		l2.push_back(number);
+		s2.push_back(number);
+	}
+
+	std::cout << "Test 2: ";
+	l2.sort();
+	s2.sort();
+	error = false;
+	if (l2.size() != s2.size())
+		error = true;
+	sit = s2.begin();
+	for (it = l2.begin(); it != l2.end(); ++it)
+	{
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+
+	l3.push_back("chouette");
+	s3.push_back("chouette");
+	l3.push_back("yo");
+	s3.push_back("yo");
+	l3.push_back("wesh");
+	s3.push_back("wesh");
+
+	std::cout << "Test 3: ";
+	l3.sort(cmp_length);
+	s3.sort(cmp_length);
+	error = false;
+	sit2 = s3.begin();
+	for (it2 = l3.begin(); it2 != l3.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
 }
 
 int main()
 {
+	srand(time(NULL));
 //	test_constructor();
 //	std::cout << std::endl;
 //	test_iterators();
@@ -622,4 +675,3 @@ int main()
 
 	return 0;
 }
-

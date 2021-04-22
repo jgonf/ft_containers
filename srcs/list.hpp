@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/21 22:15:39 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/22 12:51:20 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,21 +408,44 @@ namespace ft {
 
 				void	sort(void)
 				{
-					iterator	it;
-					node_type	cmp;
+					iterator	it = begin();
+					iterator	it2 = ++begin();
 
-					it = begin()
-					while (it != end())
+					while (it2 != end())
 					{
-						cmp = it.getPtr()->next;
-						if (*it < cmp->data)
+						if (*it > *it2)
 						{
-							//swap;
+							splice(it, *this, it2);
 							it = begin();
+							it2 = ++begin();
 						}
 						else
-							tmp = tmp->next;
-						i++;
+						{
+							it++;
+							it2++;
+						}
+					}
+				}
+
+				template <class Compare>
+					void sort(Compare comp)
+				{
+					iterator	it = begin();
+					iterator	it2 = ++begin();
+
+					while (it2 != end())
+					{
+						if (comp(*it2, *it))
+						{
+							splice(it, *this, it2);
+							it = begin();
+							it2 = ++begin();
+						}
+						else
+						{
+							it++;
+							it2++;
+						}
 					}
 				}
 
