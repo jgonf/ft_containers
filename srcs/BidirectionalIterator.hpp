@@ -2,6 +2,7 @@
 #define BIDIRECTIONALITERATOR_HPP
 
 # include "list.hpp"
+# include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -21,7 +22,7 @@ namespace ft
 				typedef node_list<T>	*pointer;
 				typedef T		&reference;
 				static const bool	input_iter;
-//				typedef	ft::random_access_iterator_tag	iterator_category;
+				typedef	ft::BidirectionalIteratorTag	iterator_category;
 
 				BidirectionalIterator(void): _ptr(NULL) {}
 				BidirectionalIterator(BidirectionalIterator const &src): _ptr(src._ptr) {};
@@ -101,6 +102,7 @@ namespace ft
 			typedef node_list<T>	*pointer;
 			typedef  T		&reference;
 			static const bool	input_iter;
+			typedef	ft::BidirectionalIteratorTag	iterator_category;
 //			typedef	ft::random_access_iterator_tag	iterator_category;
 
 			ConstBidirectionalIterator(void): _ptr(NULL) {}

@@ -6,12 +6,14 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/22 12:51:12 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/24 19:59:06 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../srcs/list.hpp"
 #include <list>
+#include <stdlib.h>
+#include <time.h>
 
 bool multiple_digit (const int& value) { return (value>=10); }
 bool cmp_length(const std::string& s1, const std::string& s2) { return (s1.size() < s2.size()); }
@@ -649,6 +651,52 @@ void	test_operations_partB(void)
 	else
 		std::cout << "Success" << std::endl;
 
+	std::cout << "Test 4: ";
+	l1.reverse();
+	s1.reverse();
+	error = false;
+	sit2 = s3.begin();
+	for (it2 = l3.begin(); it2 != l3.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+}
+
+void	test_overloads(void)
+{
+//	std::list<int> a = {10, 20, 30};
+//	std::list<int> b = {10, 20, 30};
+//	std::list<int> c = {30, 20, 10};
+
+	ft::list<int> a;
+	ft::list<int> b;
+	ft::list<int> c;
+
+	for (int i = 10; i < 40; i = i + 10)
+	{
+		a.push_back(i);
+		b.push_back(i);
+	}
+	for (int i = 30; i > 0; i = i - 10)
+	{
+		c.push_back(i);
+	}
+
+	if (a==b) std::cout << "a and b are equal\n";
+	if (b!=c) std::cout << "b and c are not equal\n";
+	if (b<c) std::cout << "b is less than c\n";
+	if (c>b) std::cout << "c is greater than b\n";
+	if (a<=b) std::cout << "a is less than or equal to b\n";
+	if (a>=b) std::cout << "a is greater than or equal to b\n";
 }
 
 int main()
@@ -670,8 +718,9 @@ int main()
 //	std::cout << std::endl;
 //	test_operations_partA();
 //	std::cout << std::endl;
-	test_operations_partB();
-	std::cout << std::endl;
+//	test_operations_partB();
+//	std::cout << std::endl;
+	test_overloads();
 
 	return 0;
 }

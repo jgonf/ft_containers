@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/22 12:51:20 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/24 20:01:23 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -449,12 +449,74 @@ namespace ft {
 					}
 				}
 
+				void reverse(void)
+				{
+					node_type	*save;
+					node_type	*tmp;
+
+					save = _head.next;
+					_head.next = _tail.prev;
+					_tail.prev = save;
+					tmp = _tail.prev;
+					for (size_type i = 0; i < _size; ++i)
+					{
+						save = tmp->next;
+						tmp->next = tmp->prev;
+						tmp->prev = save;
+						tmp = tmp->prev;
+					}
+				}
+
 			private:
 				node_type	_head;
 				node_type	_tail;
 				size_type	_size;
 
 	};
+
+	template <class T, class Alloc>
+		bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		if (lhs.size() != rhs.size())
+			return false;
+		return std::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+
+	template <class T, class Alloc>
+		bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		return !(lhs == rhs);
+	}
+
+	template <class T, class Alloc>
+		bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+
+	template <class T, class Alloc>
+			bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		return !(rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+		bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		return (rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+			bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs)
+	{
+		return !(lhs < rhs);
+	}
+
+	template <class T, class Alloc>
+		void swap (list<T,Alloc>& x, list<T,Alloc>& y)
+	{
+		return x.swap(y);
+	}
 }
 
 #endif
