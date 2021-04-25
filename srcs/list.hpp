@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/24 20:01:23 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/25 19:43:50 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,14 @@ namespace ft {
 				}
 
 				template <class InputIterator>
-					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last): _size(0)
+				{
+					_head.next = &_tail;
+					_tail.prev = &_head;
+					assign(first, last);
+				}
+
+				list(pointer first, pointer last): _size(0)
 				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
@@ -158,10 +165,16 @@ namespace ft {
 					while (first != last)
 					{
 						push_back(first.getPtr()->data);
-//						node_type	*tmp = new node_type();
-//						tmp->data = first.getPtr()->data;
-//						_tail.prev->next = tmp;
-//						_tail.prev = tmp;
+						first++;
+					}
+				}
+
+				void    assign(pointer first, pointer last)
+				{
+					clear();
+					while(first != last)
+					{
+						push_back(*first);
 						first++;
 					}
 				}
@@ -276,10 +289,10 @@ namespace ft {
 				{
 					std::swap(_head, x._head);
 					std::swap(_tail, x._tail);
-					_head.next->prev = &_head;
-					_tail.prev->next = &_tail;
-					x._head.next->prev = &x._head;
-					x._tail.prev->next = &x._tail;
+//					_head.next->prev = &_head;
+//					_tail.prev->next = &_tail;
+//					x._head.next->prev = &x._head;
+//					x._tail.prev->next = &x._tail;
 					std::swap(_size, x._size);
 				}
 
@@ -295,6 +308,7 @@ namespace ft {
 					}
 					if (n > _size)
 						insert(end(), n - _size, val);
+
 				}
 
 				void clear()
