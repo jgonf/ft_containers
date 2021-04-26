@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/24 19:59:06 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/26 11:43:41 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -562,9 +562,9 @@ void	test_operations_partB(void)
 	ft::list<int>::iterator	it;
 	std::list<int>	s1, s2;
 	std::list<int>::iterator	sit;
-	ft::list<std::string>	l3;
+	ft::list<std::string>	l3, l4;
 	ft::list<std::string>::iterator	it2;
-	std::list<std::string>	s3;
+	std::list<std::string>	s3, s4;
 	std::list<std::string>::iterator	sit2;
 
 	for (int i = 0; i < 10; ++i)
@@ -651,7 +651,66 @@ void	test_operations_partB(void)
 	else
 		std::cout << "Success" << std::endl;
 
+	l1.sort();
+	l2.sort();
+	s1.sort();
+	s2.sort();
+
 	std::cout << "Test 4: ";
+	l1.merge(l2);
+	s1.merge(s2);
+	error = false;
+	if (l2.empty() != s2.empty())
+		error = true;
+	sit = s1.begin();
+	for (it = l1.begin(); it != l1.end(); ++it)
+	{
+		if (*it != *sit)
+		{
+			error = true;
+			break;
+		}
+		++sit;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+
+	l4.push_back("couette");
+	s4.push_back("couette");
+	l4.push_back("top");
+	s4.push_back("top");
+	l4.push_back("poto");
+	s4.push_back("poto");
+	l4.sort(cmp_length);
+	s4.sort(cmp_length);
+
+
+	std::cout << "Test 5: ";
+	l3.merge(l4, cmp_length);
+	s3.merge(s4, cmp_length);
+
+	error = false;
+	if (l4.empty() != s4.empty())
+		error = true;
+	sit2 = s3.begin();
+	for (it2 = l3.begin(); it2 != l3.end(); ++it2)
+	{
+		if (*it2 != *sit2)
+		{
+			error = true;
+			break;
+		}
+		++sit2;
+	}
+	if (error)
+		std::cout << "What ?" << std::endl;
+	else
+		std::cout << "Success" << std::endl;
+
+	std::cout << "Test 6: ";
 	l1.reverse();
 	s1.reverse();
 	error = false;
@@ -673,10 +732,7 @@ void	test_operations_partB(void)
 
 void	test_overloads(void)
 {
-//	std::list<int> a = {10, 20, 30};
-//	std::list<int> b = {10, 20, 30};
-//	std::list<int> c = {30, 20, 10};
-
+	/*
 	ft::list<int> a;
 	ft::list<int> b;
 	ft::list<int> c;
@@ -697,7 +753,8 @@ void	test_overloads(void)
 	if (c>b) std::cout << "c is greater than b\n";
 	if (a<=b) std::cout << "a is less than or equal to b\n";
 	if (a>=b) std::cout << "a is greater than or equal to b\n";
-}
+*/
+	}
 
 int main()
 {
@@ -718,9 +775,9 @@ int main()
 //	std::cout << std::endl;
 //	test_operations_partA();
 //	std::cout << std::endl;
-//	test_operations_partB();
+	test_operations_partB();
 //	std::cout << std::endl;
-	test_overloads();
+//	test_overloads();
 
 	return 0;
 }

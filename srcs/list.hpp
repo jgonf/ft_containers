@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/25 19:43:50 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/26 11:50:46 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,6 +419,46 @@ namespace ft {
 							cmp++;
 					}
 				}
+
+				void	merge(list& x)
+				{
+					iterator	it1 = begin();
+					iterator	it2 = x.begin();
+
+					while (it1 != end() && it2 != x.end())
+					{
+						if (*it1 > *it2)
+						{
+							splice(it1, x, it2);
+							it1 = begin();
+							it2 = x.begin();
+						}
+						++it1;
+					}
+					if (it2 != x.end())
+						splice(it1, x);
+				}
+
+				template <class Compare>
+					void merge (list& x, Compare comp)
+				{
+					iterator	it1 = begin();
+					iterator	it2 = x.begin();
+
+					while (it1 != end() && it2 != x.end())
+					{
+						if (comp(*it2, *it1))
+						{
+							splice(it1, x, it2);
+							it1 = begin();
+							it2 = x.begin();
+						}
+						++it1;
+					}
+					if (it2 != x.end())
+						splice(it1, x);
+				}
+
 
 				void	sort(void)
 				{
