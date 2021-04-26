@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/26 11:43:41 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/26 12:23:22 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -758,7 +758,7 @@ void	test_overloads(void)
 
 int main()
 {
-	srand(time(NULL));
+//	srand(time(NULL));
 //	test_constructor();
 //	std::cout << std::endl;
 //	test_iterators();
@@ -771,10 +771,10 @@ int main()
 //	std::cout << std::endl;
 //	test_modifiers_partB();
 //	std::cout << std::endl;
-//	test_modifiers_partC();
-//	std::cout << std::endl;
-//	test_operations_partA();
-//	std::cout << std::endl;
+	test_modifiers_partC();
+	std::cout << std::endl;
+	test_operations_partA();
+	std::cout << std::endl;
 	test_operations_partB();
 //	std::cout << std::endl;
 //	test_overloads();

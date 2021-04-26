@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/26 11:50:46 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/26 12:26:47 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define LIST_HPP
 
 # include <iostream>
-# include "BidirectionalIterator.hpp"
+# include "ListIterator.hpp"
 # include "reverse_iterator.hpp"
 # include "vector.hpp"
 
@@ -44,8 +44,8 @@ namespace ft {
 				typedef value_type const	*const_pointer;
 
 				typedef node_list<value_type>	node_type;
-				typedef BidirectionalIterator<T>	iterator;
-				typedef ConstBidirectionalIterator<T>		const_iterator;
+				typedef ListIterator<T>	iterator;
+				typedef ConstListIterator<T>		const_iterator;
 				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>	reverse_iterator;
 
@@ -109,7 +109,7 @@ namespace ft {
 
 				const_iterator	begin(void) const
 				{
-					ConstBidirectionalIterator<T> tmp(_head.next);
+					ConstListIterator<T> tmp(_head.next);
 					return tmp;
 				}
 
@@ -118,7 +118,7 @@ namespace ft {
 
 				const_iterator	end(void) const
 				{
-					ConstBidirectionalIterator<T> tmp(_tail.prev->next);
+					ConstListIterator<T> tmp(_tail.prev->next);
 					return tmp;
 				}
 
@@ -289,10 +289,10 @@ namespace ft {
 				{
 					std::swap(_head, x._head);
 					std::swap(_tail, x._tail);
-//					_head.next->prev = &_head;
-//					_tail.prev->next = &_tail;
-//					x._head.next->prev = &x._head;
-//					x._tail.prev->next = &x._tail;
+					_head.next->prev = &_head;
+					_tail.prev->next = &_tail;
+					x._head.next->prev = &x._head;
+					x._tail.prev->next = &x._tail;
 					std::swap(_size, x._size);
 				}
 
