@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/26 14:52:49 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/27 16:49:32 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,15 @@ namespace ft {
 				typedef std::ptrdiff_t						difference_type;
 				typedef	size_t								size_type;
 
+				//constructor destructor
+				explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _cmp(comp), _alloc(alloc)
+				{
+					
+				}
 
+			private:
+				key_compare		_cmp;
+				allocator_type	_alloc;
 		}
 
 }
