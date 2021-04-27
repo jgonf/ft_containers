@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/26 12:26:47 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/27 16:23:01 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,34 @@ namespace ft {
 
 
 				//constructors and destructor
-				explicit list (void): _size(0)
+				explicit list (const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
 				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
 				}
 
-				explicit list (size_type n, const value_type& val = value_type()): _size(0)
+				explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(0)
 				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
 					assign(n, val);
+					_alloc = alloc;
 				}
 
 				template <class InputIterator>
-					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last): _size(0)
+					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _size(0)
 				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
 					assign(first, last);
+					_alloc = alloc;
 				}
 
-				list(pointer first, pointer last): _size(0)
+				list(pointer first, pointer last, const allocator_type& alloc = allocator_type()): _size(0)
 				{
 					_head.next = &_tail;
 					_tail.prev = &_head;
-					assign(first, last);
+					assign(first, last, alloc);
 				}
 
 				list (const list &x)
@@ -522,9 +524,10 @@ namespace ft {
 				}
 
 			private:
-				node_type	_head;
-				node_type	_tail;
-				size_type	_size;
+				node_type		_head;
+				node_type		_tail;
+				size_type		_size;
+				allocator_type	_alloc;
 
 	};
 

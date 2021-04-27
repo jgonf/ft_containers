@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/26 12:23:22 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/27 15:16:44 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	test_constructor(void)
 {
 	std::cout << "Test constructors :" << std::endl;
 
-	ft::list<int>	l1;
+	ft::list<int, std::allocator<int> >	l1;
 	ft::list<int>	l2(3);
 	ft::list<int>	l3(10, 58);
 	ft::list<int>	l4(l3.begin(), l3.end());
@@ -68,7 +68,19 @@ void	test_constructor(void)
 
 }
 
-void	test_iterators(void) { std::cout << "A faire" << std::endl;}
+/*
+void	test_iterators(void)
+{
+	std::cout << "Test iterators : " << std::endl;
+
+	ft::list<int> l1(1, 1);
+	ft::list<int>::iterator	it = l1.begin();
+	ft::list<int>::iterator copy(it);
+
+	if (l1 == copy)
+
+}
+*/
 
 void	test_capacity(void)
 {
@@ -771,11 +783,11 @@ int main()
 //	std::cout << std::endl;
 //	test_modifiers_partB();
 //	std::cout << std::endl;
-	test_modifiers_partC();
-	std::cout << std::endl;
-	test_operations_partA();
-	std::cout << std::endl;
-	test_operations_partB();
+//	test_modifiers_partC();
+//	std::cout << std::endl;
+//	test_operations_partA();
+//	std::cout << std::endl;
+//	test_operations_partB();
 //	std::cout << std::endl;
 //	test_overloads();
 
