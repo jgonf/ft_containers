@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/27 16:23:01 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/28 21:21:38 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,16 +416,12 @@ namespace ft {
 					node_type	*start_insert = end_insert->prev;
 					node_type	*to_insert = i.getPtr();
 					
-					if (i != x.begin())
-					{
-						to_insert->prev->next = to_insert->next;
-						to_insert->next->prev = to_insert->prev;
-						start_insert->next = to_insert;
-						to_insert->prev = start_insert;
-						end_insert->prev = to_insert;
-						to_insert->next = end_insert;
-					}
-					else
+					to_insert->prev->next = to_insert->next;
+					to_insert->next->prev = to_insert->prev;
+					start_insert->next = to_insert;
+					to_insert->prev = start_insert;
+					end_insert->prev = to_insert;
+					to_insert->next = end_insert;
 					_size++;
 					x._size--;
 				}

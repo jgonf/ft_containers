@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/27 15:16:44 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/28 21:41:09 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,15 +474,17 @@ void	test_operations_partA(void)
 		std::cout << "Success" << std::endl;
 
 	std::cout << "Test 2: ";
+	it = ++(l1.begin());
+	sit = ++(s1.begin());
 	l2.splice (l2.begin(), l1, it);
 	s2.splice (s2.begin(), s1, sit);
 	error = false;
 	if (l1.size() != s1.size() || l2.size() != s2.size())
 		error = true;
-//	if (l2.front() != s2.front())
-//		error = true;
-	sit2 = s1.begin();
-	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
+	if (l1.front() != s1.front())
+		error = true;
+	sit2 = s2.begin();
+	for (it2 = l2.begin(); it2 != l2.end(); ++it2)
 	{
 		if (*it2 != *sit2)
 		{
@@ -774,25 +776,25 @@ void	test_overloads(void)
 int main()
 {
 	srand(time(NULL));
-	test_constructor();
-	std::cout << std::endl;
+//	test_constructor();
+//	std::cout << std::endl;
 //	test_iterators();
 //	std::cout << std::endl;
-	test_capacity();
-	std::cout << std::endl;
-	test_access();
-	std::cout << std::endl;
-	test_modifiers_partA();
-	std::cout << std::endl;
-	test_modifiers_partB();
-	std::cout << std::endl;
-	test_modifiers_partC();
-	std::cout << std::endl;
+//	test_capacity();
+//	std::cout << std::endl;
+//	test_access();
+//	std::cout << std::endl;
+//	test_modifiers_partA();
+//	std::cout << std::endl;
+//	test_modifiers_partB();
+//	std::cout << std::endl;
+//	test_modifiers_partC();
+//	std::cout << std::endl;
 	test_operations_partA();
-	std::cout << std::endl;
-	test_operations_partB();
-	std::cout << std::endl;
-	test_overloads();
+//	std::cout << std::endl;
+//	test_operations_partB();
+//	std::cout << std::endl;
+//	test_overloads();
 
 	return 0;
 }
