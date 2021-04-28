@@ -770,26 +770,26 @@ void	test_overloads(void)
 
 int main()
 {
-//	srand(time(NULL));
-//	test_constructor();
-//	std::cout << std::endl;
+	srand(time(NULL));
+	test_constructor();
+	std::cout << std::endl;
 //	test_iterators();
 //	std::cout << std::endl;
-//	test_capacity();
-//	std::cout << std::endl;
-//	test_access();
-//	std::cout << std::endl;
-//	test_modifiers_partA();
-//	std::cout << std::endl;
-//	test_modifiers_partB();
-//	std::cout << std::endl;
-//	test_modifiers_partC();
-//	std::cout << std::endl;
-//	test_operations_partA();
-//	std::cout << std::endl;
-//	test_operations_partB();
-//	std::cout << std::endl;
-//	test_overloads();
+	test_capacity();
+	std::cout << std::endl;
+	test_access();
+	std::cout << std::endl;
+	test_modifiers_partA();
+	std::cout << std::endl;
+	test_modifiers_partB();
+	std::cout << std::endl;
+	test_modifiers_partC();
+	std::cout << std::endl;
+	test_operations_partA();
+	std::cout << std::endl;
+	test_operations_partB();
+	std::cout << std::endl;
+	test_overloads();
 
 	return 0;
 }

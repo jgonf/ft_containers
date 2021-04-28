@@ -58,21 +58,26 @@ namespace ft {
 				explicit list (const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
 				{
 					_head.next = &_tail;
+					_head.prev = &_tail;
+					_tail.next = &_head;
 					_tail.prev = &_head;
 				}
 
-				explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(0)
+				explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
 				{
 					_head.next = &_tail;
+					_head.prev = &_tail;
+					_tail.next = &_head;
 					_tail.prev = &_head;
 					assign(n, val);
-					_alloc = alloc;
 				}
 
 				template <class InputIterator>
 					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _size(0)
 				{
 					_head.next = &_tail;
+					_head.prev = &_tail;
+					_tail.next = &_head;
 					_tail.prev = &_head;
 					assign(first, last);
 					_alloc = alloc;
@@ -81,13 +86,17 @@ namespace ft {
 				list(pointer first, pointer last, const allocator_type& alloc = allocator_type()): _size(0)
 				{
 					_head.next = &_tail;
+					_head.prev = &_tail;
+					_tail.next = &_head;
 					_tail.prev = &_head;
 					assign(first, last, alloc);
 				}
 
-				list (const list &x)
+				list (const list &x): _size(0)
 				{
 					_head.next = &_tail;
+					_head.prev = &_tail;
+					_tail.next = &_head;
 					_tail.prev = &_head;
 					assign(x.begin(), x.end());
 				}
@@ -100,6 +109,8 @@ namespace ft {
 				{
 					clear();
 					_head.next = &_tail;
+					_head.prev = &_tail;
+					_tail.next = &_head;
 					_tail.prev = &_head;
 					assign(x.begin(), x.end());
 					return *this;
@@ -108,19 +119,23 @@ namespace ft {
 
 //iterators
 				iterator	begin(void) { return iterator(_head.next); }
+//				iterator	begin(void) { return iterator(_head); }
 
 				const_iterator	begin(void) const
 				{
 					ConstListIterator<T> tmp(_head.next);
+//					ConstListIterator<T> tmp(_head);
 					return tmp;
 				}
 
 
 				iterator	end(void) { return iterator(_tail.prev->next); }
+//				iterator	end(void) { return iterator(_head.prev); }
 
 				const_iterator	end(void) const
 				{
 					ConstListIterator<T> tmp(_tail.prev->next);
+//					ConstListIterator<T> tmp(_head.prev);
 					return tmp;
 				}
 
@@ -186,11 +201,6 @@ namespace ft {
 					clear();
 					for (size_type i = 0; i < n; ++i)
 						push_back(val);
-//						node_type	*tmp = new node_type();
-//						tmp->data = val;
-//						tmp->next = &_tail;
-//						_tail.prev->next = tmp;
-//						_tail.prev = tmp;
 				}
 
 				void	push_front(const value_type &val)
