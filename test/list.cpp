@@ -68,19 +68,19 @@ void	test_constructor(void)
 
 }
 
-/*
-void	test_iterators(void)
-{
-	std::cout << "Test iterators : " << std::endl;
 
-	ft::list<int> l1(1, 1);
-	ft::list<int>::iterator	it = l1.begin();
-	ft::list<int>::iterator copy(it);
-
-	if (l1 == copy)
-
-}
-*/
+//void	test_iterators(void)
+//{
+//	std::cout << "Test iterators : " << std::endl;
+//
+//	ft::list<int> l1(1, 1);
+//	ft::list<int>::iterator	it = l1.begin();
+//	ft::list<int>::iterator copy(it);
+//
+//	if (l1 == copy)
+//
+//}
+//
 
 void	test_capacity(void)
 {
@@ -209,7 +209,7 @@ void	test_modifiers_partA(void)
 		std::cout << "What ?" << std::endl;
 
 }
-
+/*
 void	test_modifiers_partB(void)
 {
 	std::cout << "Test insert, erase :" << std::endl;
@@ -628,23 +628,9 @@ void	test_operations_partB(void)
 		s2.push_back(number);
 	}
 
-//	std::cout << "l2 before" << std::endl;
-//	for (it = l2.begin(); it != l2.end(); ++it)
-//		std::cout << *it << std::endl;
-//	std::cout << "s2 before" << std::endl;
-//	for (sit = s2.begin(); sit != s2.end(); ++sit)
-//		std::cout << *sit << std::endl;
-
 	std::cout << "Test 2: ";
 	l2.sort();
 	s2.sort();
-	std::cout << "l2 before" << std::endl;
-	for (it = l2.begin(); it != l2.end(); ++it)
-		std::cout << *it << std::endl;
-	std::cout << "s2 before" << std::endl;
-	for (sit = s2.begin(); sit != s2.end(); ++sit)
-		std::cout << *sit << std::endl;
-
 	error = false;
 	if (l2.size() != s2.size())
 		error = true;
@@ -704,6 +690,11 @@ void	test_operations_partB(void)
 	sit = s1.begin();
 	for (it = l1.begin(); it != l1.end(); ++it)
 	{
+		if (sit == s1.end())
+		{
+			error = true;
+			break;
+		}
 		if (*it != *sit)
 		{
 			error = true;
@@ -771,68 +762,58 @@ void	test_operations_partB(void)
 
 void	test_overloads(void)
 {
-	/*
-	ft::list<int> a;
-	ft::list<int> b;
-	ft::list<int> c;
 
-	for (int i = 10; i < 40; i = i + 10)
-	{
-		a.push_back(i);
-		b.push_back(i);
+//	ft::list<int> a;
+//	ft::list<int> b;
+//	ft::list<int> c;
+//
+//	for (int i = 10; i < 40; i = i + 10)
+//	{
+//		a.push_back(i);
+//		b.push_back(i);
+//	}
+//	for (int i = 30; i > 0; i = i - 10)
+//	{
+//		c.push_back(i);
+//	}
+//
+//	if (a==b) std::cout << "a and b are equal\n";
+//	if (b!=c) std::cout << "b and c are not equal\n";
+//	if (b<c) std::cout << "b is less than c\n";
+//	if (c>b) std::cout << "c is greater than b\n";
+//	if (a<=b) std::cout << "a is less than or equal to b\n";
+//	if (a>=b) std::cout << "a is greater than or equal to b\n";
+//
 	}
-	for (int i = 30; i > 0; i = i - 10)
-	{
-		c.push_back(i);
-	}
-
-	if (a==b) std::cout << "a and b are equal\n";
-	if (b!=c) std::cout << "b and c are not equal\n";
-	if (b<c) std::cout << "b is less than c\n";
-	if (c>b) std::cout << "c is greater than b\n";
-	if (a<=b) std::cout << "a is less than or equal to b\n";
-	if (a>=b) std::cout << "a is greater than or equal to b\n";
 */
-	}
 
 void	test_debug(void)
 {
 	ft::list<int>	l1, l2;
+	ft::list<int>	l3(1);
+	ft::list<int>	l4(5, 12);
 	ft::list<int>::iterator	it;
 
-	for (int i = 0; i < 10; ++i)
-		l1.push_back(rand() % 100);
-	for (int i = 0; i < 10; ++i)
-		l2.push_back(rand() % 100);
-
-	std::cout << "l1 before : " << std::endl;
-	for (it = l1.begin(); it != l1.end(); ++it)
+	l3.push_back(8);
+	for (it = l3.begin(); it != l3.end(); ++it)
 		std::cout << *it << std::endl;
-
-	l1.splice(l1.begin(), l1, --(l1.end()));
-
-	std::cout << "Size: " << l1.size() << std::endl;
-	if (l1.begin() == l1.end())
-		std::cout << "snif" << std::endl;
-	std::cout << "l1 after : " << std::endl;
-	for (it = l1.begin(); it != l1.end(); ++it)
-		std::cout << *it << std::endl;
-
+	std::cout << "front : " << l3.front() << std::endl;
+	std::cout << "back : " << l3.back() << std::endl;
 }
 
 int main()
 {
 	srand(time(NULL));
-	test_debug();
-//	test_constructor();
+//	test_debug();
+	test_constructor();
+	std::cout << std::endl;
+//	test_iterators();
 //	std::cout << std::endl;
-////	test_iterators();
-////	std::cout << std::endl;
-//	test_capacity();
-//	std::cout << std::endl;
-//	test_access();
-//	std::cout << std::endl;
-//	test_modifiers_partA();
+	test_capacity();
+	std::cout << std::endl;
+	test_access();
+	std::cout << std::endl;
+	test_modifiers_partA();
 //	std::cout << std::endl;
 //	test_modifiers_partB();
 //	std::cout << std::endl;

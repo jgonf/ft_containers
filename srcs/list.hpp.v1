@@ -61,62 +61,108 @@ namespace ft {
 
 				//constructors and destructor
 				explicit list (const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
-				{ init_list(); }
+				{
+					node_type*	tmp = new node_type;
+
+					_head = tmp;
+					_head->next = &_tail;
+					_head->prev = &_tail;
+					_tail.next = _head;
+					_tail.prev = _head;
+				}
 
 				explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
 				{
-					init_list();
+					node_type*	tmp = new node_type;
+
+					_head = tmp;
+					_head->next = &_tail;
+					_head->prev = &_tail;
+					_tail.next = _head;
+					_tail.prev = _head;
 					assign(n, val);
 				}
 
 				template <class InputIterator>
-					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
+					list(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _size(0)
 				{
-					init_list();
+					node_type*	tmp = new node_type;
+
+					_head = tmp;
+					_head->next = &_tail;
+					_head->prev = &_tail;
+					_tail.next = _head;
+					_tail.prev = _head;
+					assign(first, last);
+					_alloc = alloc;
+				}
+
+				list(pointer first, pointer last, const allocator_type& alloc = allocator_type()): _size(0)
+				{
+					node_type*	tmp = new node_type;
+
+					_head = tmp;
+					_alloc = alloc;
+					_head->next = &_tail;
+					_head->prev = &_tail;
+					_tail.next = _head;
+					_tail.prev = _head;
 					assign(first, last);
 				}
 
-				list(pointer first, pointer last, const allocator_type& alloc = allocator_type()): _size(0), _alloc(alloc)
+				list (const list &x): _size(0)
 				{
-					init_list();
-					assign(first, last);
-				}
+					node_type*	tmp = new node_type;
 
-				list (const list &x): _size(0), _alloc(x._alloc)
-				{
-					init_list();
+					_head = tmp;
+					_head->next = &_tail;
+					_head->prev = &_tail;
+					_tail.next = _head;
+					_tail.prev = _head;
 					assign(x.begin(), x.end());
 				}
 
 				~list (void) {
 					clear();
-					delete _tail;
+					delete _head;
 				}
 
 				list	&operator=(const list &x)
 				{
 					clear();
-					init_list();
+					_head->next = &_tail;
+					_head->prev = &_tail;
+					_tail.next = _head;
+					_tail.prev = _head;
 					assign(x.begin(), x.end());
 					return *this;
 				}
 
 
 //iterators
-				iterator	begin(void) { return iterator(_tail->next); }
+//				iterator	begin(void) { return iterator(_head->next); }
+				iterator	begin(void) { return iterator(_head); }
 
 				const_iterator	begin(void) const
 				{
-					ConstListIterator<T> tmp(_tail->next);
+//					ConstListIterator<T> tmp(_head->next);
+					ConstListIterator<T> tmp(_head);
 					return tmp;
 				}
 
 
-				iterator	end(void) { return iterator(_tail); }
+//				iterator	end(void) { return iterator(_tail.prev->next); }
+				iterator	end(void)
+				{
+					if (_size == 0)
+						return iterator(_head);
+					return iterator(_head->prev);
+				}
 
 				const_iterator	end(void) const
 				{
-					ConstListIterator<T> tmp(_tail);
+//					ConstListIterator<T> tmp(_tail.prev->next);
+					ConstListIterator<T> tmp(_head->prev);
 					return tmp;
 				}
 
@@ -133,7 +179,6 @@ namespace ft {
 				{ return reverse_iterator(begin()); }
 
 //capacity
-
 				bool	empty(void)	const
 				{
 					if (_size == 0)
@@ -150,10 +195,10 @@ namespace ft {
 				}
 
 //element access
-				reference front(void) { return _tail->next->data; }
-				const_reference front(void) const { return _tail->next->data; }
-				reference back(void) { return _tail->prev->data; }
-				const_reference back(void) const { return _tail->prev->data; }
+				reference front(void) { return _head->data; }
+				const_reference front(void) const { return _head->data; }
+				reference back(void) { return _tail.prev->data; }
+				const_reference back(void) const { return _tail.prev->data; }
 
 
 //modifiers
@@ -187,49 +232,74 @@ namespace ft {
 
 				void	push_front(const value_type &val)
 				{
+					if (_size == 0)
+					{
+						_head->data = val;
+						_size++;
+						return;
+					}
 					node_type	*tmp = new node_type();
-					node_type	*head = _tail->next;
 
-					tmp->data = val;
-					tmp->next = head;
-					head->prev = tmp;
-					_tail->next = tmp;
+					tmp->data = _head->data;
+					tmp->next = _head->next;
+					tmp->prev = _head;
+					_head->next->prev = tmp;
+					_head->next = tmp;
+					_head->data = val;
 					_size++;
 				}
 
 				void	pop_front(void)
 				{
-					node_type *save = _tail->next;
+					if (_size == 1)
+					{
+						_size = 0;
+						return ;
+					}
+					node_type *save = _head->next;
 
-					_tail->next = save->next;
-					_tail->next->prev = _tail;
+					_head->data = save->data;	
+					_head->next = save->next;
+					_head->next->prev = _head;
 					_size--;
 					delete save;
 				}
 
 				void	push_back(const value_type& val)
 				{
+					if (_size == 0)
+					{
+						_head->data = val;
+						_size++;
+						return;
+					}
+
 					node_type	*tmp = new node_type();
 
 					tmp->data = val;
-					tmp->next = _tail;
-					tmp->prev = _tail->prev;
-					_tail->prev->next = tmp;
-					_tail->prev = tmp;
+					tmp->next = &_tail;
+					tmp->prev = _tail.prev;
+					_tail.prev->next = tmp;
+					_tail.prev = tmp;
 					_size++;
 				}
 
 				void	pop_back(void)
 				{
-					node_type *save = _tail->prev;
+					if (_size == 1)
+					{
+						_size = 0;
+						return ;
+					}
+					node_type *save = _tail.prev;
 
-					_tail->prev = save->prev;
-					_tail->prev->next = _tail;
+					_tail.prev = save->prev;
+					_tail.prev->next = &_tail;
 					_size--;
 					delete save;
 				}
 
-/*				iterator insert(iterator position, const value_type &val)
+				iterator insert(iterator position, const value_type &val)
 				{
 					node_type	*tmp = new node_type();
 
@@ -313,11 +383,11 @@ namespace ft {
 						insert(end(), n - _size, val);
 
 				}
-*/
+
 				void clear()
 				{
 					node_type	*save;
-					node_type	*to_del = _tail->next;
+					node_type	*to_del = _head->next;
 
 					while (_size > 1)
 					{
@@ -327,9 +397,10 @@ namespace ft {
 						_size--;
 					}
 					_size = 0;
-					_tail->prev = _tail;
+					_head->next= &_tail;
+					_tail.prev = _head;
 				}
-/*
+
 //operations
 				void splice(iterator position, list &x)
 				{
@@ -575,18 +646,12 @@ namespace ft {
 						tmp = tmp->prev;
 					}
 				}
-*/
-			private:
-				node_type*	_tail;
-				size_type	_size;
-				allocator_type	_alloc;
 
-				void	init_list(void)
-				{
-					_tail = new node_type;
-					_tail->prev = _tail;
-					_tail->next = _tail;
-				}
+			private:
+				node_type*		_head;
+				node_type		_tail;
+				size_type		_size;
+				allocator_type	_alloc;
 
 	};
 
