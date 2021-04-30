@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/30 12:05:01 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/30 13:54:13 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -430,17 +430,21 @@ namespace ft {
 					to_insert->next = end_insert;
 					if (position == begin())
 					{
+						std::cout << "yo" << std::endl;
 						_head = to_insert;
 						_head->prev = &_tail;
 						if (_size == 0)
 							_head->next = &_tail;
+						_tail.prev = _head;
 					}
-					if (i == x.begin())
+					if (i == x.begin() && x != *this)
 					{
+						std::cout << "wesh" << std::endl;
 						if (x.size() > 1)
 						{
 							save->prev = &x._tail;
 							x._head = save;
+							x._tail.prev = x._head;
 						}
 						else
 						{
@@ -448,7 +452,7 @@ namespace ft {
 							tmp->next = &x._tail;
 							tmp->prev = &x._tail;
 							x._head = tmp;
-
+							x._tail.prev = x._head;
 						}
 					}
 					_size++;
