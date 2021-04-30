@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/28 21:41:09 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/30 12:06:57 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -476,6 +476,9 @@ void	test_operations_partA(void)
 	std::cout << "Test 2: ";
 	it = ++(l1.begin());
 	sit = ++(s1.begin());
+//	it = l1.begin();
+//	sit = s1.begin();
+
 	l2.splice (l2.begin(), l1, it);
 	s2.splice (s2.begin(), s1, sit);
 	error = false;
@@ -486,6 +489,11 @@ void	test_operations_partA(void)
 	sit2 = s2.begin();
 	for (it2 = l2.begin(); it2 != l2.end(); ++it2)
 	{
+		if (sit2 == s2.end())
+		{
+			error = true;
+			break;
+		}
 		if (*it2 != *sit2)
 		{
 			error = true;
@@ -620,9 +628,23 @@ void	test_operations_partB(void)
 		s2.push_back(number);
 	}
 
+//	std::cout << "l2 before" << std::endl;
+//	for (it = l2.begin(); it != l2.end(); ++it)
+//		std::cout << *it << std::endl;
+//	std::cout << "s2 before" << std::endl;
+//	for (sit = s2.begin(); sit != s2.end(); ++sit)
+//		std::cout << *sit << std::endl;
+
 	std::cout << "Test 2: ";
 	l2.sort();
 	s2.sort();
+	std::cout << "l2 before" << std::endl;
+	for (it = l2.begin(); it != l2.end(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << "s2 before" << std::endl;
+	for (sit = s2.begin(); sit != s2.end(); ++sit)
+		std::cout << *sit << std::endl;
+
 	error = false;
 	if (l2.size() != s2.size())
 		error = true;
@@ -773,13 +795,39 @@ void	test_overloads(void)
 */
 	}
 
+void	test_debug(void)
+{
+	ft::list<int>	l1, l2;
+	ft::list<int>::iterator	it;
+
+	for (int i = 0; i < 10; ++i)
+		l1.push_back(rand() % 100);
+	for (int i = 0; i < 10; ++i)
+		l2.push_back(rand() % 100);
+
+	std::cout << "l1 before : " << std::endl;
+	for (it = l1.begin(); it != l1.end(); ++it)
+		std::cout << *it << std::endl;
+
+	l1.splice(l1.begin(), l1, --(l1.end()));
+
+	std::cout << "Size: " << l1.size() << std::endl;
+	if (l1.begin() == l1.end())
+		std::cout << "snif" << std::endl;
+	std::cout << "l1 after : " << std::endl;
+	for (it = l1.begin(); it != l1.end(); ++it)
+		std::cout << *it << std::endl;
+
+}
+
 int main()
 {
 	srand(time(NULL));
+	test_debug();
 //	test_constructor();
 //	std::cout << std::endl;
-//	test_iterators();
-//	std::cout << std::endl;
+////	test_iterators();
+////	std::cout << std::endl;
 //	test_capacity();
 //	std::cout << std::endl;
 //	test_access();
@@ -790,7 +838,7 @@ int main()
 //	std::cout << std::endl;
 //	test_modifiers_partC();
 //	std::cout << std::endl;
-	test_operations_partA();
+//	test_operations_partA();
 //	std::cout << std::endl;
 //	test_operations_partB();
 //	std::cout << std::endl;

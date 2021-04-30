@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/28 21:21:38 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/04/30 12:05:01 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,12 @@ namespace ft {
 
 
 //				iterator	end(void) { return iterator(_tail.prev->next); }
-				iterator	end(void) { return iterator(_head->prev); }
+				iterator	end(void)
+				{
+					if (_size == 0)
+						return iterator(_head);
+					return iterator(_head->prev);
+				}
 
 				const_iterator	end(void) const
 				{
@@ -415,13 +420,37 @@ namespace ft {
 					node_type	*end_insert = position.getPtr();
 					node_type	*start_insert = end_insert->prev;
 					node_type	*to_insert = i.getPtr();
-					
+					node_type	*save = to_insert->next;
+
 					to_insert->prev->next = to_insert->next;
 					to_insert->next->prev = to_insert->prev;
 					start_insert->next = to_insert;
 					to_insert->prev = start_insert;
 					end_insert->prev = to_insert;
 					to_insert->next = end_insert;
+					if (position == begin())
+					{
+						_head = to_insert;
+						_head->prev = &_tail;
+						if (_size == 0)
+							_head->next = &_tail;
+					}
+					if (i == x.begin())
+					{
+						if (x.size() > 1)
+						{
+							save->prev = &x._tail;
+							x._head = save;
+						}
+						else
+						{
+							node_type *tmp = new node_type;
+							tmp->next = &x._tail;
+							tmp->prev = &x._tail;
+							x._head = tmp;
+
+						}
+					}
 					_size++;
 					x._size--;
 				}
@@ -444,6 +473,29 @@ namespace ft {
 					first_ptr->prev = start_insert;
 					end_insert->prev = last_ptr;
 					last_ptr->next = end_insert;
+					if (position == begin())
+					{
+						_head = first_ptr;
+						_head->prev = &_tail;
+						if (_size == 0)
+							last_ptr->next = &_tail;
+					}
+					if (first == x.begin())
+					{
+						if (x.size() > size)
+						{
+							last.getPtr()->prev = &x._tail;
+							x._head = last.getPtr();
+						}
+						else
+						{
+							node_type *tmp = new node_type;
+							tmp->next = &x._tail;
+							tmp->prev = &x._tail;
+							x._head = tmp;
+						}
+					}
+
 					_size += size;
 					x._size -= size;
 				}
