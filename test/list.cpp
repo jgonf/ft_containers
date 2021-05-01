@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/01 11:16:48 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 15:19:43 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -797,22 +797,14 @@ void	test_overloads(void)
 
 void	test_debug(void)
 {
-	ft::list<int>	l1, l2;
-	ft::list<int>	l3(1);
-	ft::list<int>	l4(5, 12);
-	ft::list<int>::iterator	it;
-
-	l3.push_back(8);
-	for (it = l3.begin(); it != l3.end(); ++it)
-		std::cout << *it << std::endl;
-	std::cout << "front : " << l3.front() << std::endl;
-	std::cout << "back : " << l3.back() << std::endl;
+	ft::list<int> l1(2);
+	ft::list<ft::list<int> > l2(2, l1);
 }
 
 int main()
 {
 	srand(time(NULL));
-//	test_debug();
+	test_debug();
 	test_constructor();
 	std::cout << std::endl;
 //	test_iterators();

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/01 13:18:56 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 15:27:46 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft {
 	template <typename T>
 	struct node_list: public node<T> {
 		public :
-			T		data;
+			T		*data;
 	};
 
 	template < typename T, typename Alloc=std::allocator<T> >
@@ -42,7 +42,8 @@ namespace ft {
 				//variables
 
 				typedef T			value_type;
-				typedef typename Alloc::template rebind<node_list<T> >::other			allocator_type;
+//				typedef typename Alloc::template rebind<node_list<T> >::other			allocator_type;
+				typedef Alloc			allocator_type;
 				typedef value_type		&reference;
 				typedef value_type const	&const_reference;
 				typedef value_type		*pointer;
@@ -150,10 +151,10 @@ namespace ft {
 				}
 
 //element access
-				reference front(void) { return _tail->next->data; }
-				const_reference front(void) const { return _tail->next->data; }
-				reference back(void) { return _tail->prev->data; }
-				const_reference back(void) const { return _tail->prev->data; }
+				reference front(void) { return *(_tail->next->data); }
+				const_reference front(void) const { return *(_tail->next->data); }
+				reference back(void) { return *(_tail->prev->data); }
+				const_reference back(void) const { return *(_tail->prev->data); }
 
 
 //modifiers
@@ -163,7 +164,7 @@ namespace ft {
 					clear();
 					while (first != last)
 					{
-						push_back(first.getPtr()->data);
+						push_back(*(first.getPtr()->data));
 						first++;
 					}
 				}
@@ -190,7 +191,8 @@ namespace ft {
 					node_type	*tmp = new node_type();
 					node_type	*head = _tail->next;
 
-					tmp->data = val;
+					tmp->data = _alloc.allocate(1);
+					_alloc.construct(tmp->data,val);
 					tmp->next = head;
 					tmp->prev = _tail;
 					head->prev = tmp;
@@ -205,6 +207,8 @@ namespace ft {
 					_tail->next = save->next;
 					_tail->next->prev = _tail;
 					_size--;
+					_alloc.destroy(save->data);
+					_alloc.deallocate(save->data, sizeof(value_type));
 					delete save;
 				}
 
@@ -212,7 +216,8 @@ namespace ft {
 				{
 					node_type	*tmp = new node_type();
 
-					tmp->data = val;
+					tmp->data = _alloc.allocate(1);
+					_alloc.construct(tmp->data,val);
 					tmp->next = _tail;
 					tmp->prev = _tail->prev;
 					_tail->prev->next = tmp;
@@ -227,6 +232,8 @@ namespace ft {
 					_tail->prev = save->prev;
 					_tail->prev->next = _tail;
 					_size--;
+					_alloc.destroy(save->data);
+					_alloc.deallocate(save->data, sizeof(value_type));
 					delete save;
 				}
 
@@ -234,7 +241,8 @@ namespace ft {
 				{
 					node_type	*tmp = new node_type();
 
-					tmp->data = val;
+					tmp->data = _alloc.allocate(1);
+					_alloc.construct(tmp->data,val);
 					tmp->next = position.getPtr();
 					tmp->prev = position.getPtr()->prev;
 					position.getPtr()->prev = tmp;
@@ -268,6 +276,8 @@ namespace ft {
 					ptr->next->prev = ptr->prev;
 					ptr->prev->next = ptr->next;
 					_size--;
+					_alloc.destroy(ptr->data);
+					_alloc.deallocate(ptr->data, sizeof(value_type));
 					delete ptr;
 
 					return ret;
@@ -310,6 +320,8 @@ namespace ft {
 					while (_size)
 					{
 						save = to_del->next;
+						_alloc.destroy(to_del->data);
+						_alloc.deallocate(to_del->data, sizeof(value_type));
 						delete to_del;
 						to_del = save;
 						_size--;
@@ -520,7 +532,6 @@ namespace ft {
 					_tail = new node_type;
 					_tail->prev = _tail;
 					_tail->next = _tail;
-//					_tail->data = value_type();
 				}
 
 	};

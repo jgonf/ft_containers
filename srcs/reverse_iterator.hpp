@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 21:12:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/08 23:02:16 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:01:57 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ namespace ft
 	template < typename T>
 		class ConstRandomIterator;
 
+	template < typename T>
+		class ListIterator;
+
+	template < typename T>
+		class ConstListIterator;
+
 	template <class Iterator>
 		class reverse_iterator {
 
@@ -42,25 +48,24 @@ namespace ft
 
 				reverse_iterator(void): _base(NULL) {};
 				reverse_iterator(RandomIterator<value_type> it): _base(it) {};
-				reverse_iterator(reverse_iterator<RandomIterator<value_type> > const & src): _base(src.base()) {};
+				reverse_iterator(ListIterator<value_type> it): _base(it) {};
+				reverse_iterator(reverse_iterator<iterator_type > const & src): _base(src.base()) {};
 				virtual ~reverse_iterator(void) {};
 
 				iterator_type	base() const { return _base; }
 
 				reference	operator*(void) const
 				{
-//					iterator_type	tmp(_base);
-//					return *--tmp;
-					value_type	*ptr = _base.getPtr();
-					RandomIterator<value_type> it(ptr);
-					return *--it;
+//					T	*ptr = _base.getPtr();
+					iterator_type cpy(_base);
+//					return *--it;
+					return *--(cpy);
 				}
 
 				reverse_iterator	operator+(difference_type n) const
 				{
 					reverse_iterator	tmp(*this);
 					reverse_iterator	ret(tmp.base().getPtr() - n);
-		
 					return ret;
 				}
 

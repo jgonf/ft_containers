@@ -6,12 +6,13 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 15:08:00 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/04 11:09:30 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 16:02:39 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reverse_iterator.hpp"
 #include "vector.hpp"
+#include "list.hpp"
 #include <vector>
 
 int main()
@@ -185,5 +186,7 @@ int main()
 	else
 		std::cout << "What?" << std::endl;
 
-
+	ft::list<int> l1(1, 5);
+	typedef ft::list<int>::iterator it;
+	ft::reverse_iterator<it>	test(l1.end());
 }
