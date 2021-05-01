@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/01 15:27:46 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 21:07:45 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft {
 				list	&operator=(const list &x)
 				{
 					clear();
-					init_list();
+//					init_list();
 					assign(x.begin(), x.end());
 					return *this;
 				}
@@ -333,40 +333,42 @@ namespace ft {
 //operations
 				void splice(iterator position, list &x)
 				{
-					node_type	*end_insert = position.getPtr();
-					node_type	*start_insert = end_insert->prev;
-					node_type	*last = x.end().getPtr()->prev;
-					node_type	*first = x.begin().getPtr();
-
-					start_insert->next = first;
-					first->prev = start_insert;
-					end_insert->prev = last;
-					last->next = end_insert;
-					_size += x._size;
-					x._tail->prev = x._tail;
-					x._tail->next = x._tail;
-					x._size = 0;
+//					node_type	*end_insert = position.getPtr();
+//					node_type	*start_insert = end_insert->prev;
+//					node_type	*last = x.end().getPtr()->prev;
+//					node_type	*first = x.begin().getPtr();
+//
+//					start_insert->next = first;
+//					first->prev = start_insert;
+//					end_insert->prev = last;
+//					last->next = end_insert;
+//					_size += x._size;
+//					x._tail->prev = x._tail;
+//					x._tail->next = x._tail;
+//					x._size = 0;
+					splice(position, x, x.begin(), x.end());
 				}
 
 				void splice(iterator position, list &x, iterator i)
 				{
-					node_type	*end_insert = position.getPtr();
-					node_type	*start_insert = end_insert->prev;
-					node_type	*to_insert = i.getPtr();
-
-					to_insert->prev->next = to_insert->next;
-					to_insert->next->prev = to_insert->prev;
-					start_insert->next = to_insert;
-					to_insert->prev = start_insert;
-					end_insert->prev = to_insert;
-					to_insert->next = end_insert;
-					_size++;
-					x._size--;
+//					node_type	*end_insert = position.getPtr();
+//					node_type	*start_insert = end_insert->prev;
+//					node_type	*to_insert = i.getPtr();
+//
+//					to_insert->prev->next = to_insert->next;
+//					to_insert->next->prev = to_insert->prev;
+//					start_insert->next = to_insert;
+//					to_insert->prev = start_insert;
+//					end_insert->prev = to_insert;
+//					to_insert->next = end_insert;
+//					_size++;
+//					x._size--;
+					splice(position, x, i, ++i);
 				}
 
 				void splice(iterator position, list &x, iterator first, iterator last)
 				{
-					size_type	size = 0;
+					size_type	size = 1;
 					node_type	*end_insert = position.getPtr();
 					node_type	*start_insert = end_insert->prev;
 					node_type	*first_ptr = first.getPtr();
@@ -418,15 +420,50 @@ namespace ft {
 					iterator	it = ++begin();
 					iterator	cmp = begin();
 
-					for (; it != end(); ++it)
+					while (it != end())
 					{
 						if (*it == *cmp)
-							erase(cmp++);
+							erase(it++);
 						else
-							cmp++;
+							it++;
+						cmp = it;
+						--cmp;
+
 					}
+//					for (; it != end(); ++it)
+//					{
+//						if (*it == *cmp)
+//							erase(cmp++);
+//						else
+//							cmp++;
+//					}
 				}
 
+				template <class BinaryPredicate>
+					void unique(BinaryPredicate binary_pred)
+				{
+					iterator	it = ++begin();
+					iterator	cmp = begin();
+
+					while (it != end())
+					{
+						if (binary_pred(*it,*cmp))
+							erase(it++);
+						else
+							it++;
+						cmp = it;
+						--cmp;
+
+					}
+
+//					for (; it != end(); ++it)
+//					{
+//						if (binary_pred(*it,*cmp))
+//							erase(it);
+////						else
+//							cmp++;
+//					}
+				}
 				void	merge(list& x)
 				{
 					iterator	it1 = begin();

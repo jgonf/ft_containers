@@ -9,9 +9,9 @@ DIR_SRCS	= test/
 DIR_OBJS	= objs/
 DIR_INC		= ./srcs/
 
-#F_SRCS		= list.cpp
+F_SRCS		= list.cpp
 #F_SRCS		= vector.cpp
-F_SRCS		= reverse_iterator.cpp
+#F_SRCS		= reverse_iterator.cpp
 SRCS		= $(addprefix $(DIR_SRCS), $(F_SRCS))
 
 OBJS		= $(addprefix $(DIR_OBJS), $(F_SRCS:.cpp=.o))
