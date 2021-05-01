@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/01 11:16:11 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 13:18:56 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft {
 				//variables
 
 				typedef T			value_type;
-				typedef Alloc			allocator_type;
+				typedef typename Alloc::template rebind<node_list<T> >::other			allocator_type;
 				typedef value_type		&reference;
 				typedef value_type const	&const_reference;
 				typedef value_type		*pointer;
@@ -275,8 +275,9 @@ namespace ft {
 
 				iterator erase(iterator first, iterator last)
 				{
-					for (; first != last; ++first)
-						erase(first);
+					iterator it = first;
+					while (it != last)
+						it = erase(it);
 					return last;
 				}
 
@@ -301,7 +302,7 @@ namespace ft {
 
 				}
 
-				void clear()
+				void clear(void)
 				{
 					node_type	*save;
 					node_type	*to_del = _tail->next;
@@ -314,6 +315,7 @@ namespace ft {
 						_size--;
 					}
 					_tail->prev = _tail;
+					_tail->next = _tail;
 				}
 
 //operations
@@ -518,6 +520,7 @@ namespace ft {
 					_tail = new node_type;
 					_tail->prev = _tail;
 					_tail->next = _tail;
+//					_tail->data = value_type();
 				}
 
 	};
