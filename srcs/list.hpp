@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/30 13:54:13 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 11:16:11 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ namespace ft {
 
 					tmp->data = val;
 					tmp->next = head;
+					tmp->prev = _tail;
 					head->prev = tmp;
 					_tail->next = tmp;
 					_size++;
@@ -229,7 +230,7 @@ namespace ft {
 					delete save;
 				}
 
-/*				iterator insert(iterator position, const value_type &val)
+				iterator insert(iterator position, const value_type &val)
 				{
 					node_type	*tmp = new node_type();
 
@@ -264,11 +265,6 @@ namespace ft {
 					node_type	*ptr = position.getPtr();
 					iterator	ret(ptr->next);
 
-					if (position == begin())
-					{
-						pop_front();
-						return iterator(_head);
-					}
 					ptr->next->prev = ptr->prev;
 					ptr->prev->next = ptr->next;
 					_size--;
@@ -286,16 +282,7 @@ namespace ft {
 
 				void swap(list &x)
 				{
-					std::swap(_head, x._head);
 					std::swap(_tail, x._tail);
-					_head->next->prev = _head;
-					_head->prev = &_tail;
-					_tail.prev->next = &_tail;
-					_tail.next = _head;
-					x._head->next->prev = x._head;
-					x._tail.prev->next = &x._tail;
-					x._head->prev = &x._tail;
-//					x._tail.next = x._head;
 					std::swap(_size, x._size);
 				}
 
@@ -313,40 +300,37 @@ namespace ft {
 						insert(end(), n - _size, val);
 
 				}
-*/
+
 				void clear()
 				{
 					node_type	*save;
 					node_type	*to_del = _tail->next;
 
-					while (_size > 1)
+					while (_size)
 					{
 						save = to_del->next;
 						delete to_del;
 						to_del = save;
 						_size--;
 					}
-					_size = 0;
 					_tail->prev = _tail;
 				}
-/*
+
 //operations
 				void splice(iterator position, list &x)
 				{
 					node_type	*end_insert = position.getPtr();
 					node_type	*start_insert = end_insert->prev;
-					node_type	*last = (--x.end()).getPtr();
-					node_type	*first = new node_type;
+					node_type	*last = x.end().getPtr()->prev;
+					node_type	*first = x.begin().getPtr();
 
-					first->data = *(x.begin());
-					first->next = x.begin().getPtr()->next;
 					start_insert->next = first;
 					first->prev = start_insert;
 					end_insert->prev = last;
 					last->next = end_insert;
 					_size += x._size;
-					x._head->next = &x._tail;
-					x._tail.prev = x._head;
+					x._tail->prev = x._tail;
+					x._tail->next = x._tail;
 					x._size = 0;
 				}
 
@@ -355,40 +339,13 @@ namespace ft {
 					node_type	*end_insert = position.getPtr();
 					node_type	*start_insert = end_insert->prev;
 					node_type	*to_insert = i.getPtr();
-					node_type	*save = to_insert->next;
 
-					iterator it = x.end();
 					to_insert->prev->next = to_insert->next;
 					to_insert->next->prev = to_insert->prev;
 					start_insert->next = to_insert;
 					to_insert->prev = start_insert;
 					end_insert->prev = to_insert;
 					to_insert->next = end_insert;
-					if (position == begin())
-					{
-						_head = to_insert;
-						_head->prev = &_tail;
-						if (_size == 0)
-							_head->next = &_tail;
-						_tail.prev = _head;
-					}
-					if (i == x.begin() && x != *this)
-					{
-						if (x.size() > 1)
-						{
-							x._head = save;
-							x._head->prev = &(x._tail);
-							x._tail.prev = x._head;
-						}
-						else
-						{
-							node_type *tmp = new node_type;
-							tmp->next = &x._tail;
-							tmp->prev = &x._tail;
-							x._head = tmp;
-							x._tail.prev = x._head;
-						}
-					}
 					_size++;
 					x._size--;
 				}
@@ -411,53 +368,34 @@ namespace ft {
 					first_ptr->prev = start_insert;
 					end_insert->prev = last_ptr;
 					last_ptr->next = end_insert;
-					if (position == begin())
-					{
-						_head = first_ptr;
-						_head->prev = &_tail;
-						if (_size == 0)
-							last_ptr->next = &_tail;
-					}
-					if (first == x.begin())
-					{
-						if (x.size() > size)
-						{
-							last.getPtr()->prev = &x._tail;
-							x._head = last.getPtr();
-						}
-						else
-						{
-							node_type *tmp = new node_type;
-							tmp->next = &x._tail;
-							tmp->prev = &x._tail;
-							x._head = tmp;
-						}
-					}
-
 					_size += size;
 					x._size -= size;
 				}
 
 				void remove(const value_type& val)
 				{
-					iterator	it;
+					iterator	it = begin();
 
-					for (it = begin(); it != end(); ++it)
+					while (it != end())
 					{
 						if (*it == val)
-							erase(it);
+							it = erase(it);
+						else
+							++it;
 					}
 				}
 
 				template <class Predicate>
 					void remove_if(Predicate pred)
 				{
-					iterator	it;
+					iterator	it = begin();
 
-					for (it = begin(); it != end(); ++it)
+					while (it != end())
 					{
 						if (pred(*it))
-							erase(it);
+							it = erase(it);
+						else
+							++it;
 					}
 				}
 
@@ -560,22 +498,16 @@ namespace ft {
 
 				void reverse(void)
 				{
-					node_type	*save;
-					node_type	*tmp;
+					iterator	it = begin();
 
-					save = _head->next;
-					_head->next = _tail.prev;
-					_tail.prev = save;
-					tmp = _tail.prev;
-					for (size_type i = 0; i < _size; ++i)
+					while (it != end())
 					{
-						save = tmp->next;
-						tmp->next = tmp->prev;
-						tmp->prev = save;
-						tmp = tmp->prev;
+						std::swap(it.getPtr()->prev, it.getPtr()->next);
+						--it;
 					}
+					std::swap(_tail->next, _tail->prev);
 				}
-*/
+
 			private:
 				node_type*	_tail;
 				size_type	_size;

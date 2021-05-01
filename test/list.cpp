@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/30 13:53:45 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/01 11:16:48 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void	test_modifiers_partA(void)
 		std::cout << "What ?" << std::endl;
 
 }
-/*
+
 void	test_modifiers_partB(void)
 {
 	std::cout << "Test insert, erase :" << std::endl;
@@ -375,6 +375,7 @@ void	test_modifiers_partB(void)
 
 }
 
+
 void	test_modifiers_partC(void)
 {
 	std::cout << "Test swap, resize and clear :" << std::endl;
@@ -461,6 +462,11 @@ void	test_operations_partA(void)
 	sit2 = s1.begin();
 	for (it2 = l1.begin(); it2 != l1.end(); ++it2)
 	{
+		if (sit2 == s1.end())
+		{
+			error = true;
+			break;
+		}
 		if (*it2 != *sit2)
 		{
 			error = true;
@@ -581,6 +587,8 @@ void	test_operations_partA(void)
 
 void	test_operations_partB(void)
 {
+	std::cout << "Test : unique, sort, merge, reverse" << std::endl;
+
 	bool	error;
 	int		number;
 	ft::list<int>	l1, l2;
@@ -763,29 +771,29 @@ void	test_operations_partB(void)
 void	test_overloads(void)
 {
 
-//	ft::list<int> a;
-//	ft::list<int> b;
-//	ft::list<int> c;
-//
-//	for (int i = 10; i < 40; i = i + 10)
-//	{
-//		a.push_back(i);
-//		b.push_back(i);
-//	}
-//	for (int i = 30; i > 0; i = i - 10)
-//	{
-//		c.push_back(i);
-//	}
-//
-//	if (a==b) std::cout << "a and b are equal\n";
-//	if (b!=c) std::cout << "b and c are not equal\n";
-//	if (b<c) std::cout << "b is less than c\n";
-//	if (c>b) std::cout << "c is greater than b\n";
-//	if (a<=b) std::cout << "a is less than or equal to b\n";
-//	if (a>=b) std::cout << "a is greater than or equal to b\n";
-//
+	ft::list<int> a;
+	ft::list<int> b;
+	ft::list<int> c;
+
+	for (int i = 10; i < 40; i = i + 10)
+	{
+		a.push_back(i);
+		b.push_back(i);
 	}
-*/
+	for (int i = 30; i > 0; i = i - 10)
+	{
+		c.push_back(i);
+	}
+
+	if (a==b) std::cout << "a and b are equal\n";
+	if (b!=c) std::cout << "b and c are not equal\n";
+	if (b<c) std::cout << "b is less than c\n";
+	if (c>b) std::cout << "c is greater than b\n";
+	if (a<=b) std::cout << "a is less than or equal to b\n";
+	if (a>=b) std::cout << "a is greater than or equal to b\n";
+
+	}
+
 
 void	test_debug(void)
 {
@@ -814,16 +822,16 @@ int main()
 	test_access();
 	std::cout << std::endl;
 	test_modifiers_partA();
-//	std::cout << std::endl;
-//	test_modifiers_partB();
-//	std::cout << std::endl;
-//	test_modifiers_partC();
-//	std::cout << std::endl;
-//	test_operations_partA();
-//	std::cout << std::endl;
-//	test_operations_partB();
-//	std::cout << std::endl;
-//	test_overloads();
+	std::cout << std::endl;
+	test_modifiers_partB();
+	std::cout << std::endl;
+	test_modifiers_partC();
+	std::cout << std::endl;
+	test_operations_partA();
+	std::cout << std::endl;
+	test_operations_partB();
+	std::cout << std::endl;
+	test_overloads();
 
 	return 0;
 }
