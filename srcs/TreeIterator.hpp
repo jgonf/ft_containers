@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MapIterator.hpp                                    :+:      :+:    :+:   */
+/*   TreeIterator.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/27 16:41:26 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/02 15:25:19 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPITERATOR_HPP
-#define MAPITERATOR_HPP
+#ifndef TREEITERATOR_HPP
+#define TREEITERATOR_HPP
 
 # include "map.hpp"
 # include "reverse_iterator.hpp"
@@ -19,13 +19,13 @@
 namespace ft
 {
 	template <class T>
-		struct node_list;
+		struct node_tree;
 
 	template <class T>
-		class ConstMapIterator;
+		class ConstTreeIterator;
 
 	template < typename T>
-		class MapIterator
+		class TreeIterator
 		{
 			public:
 
@@ -36,61 +36,61 @@ namespace ft
 				static const bool	input_iter;
 				typedef	ft::BidirectionalIteratorTag	iterator_category;
 
-				MapIterator(void): _ptr(NULL) {}
-				MapIterator(MapIterator const &src): _ptr(src._ptr) {};
-				MapIterator(pointer ptr): _ptr(ptr) {};
-				virtual ~MapIterator(void) {}
+				TreeIterator(void): _ptr(NULL) {}
+				TreeIterator(TreeIterator const &src): _ptr(src._ptr) {};
+				TreeIterator(pointer ptr): _ptr(ptr) {};
+				virtual ~TreeIterator(void) {}
 
 				pointer	getPtr(void) const { return _ptr; }
 
-				MapIterator	&operator=(MapIterator const & src)
+				TreeIterator	&operator=(TreeIterator const & src)
 				{
 					_ptr = src._ptr;
 					return *this;
 				}
 
-				MapIterator	&operator++(void)
+				TreeIterator	&operator++(void)
 				{
 					_ptr = _ptr->next;
 					return *this;
 				}
 
-				MapIterator	&operator--(void)
+				TreeIterator	&operator--(void)
 				{
 					_ptr = _ptr->prev;
 					return *this;
 				}
 
-				MapIterator	operator++(int)
+				TreeIterator	operator++(int)
 				{
-					MapIterator<value_type> tmp = *this;
+					TreeIterator<value_type> tmp = *this;
 					_ptr = _ptr->next;
 					return tmp;
 				}
 
-				MapIterator	operator--(int)
+				TreeIterator	operator--(int)
 				{
-					MapIterator<value_type> tmp = *this;
+					TreeIterator<value_type> tmp = *this;
 					_ptr = _ptr->prev;
 					return tmp;
 				}
 
-				bool operator==(MapIterator const &cmp) const
+				bool operator==(TreeIterator const &cmp) const
 				{
 					return (_ptr == cmp._ptr);
 				}
 
-				bool operator==(ConstMapIterator<T> const &cmp) const
+				bool operator==(ConstTreeIterator<T> const &cmp) const
 				{
 					return (_ptr == cmp.getPtr());
 				}
 
-				bool operator!=(MapIterator const &cmp) const
+				bool operator!=(TreeIterator const &cmp) const
 				{
 					return !(*this == cmp);
 				}
 
-				bool operator!=(ConstMapIterator<T> const &cmp) const
+				bool operator!=(ConstTreeIterator<T> const &cmp) const
 				{
 					return !(*this == cmp);
 				}
@@ -103,10 +103,10 @@ namespace ft
 		};
 
 	template < class T>
-		const bool MapIterator<T>::input_iter = true;
+		const bool TreeIterator<T>::input_iter = true;
 
 	template <class T>
-		class ConstMapIterator: public MapIterator<T>
+		class ConstTreeIterator: public TreeIterator<T>
 	{
 		public:
 			typedef T		value_type;
@@ -117,54 +117,54 @@ namespace ft
 			typedef	ft::BidirectionalIteratorTag	iterator_category;
 //			typedef	ft::random_access_iterator_tag	iterator_category;
 
-			ConstMapIterator(void): _ptr(NULL) {}
-			ConstMapIterator(MapIterator<T> const &src): _ptr(src.getPtr()) {};
-//			ConstMapIterator(ConstMapIterator const &src): _ptr(src._ptr) {};
-//			ConstMapIterator(pointer ptr): _ptr(ptr) {};
-			ConstMapIterator(node_list<T> *src): _ptr(src) {};
-			ConstMapIterator(node_list<T> src): _ptr(&src) {};
-			virtual ~ConstMapIterator(void) {}
+			ConstTreeIterator(void): _ptr(NULL) {}
+			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
+//			ConstTreeIterator(ConstTreeIterator const &src): _ptr(src._ptr) {};
+//			ConstTreeIterator(pointer ptr): _ptr(ptr) {};
+			ConstTreeIterator(node_list<T> *src): _ptr(src) {};
+			ConstTreeIterator(node_list<T> src): _ptr(&src) {};
+			virtual ~ConstTreeIterator(void) {}
 
 			pointer	getPtr(void) const { return _ptr; }
 
-			ConstMapIterator	&operator=(ConstMapIterator const & src)
+			ConstTreeIterator	&operator=(ConstTreeIterator const & src)
 			{
 				_ptr = src._ptr;
 				return *this;
 			}
 
-			ConstMapIterator	&operator++(void)
+			ConstTreeIterator	&operator++(void)
 			{
 				_ptr = _ptr->next;
 				return *this;
 			}
 
-			ConstMapIterator	&operator--(void)
+			ConstTreeIterator	&operator--(void)
 			{
 				_ptr = _ptr->prev;
 				return *this;
 			}
 
-			ConstMapIterator	operator++(int)
+			ConstTreeIterator	operator++(int)
 			{
-				ConstMapIterator<value_type> tmp = *this;
+				ConstTreeIterator<value_type> tmp = *this;
 				_ptr = _ptr->next;
 				return tmp;
 			}
 
-			ConstMapIterator	operator--(int)
+			ConstTreeIterator	operator--(int)
 			{
-				ConstMapIterator<value_type> tmp = *this;
+				ConstTreeIterator<value_type> tmp = *this;
 				_ptr = _ptr->prev;
 				return tmp;
 			}
 
-			bool operator==(ConstMapIterator const &cmp) const
+			bool operator==(ConstTreeIterator const &cmp) const
 			{
 				return (_ptr == cmp._ptr);
 			}
 
-			bool operator!=(ConstMapIterator const &cmp) const
+			bool operator!=(ConstTreeIterator const &cmp) const
 			{
 				return !(*this == cmp);
 			}
@@ -178,7 +178,7 @@ namespace ft
 	};
 
 	template < class T>
-		const bool ConstMapIterator<T>::input_iter = true;
+		const bool ConstTreeIterator<T>::input_iter = true;
 
 }
 
