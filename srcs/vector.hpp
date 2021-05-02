@@ -61,7 +61,6 @@ namespace ft
 					_cont = _alloc.allocate(n);
 					for (size_t i = 0; i < n; i++)
 						_alloc.construct(&_cont[i],val);
-
 				}
 
 				template <class InputIterator>
@@ -275,7 +274,6 @@ namespace ft
 
 				void	push_back(const value_type& val)
 				{
-
 					size_t	new_capa = _capacity;
 					if (new_capa == 0)
 						new_capa = 1;
@@ -290,34 +288,27 @@ namespace ft
 
 				void	pop_back(void)
 				{
-					resize(_size - 1);
+					_alloc.destroy(&_cont[_size - 1]);
+					_size--;
 				}
 
 				iterator	insert(iterator position, const value_type& val)
 				{
-					size_t  save = _size + 1;
-					size_t  len = 0;
+					size_t  len = position - begin();
 					iterator        it;
 
-					for (it = position; it != end(); ++it)
-						len++;
-
+//					for (it = begin(); it != position; ++it)
+//						len++;
 					if (_capacity < _size + 1)
 						reserve(_size * 2);
-					while (len)
+					for (size_type i = _size; i > len ; i--)
 					{
-						push_back(*(end() - 1));
-						if (_size < 2)
-						{
-							_size = 0;
-							break;
-						}
-						_size -= 2;
-						len--;
+						_alloc.construct(&_cont[i], _cont[i - 1]);
+						_alloc.destroy(&_cont[i - 1]);
 					}
-					push_back(val);
-					it = iterator(&_cont[_size - 1]);
-					_size = save;
+					_alloc.construct(&_cont[len], val);
+					it = iterator(&_cont[len]);
+					_size++;
 					return it;
 				}
 

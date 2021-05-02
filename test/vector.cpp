@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/04/27 15:13:17 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/02 10:58:58 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,7 @@ void	test_modifiers2(void)
 
 }
 
-/*
+
 void	test_relational_operator(void)
 {
 	std::cout << std::endl << "test relation operator" << std::endl;
@@ -507,18 +507,24 @@ void	test_relational_operator(void)
 		std::cout << "What?" << std::endl;
 
 }
-*/
+
 void	test_debug(void)
 {
-	ft::vector<std::string> empty;
-	std::vector<std::string> emptystd;
-	ft::vector<std::string> v1(5);
-	std::vector<std::string> s1(5);
-	ft::vector<std::string> v2(11, "toto");
-	std::vector<std::string> s2(11, "toto");
-	ft::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
-	std::vector<std::string> s3(s2.begin()+1, s2.end() - 2);
+//	ft::vector<std::string> empty;
+//	std::vector<std::string> emptystd;
+//	ft::vector<std::string> v1(5);
+//	std::vector<std::string> s1(5);
+//	ft::vector<std::string> v2(11, "toto");
+//	std::vector<std::string> s2(11, "toto");
+//	ft::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
+//	std::vector<std::string> s3(s2.begin()+1, s2.end() - 2);
 
+	ft::vector<int> i1(2);
+	ft::vector<int> i2(3,5);
+	ft::vector<ft::vector<int> > l1(2, i1);
+	ft::vector<ft::vector<int> > l2 (5, i2);
+
+	l2.insert(++l2.begin(), 1, i1);
 }
 
 int main()
@@ -528,24 +534,24 @@ int main()
 	test_constructor();
 	std::cout << std::endl;
 
-//	test_iterator();
-//	std::cout << std::endl;
-//
-//	test_size_capacity();
-//	std::cout << std::endl;
-//
-//	test_element_access();
-//	std::cout << std::endl;
-//
-//	test_modifiers1();
-//	std::cout << std::endl;
-//
-//	test_modifiers2();
-//	std::cout << std::endl;
-//
-//	test_relational_operator();
-//	std::cout << std::endl;
-//
+	test_iterator();
+	std::cout << std::endl;
+
+	test_size_capacity();
+	std::cout << std::endl;
+
+	test_element_access();
+	std::cout << std::endl;
+
+	test_modifiers1();
+	std::cout << std::endl;
+
+	test_modifiers2();
+	std::cout << std::endl;
+
+	test_relational_operator();
+	std::cout << std::endl;
+
 	return 1;
 }
 
