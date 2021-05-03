@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/03 09:40:43 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/03 14:15:31 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,6 @@ namespace ft
 				{
 					return !(*this == cmp);
 				}
-
-				reference operator*(void) const { return _ptr->data; }
-				T	*operator->(void) const { return _ptr->data; }
 
 			protected:
 				pointer	_ptr;
