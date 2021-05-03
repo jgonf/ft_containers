@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/03 21:11:00 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/03 23:13:07 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,21 @@ namespace ft {
 				}
 
 
-//element access				
+//element access
 				mapped_type& operator[] (const key_type& k)
 				{
 					return  (*((this->insert(make_pair(k,mapped_type()))).first)).second;
 				}
 
-				
+				pair<iterator,bool> insert (const value_type& val)
+				{
+					node_type	*new_node = new node_type;
+
+					new_node->data = val;
+					new_node->is_black = false;
+					new_node = _insert_node(new_node);
+					_balance_tree(new_node);
+				}
 
 			private:
 				key_compare	_cmp;
@@ -180,6 +188,23 @@ namespace ft {
 					while (tmp)
 						tmp = tmp->left;
 					return tmp->parent;
+				}
+
+				node_type * _insert_node(node_type* root, node_type* new_node)
+				{
+					if (!root)
+					{
+						new_node->prev = root->prev;
+						root = new_node;
+						_size++;
+						return root;
+    					}
+
+    					if (less(new_node->data->first, root->data->first))
+        					root->left = _insert_node(root->left, new_node);
+    					else
+        					root->right = _insert_node(root->right, new_node);
+					return root;
 				}
 		};
 }
