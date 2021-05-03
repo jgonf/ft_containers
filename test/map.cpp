@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/02 22:37:55 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/03 09:47:59 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	test_constructor(void)
 {
-	ft::map m1();
+	ft::map<int, std::string> m1;
 }
 
 int main()

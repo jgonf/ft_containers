@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/02 15:25:19 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/03 09:40:43 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft
 
 				typedef T		value_type;
 				typedef std::ptrdiff_t 	difference_type;
-				typedef node_list<T>	*pointer;
+				typedef node_tree<T>	*pointer;
 				typedef T		&reference;
 				static const bool	input_iter;
 				typedef	ft::BidirectionalIteratorTag	iterator_category;
@@ -111,7 +111,7 @@ namespace ft
 		public:
 			typedef T		value_type;
 			typedef std::ptrdiff_t 	difference_type;
-			typedef node_list<T>	*pointer;
+			typedef node_tree<T>	*pointer;
 			typedef  T		&reference;
 			static const bool	input_iter;
 			typedef	ft::BidirectionalIteratorTag	iterator_category;
@@ -121,8 +121,8 @@ namespace ft
 			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
 //			ConstTreeIterator(ConstTreeIterator const &src): _ptr(src._ptr) {};
 //			ConstTreeIterator(pointer ptr): _ptr(ptr) {};
-			ConstTreeIterator(node_list<T> *src): _ptr(src) {};
-			ConstTreeIterator(node_list<T> src): _ptr(&src) {};
+			ConstTreeIterator(node_tree<T> *src): _ptr(src) {};
+			ConstTreeIterator(node_tree<T> src): _ptr(&src) {};
 			virtual ~ConstTreeIterator(void) {}
 
 			pointer	getPtr(void) const { return _ptr; }

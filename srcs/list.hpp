@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/01 21:07:45 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/03 10:08:46 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ namespace ft {
 
 				typedef T			value_type;
 //				typedef typename Alloc::template rebind<node_list<T> >::other			allocator_type;
-				typedef Alloc			allocator_type;
-				typedef value_type		&reference;
-				typedef value_type const	&const_reference;
-				typedef value_type		*pointer;
-				typedef value_type const	*const_pointer;
+				typedef Alloc				allocator_type;
+				typedef value_type			&reference;
+				typedef value_type const		&const_reference;
+				typedef value_type			*pointer;
+				typedef value_type const		*const_pointer;
 
-				typedef node_list<value_type>	node_type;
+				typedef node_list<value_type>		node_type;
 				typedef ListIterator<T>	iterator;
 				typedef ConstListIterator<T>		const_iterator;
 				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>	reverse_iterator;
 
-				typedef	std::ptrdiff_t		difference_type;
-				typedef	size_t			size_type;
+				typedef	std::ptrdiff_t			difference_type;
+				typedef	size_t				size_type;
 
 
 
@@ -97,7 +97,6 @@ namespace ft {
 				list	&operator=(const list &x)
 				{
 					clear();
-//					init_list();
 					assign(x.begin(), x.end());
 					return *this;
 				}
