@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/03 23:13:07 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/05 15:59:37 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,27 @@ namespace ft {
 	class pair {
 
 		public:
-			const T	first;
-			U		second;
+			T	first;
+			U	second;
 
-		pair(const T& key = T(), const U& value = U()): first(key), second(value) {}
+		pair(void): first(), second() {}
+		pair(T& key, U& value): first(key), second(value) {}
 		~pair(void) {}
+
+		pair& operator=(const pair& src)
+		{
+			first = src.first;
+			second = src.second;
+			return *this;
+		}
 	};
 
 	template< class T1, class T2 >
-	std::pair<T1,T2> make_pair( T1 t, T2 u) { return pair<T1, T2>(t, u); }
+	const ft::pair<T1,T2> make_pair( T1 t, T2 u)
+	{
+		const pair<T1, T2> ret(t, u);
+		return ret;
+	}
 
 	template <typename T>
 	struct node_tree {
@@ -56,7 +68,7 @@ namespace ft {
 
 				typedef Key										key_type;
 				typedef T										mapped_type;
-				typedef pair<const key_type, mapped_type>	value_type;
+				typedef pair<key_type, mapped_type>				value_type;
 				typedef Compare									key_compare;
 //				typedef Alloc									allocator_type;
 				typedef	typename Alloc::template rebind<node_tree<value_type> >::other	allocator_type;
@@ -156,14 +168,18 @@ namespace ft {
 					return  (*((this->insert(make_pair(k,mapped_type()))).first)).second;
 				}
 
+//modifiers
 				pair<iterator,bool> insert (const value_type& val)
 				{
 					node_type	*new_node = new node_type;
 
 					new_node->data = val;
 					new_node->is_black = false;
-					new_node = _insert_node(new_node);
-					_balance_tree(new_node);
+					if (!_size)
+						_tail->right = new_node;
+//					new_node = _insert_node(_tail->right, new_node);
+//					_balance_tree(new_node);
+					return ft::make_pair<iterator, bool>(iterator(new_node), true);
 				}
 
 			private:
@@ -185,7 +201,7 @@ namespace ft {
 				node_type	*_get_first(void) const
 				{
 					node_type	*tmp = _tail->right;
-					while (tmp)
+					while (tmp->left)
 						tmp = tmp->left;
 					return tmp->parent;
 				}
@@ -194,13 +210,13 @@ namespace ft {
 				{
 					if (!root)
 					{
-						new_node->prev = root->prev;
+						new_node->parent = root->parent;
 						root = new_node;
 						_size++;
 						return root;
     					}
 
-    					if (less(new_node->data->first, root->data->first))
+    					if (key_compare()(new_node->data.first, root->data.first))
         					root->left = _insert_node(root->left, new_node);
     					else
         					root->right = _insert_node(root->right, new_node);

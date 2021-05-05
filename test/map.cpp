@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/03 14:50:02 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/05 15:58:14 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	test_capacity(void)
 		std::cout << "Bingo" << std::endl;
 	else
 		std::cout << "What" << std::endl;
-	
+
 	if (m1.max_size() == s1.max_size())
 		std::cout << "Bingo" << std::endl;
 	else
@@ -61,9 +61,21 @@ void	test_capacity(void)
 
 }
 
+void	test_modifiers(void)
+{
+	ft::map<int, std::string> m1;
+	ft::map<int, std::string>::iterator it;
+	std::string	test = "truc";
+
+	m1.insert(ft::make_pair(1, test));
+	it = m1.begin();
+	std::cout << (*it).second << std::endl;
+}
+
 int main()
 {
-	test_iterator();
-	test_capacity();
+//	test_iterator();
+//	test_capacity();
+	test_modifiers();
 	return 0;
 }
