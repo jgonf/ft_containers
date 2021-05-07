@@ -122,15 +122,11 @@ namespace ft {
 //iterators
 				iterator begin(void)
 				{
-					if (!_size)
-						return iterator(_tail);
 					return iterator(_get_first());
 				}
 
 				const_iterator begin(void) const
 				{
-					if (!_size)
-						return const_iterator(_tail);
 					return const_iterator(_get_first());
 				}
 
@@ -185,25 +181,38 @@ namespace ft {
 			private:
 				key_compare	_cmp;
 				allocator_type	_alloc;
+				node_type*	_root;
 				node_type*	_tail;
 				size_type	_size;
 
 				void	_init_tree(void)
 				{
-					_tail = new node_type;
-					_tail->parent = NULL;
-					_tail->left = NULL;
-					_tail->right = NULL;
-					_tail->is_black = false;
+					_root = new node_type;
+					_root->parent = NULL;
+					_root->left = NULL;
+					_root->right = NULL;
+					_root->is_black = false;
+					_tail = _root;
 				}
 
 
 				node_type	*_get_first(void) const
 				{
-					node_type	*tmp = _tail->right;
+					node_type	*tmp = _root;
 					while (tmp->left)
 						tmp = tmp->left;
-					return tmp->parent;
+					return tmp;
+				}
+				
+				node_type	*_get_tail(void) const
+				{
+					node_type	*tmp = _root;
+					
+					if (!_size)
+						return _root;
+					while (tmp->right)
+						tmp = tmp->right;
+					return tmp;
 				}
 
 				node_type * _insert_node(node_type* root, node_type* new_node)

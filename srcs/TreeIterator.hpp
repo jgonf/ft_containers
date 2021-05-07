@@ -51,27 +51,31 @@ namespace ft
 
 				TreeIterator	&operator++(void)
 				{
-					_ptr = _ptr->next;
+					setNextNode();
+//					_ptr = _ptr->next;
 					return *this;
 				}
 
 				TreeIterator	&operator--(void)
 				{
-					_ptr = _ptr->prev;
+					setPrevNode();
+//					_ptr = _ptr->prev;
 					return *this;
 				}
 
 				TreeIterator	operator++(int)
 				{
 					TreeIterator<value_type> tmp = *this;
-					_ptr = _ptr->next;
+					++this;
+//					_ptr = _ptr->next;
 					return tmp;
 				}
 
 				TreeIterator	operator--(int)
 				{
 					TreeIterator<value_type> tmp = *this;
-					_ptr = _ptr->prev;
+					--this;	
+//					_ptr = _ptr->prev;
 					return tmp;
 				}
 
@@ -95,7 +99,11 @@ namespace ft
 					return !(*this == cmp);
 				}
 
+				reference	operator*(void) { return _ptr->data; }
 				reference	operator*(void) const { return _ptr->data; }
+				pointer		operator->(void) { return &(_ptr->data); }
+				pointer		operator->(void) const { return &(_ptr->data; }
+
 
 			protected:
 				pointer	_ptr;
