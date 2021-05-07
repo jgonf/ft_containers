@@ -38,7 +38,7 @@ namespace ft
 
 				TreeIterator(void): _ptr(NULL) {}
 				TreeIterator(TreeIterator const &src): _ptr(src._ptr) {};
-				TreeIterator(pointer ptr): _ptr(ptr) {};
+				TreeIterator(pointer _ptr): _ptr(_ptr) {};
 				virtual ~TreeIterator(void) {}
 
 				pointer	getPtr(void) const { return _ptr; }
@@ -51,14 +51,14 @@ namespace ft
 
 				TreeIterator	&operator++(void)
 				{
-					setNextNode();
+					_setNextNode();
 //					_ptr = _ptr->next;
 					return *this;
 				}
 
 				TreeIterator	&operator--(void)
 				{
-					setPrevNode();
+					_setPrevNode();
 //					_ptr = _ptr->prev;
 					return *this;
 				}
@@ -74,7 +74,7 @@ namespace ft
 				TreeIterator	operator--(int)
 				{
 					TreeIterator<value_type> tmp = *this;
-					--this;	
+					--this;
 //					_ptr = _ptr->prev;
 					return tmp;
 				}
@@ -102,11 +102,44 @@ namespace ft
 				reference	operator*(void) { return _ptr->data; }
 				reference	operator*(void) const { return _ptr->data; }
 				pointer		operator->(void) { return &(_ptr->data); }
-				pointer		operator->(void) const { return &(_ptr->data; }
+				pointer		operator->(void) const { return &(_ptr->data); }
 
 
 			protected:
 				pointer	_ptr;
+
+//code a changer plus tard
+				void	_setNextNode(void)
+				{
+					if (_ptr->right)
+					{
+						_ptr = _ptr->right;
+						while (_ptr->left)
+							_ptr = _ptr->left;
+					}
+					else
+					{
+						pointer	tmp = _ptr;
+						_ptr = _ptr->parent;
+						while (_ptr->left != tmp)
+						{
+							tmp = _ptr;
+							_ptr = _ptr->parent;
+						}
+					}
+				}
+
+				void	_setPrevNode(void)
+				{
+					if (_ptr->left)
+					{
+						_ptr = _ptr->left;
+						while (_ptr->right)
+							_ptr = _ptr->right;
+					}
+					else
+						_ptr = _ptr->parent;
+				}
 		};
 
 	template < class T>
@@ -127,7 +160,7 @@ namespace ft
 			ConstTreeIterator(void): _ptr(NULL) {}
 			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
 //			ConstTreeIterator(ConstTreeIterator const &src): _ptr(src._ptr) {};
-//			ConstTreeIterator(pointer ptr): _ptr(ptr) {};
+//			ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
 			ConstTreeIterator(node_tree<T> *src): _ptr(src) {};
 			ConstTreeIterator(node_tree<T> src): _ptr(&src) {};
 			virtual ~ConstTreeIterator(void) {}

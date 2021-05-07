@@ -167,14 +167,27 @@ namespace ft {
 //modifiers
 				pair<iterator,bool> insert (const value_type& val)
 				{
+
+//insert : gerer les retours + que faire quand la clef existe deja ?
+
 					node_type	*new_node = new node_type;
 
 					new_node->data = val;
+					new_node->parent = NULL;
 					new_node->is_black = false;
 					if (!_size)
-						_tail->right = new_node;
-//					new_node = _insert_node(_tail->right, new_node);
+					{
+						_root = new_node;
+						_root->right = _tail;
+						_tail->parent = _root;
+						_tail->right = _root;
+						_size++;
+						return ft::make_pair<iterator, bool>(iterator(new_node), true);
+					}
+					new_node = _insert_node(_root, new_node);
+								_size++;
 //					_balance_tree(new_node);
+					_update_tail(new_node);
 					return ft::make_pair<iterator, bool>(iterator(new_node), true);
 				}
 
@@ -203,11 +216,11 @@ namespace ft {
 						tmp = tmp->left;
 					return tmp;
 				}
-				
+
 				node_type	*_get_tail(void) const
 				{
 					node_type	*tmp = _root;
-					
+
 					if (!_size)
 						return _root;
 					while (tmp->right)
@@ -217,19 +230,35 @@ namespace ft {
 
 				node_type * _insert_node(node_type* root, node_type* new_node)
 				{
-					if (!root)
+    				if (key_compare()(new_node->data.first, root->data.first))
 					{
-						new_node->parent = root->parent;
-						root = new_node;
-						_size++;
-						return root;
-    					}
-
-    					if (key_compare()(new_node->data.first, root->data.first))
-        					root->left = _insert_node(root->left, new_node);
-    					else
-        					root->right = _insert_node(root->right, new_node);
+						if (root->left == NULL)
+						{
+							new_node->parent = root;
+							root->left = new_node;
+							return root->left;
+						}
+						else
+        					_insert_node(root->left, new_node);
+					}
+					else
+						if (root->right == NULL)
+						{
+							new_node->parent = root;
+							root->right = new_node;
+							return root->right;
+						}
+						else
+        					_insert_node(root->left, new_node);
 					return root;
+				}
+
+				void	_update_tail(node_type* new_node)
+				{
+					if (key_compare()(new_node->data.first, _tail->right->data.first))
+						_tail->right = new_node;
+					if (!(key_compare()(new_node->data.first, _tail->parent->data.first)))
+						_tail->parent = new_node;
 				}
 		};
 }

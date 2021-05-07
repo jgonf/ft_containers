@@ -63,13 +63,16 @@ void	test_capacity(void)
 
 void	test_modifiers(void)
 {
-	ft::map<int, std::string> m1;
-	ft::map<int, std::string>::iterator it;
-	std::string	test = "truc";
+	ft::map<int, int> m1;
+	ft::map<int, int>::iterator it;
 
-	m1.insert(ft::make_pair(1, test));
-	it = m1.begin();
-	std::cout << (*it).second << std::endl;
+	m1.insert(ft::make_pair(10, 10));
+	m1.insert(ft::make_pair(2, 2));
+	m1.insert(ft::make_pair(5, 5));
+	m1.insert(ft::make_pair(1, 1));
+
+	for (it = m1.begin(); it != m1.end(); ++it)
+		std::cout << (*it).second << std::endl;
 }
 
 int main()
