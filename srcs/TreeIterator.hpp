@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/05 15:56:29 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:04:36 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ namespace ft
 						_ptr = _ptr->parent;
 						while (_ptr->left != tmp)
 						{
+
 							tmp = _ptr;
 							_ptr = _ptr->parent;
 						}

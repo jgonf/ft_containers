@@ -1,0 +1,10 @@
+TO DO LIST:
+
+[] : besoin de finir insert pour que ca fonctionne
+insert : besoin de find pour gerer le cas ou il est deja present
+
+=> besoin de faire find
+
+
+
+pb avec le insert iterator : segfault pdt le _find_key

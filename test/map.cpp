@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/05 15:58:14 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:03:18 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	test_capacity(void)
 void	test_modifiers(void)
 {
 	ft::map<int, int> m1;
+	ft::map<int, int> cpy;
 	ft::map<int, int>::iterator it;
 
 	m1.insert(ft::make_pair(10, 10));
@@ -71,8 +72,20 @@ void	test_modifiers(void)
 	m1.insert(ft::make_pair(5, 5));
 	m1.insert(ft::make_pair(1, 1));
 
-	for (it = m1.begin(); it != m1.end(); ++it)
-		std::cout << (*it).second << std::endl;
+//	for (it = m1.begin(); it != m1.end(); ++it)
+//		std::cout << (*it).second << std::endl;
+
+	std::cout << "array : " << m1[2] << std::endl;
+	std::cout << "find : " << (*m1.find(8)).second << std::endl;
+
+	cpy.insert(m1.begin(), m1.end());
+
+//	for (it = m1.begin(); it != m1.end(); ++it)
+//		std::cout << (*it).second << std::endl;
+//
+//	for (it = cpy.begin(); it != cpy.end(); ++it)
+//		std::cout << (*it).second << std::endl;
+//
 }
 
 int main()

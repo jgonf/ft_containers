@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/05 15:59:37 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/10 17:57:13 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,13 +167,15 @@ namespace ft {
 //modifiers
 				pair<iterator,bool> insert (const value_type& val)
 				{
-
-//insert : gerer les retours + que faire quand la clef existe deja ?
-
+					iterator	ret;
 					node_type	*new_node = new node_type;
 
+					if ((ret = find(val.first)) != end())
+						return ft::make_pair<iterator, bool>(ret, false);
 					new_node->data = val;
 					new_node->parent = NULL;
+					new_node->right = NULL;
+					new_node->left = NULL;
 					new_node->is_black = false;
 					if (!_size)
 					{
@@ -184,11 +186,40 @@ namespace ft {
 						_size++;
 						return ft::make_pair<iterator, bool>(iterator(new_node), true);
 					}
+					std::cout << "ici" << std::endl;
 					new_node = _insert_node(_root, new_node);
-								_size++;
+					_size++;
 //					_balance_tree(new_node);
 					_update_tail(new_node);
 					return ft::make_pair<iterator, bool>(iterator(new_node), true);
+				}
+
+				iterator insert(iterator position, const value_type& val)
+				{
+					(void)position;
+					insert(val);
+				}
+
+				template <class InputIterator>
+					void insert(InputIterator first, InputIterator last)
+				{
+					std::cout << std::endl << std::endl << "debut" << std::endl;
+					iterator	it = first;
+					(void)last;
+					insert(*it);
+					++it;
+					insert(*it);
+				}
+
+
+//operations
+
+				iterator	find(const key_type& k)
+				{
+					if (!_size)
+						return end();
+//					return _find_key(k);
+					return _find_key(_root, k);
 				}
 
 			private:
@@ -239,9 +270,10 @@ namespace ft {
 							return root->left;
 						}
 						else
-        					_insert_node(root->left, new_node);
+							_insert_node(root->left, new_node);
 					}
 					else
+					{
 						if (root->right == NULL)
 						{
 							new_node->parent = root;
@@ -250,6 +282,7 @@ namespace ft {
 						}
 						else
         					_insert_node(root->left, new_node);
+					}
 					return root;
 				}
 
@@ -259,6 +292,21 @@ namespace ft {
 						_tail->right = new_node;
 					if (!(key_compare()(new_node->data.first, _tail->parent->data.first)))
 						_tail->parent = new_node;
+				}
+
+				iterator	_find_key(node_type *root, key_type key)
+				{
+					iterator	ret = end();
+
+					if (root == NULL || root == _tail)
+						return ret;
+					if (root->data.first == key)
+						return iterator(root);
+					if (key_compare()(key, root->data.first))
+						ret = _find_key(root->left, key);
+					if (!(key_compare()(key, root->data.first)))
+						ret = _find_key(root->right, key);
+					return ret;
 				}
 		};
 }
