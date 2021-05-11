@@ -86,7 +86,8 @@ void	test_modifiers(void)
 	for (ite = cpy.begin(); ite != cpy.end(); ++ite)
 		std::cout << (*ite).second << std::endl;
 
-	it = --cpy.end();
+	m1.insert(ft::make_pair(2, 2));
+	it = ++cpy.begin();
 	cpy.erase(it);
 
 	std::cout << std::endl << "cpy after erase: " << std::endl;

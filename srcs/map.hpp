@@ -212,8 +212,9 @@ namespace ft {
 				void erase(iterator position)
 				{
 					node_type	*node = position.getPtr();
+					node_type	*tmp;
 
-					if (!(node->left) && !check_node_right()))
+					if (!(node->left) && !((_check_node_right(node))))
 					{
 						if (key_compare()(node->data.first, node->parent->data.first))
 							node->parent->left = NULL;
@@ -222,7 +223,26 @@ namespace ft {
 						delete node;
 						_update_max();
 					}
-					(!)
+					else if (!(node->left))
+					{
+						tmp = node->right;
+						node->data = tmp->data;
+						node->right = tmp->right;
+						node->left = tmp->left;
+						delete tmp;
+					}
+					else if (!(_check_node_right(node)))
+					{
+						tmp = node->left;
+						node->data = tmp->data;
+						node->right = tmp->right;
+						node->left = tmp->left;
+						delete tmp;
+					}
+					else
+					{
+					
+					}
 				}
 
 //operations
