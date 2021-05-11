@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/10 17:04:36 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/11 15:11:30 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ namespace ft
 				TreeIterator	operator++(int)
 				{
 					TreeIterator<value_type> tmp = *this;
-					++this;
+					++(*this);
 //					_ptr = _ptr->next;
 					return tmp;
 				}
@@ -74,7 +74,7 @@ namespace ft
 				TreeIterator	operator--(int)
 				{
 					TreeIterator<value_type> tmp = *this;
-					--this;
+					--(*this);
 //					_ptr = _ptr->prev;
 					return tmp;
 				}

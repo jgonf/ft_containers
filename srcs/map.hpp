@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/10 17:57:13 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/11 18:20:48 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ namespace ft {
 						_size++;
 						return ft::make_pair<iterator, bool>(iterator(new_node), true);
 					}
-					std::cout << "ici" << std::endl;
 					new_node = _insert_node(_root, new_node);
 					_size++;
 //					_balance_tree(new_node);
@@ -203,14 +202,28 @@ namespace ft {
 				template <class InputIterator>
 					void insert(InputIterator first, InputIterator last)
 				{
-					std::cout << std::endl << std::endl << "debut" << std::endl;
-					iterator	it = first;
-					(void)last;
-					insert(*it);
-					++it;
-					insert(*it);
+					while (first != last)
+					{
+						insert(*first);
+						++first;
+					}
 				}
 
+				void erase(iterator position)
+				{
+					node_type	*node = position.getPtr();
+
+					if (!(node->left) && !check_node_right()))
+					{
+						if (key_compare()(node->data.first, node->parent->data.first))
+							node->parent->left = NULL;
+						else
+							node->parent->right = NULL;
+						delete node;
+						_update_max();
+					}
+					(!)
+				}
 
 //operations
 
@@ -248,15 +261,19 @@ namespace ft {
 					return tmp;
 				}
 
-				node_type	*_get_tail(void) const
+				void	_update_max(void)
 				{
 					node_type	*tmp = _root;
 
 					if (!_size)
-						return _root;
+					{
+						_tail = _root;
+						return;
+					}
 					while (tmp->right)
 						tmp = tmp->right;
-					return tmp;
+					_tail->parent = tmp;
+					tmp->right = _tail;
 				}
 
 				node_type * _insert_node(node_type* root, node_type* new_node)
@@ -274,24 +291,27 @@ namespace ft {
 					}
 					else
 					{
-						if (root->right == NULL)
+						if (root->right == NULL || root->right == _tail)
 						{
 							new_node->parent = root;
 							root->right = new_node;
 							return root->right;
 						}
 						else
-        					_insert_node(root->left, new_node);
+							_insert_node(root->right, new_node);
 					}
-					return root;
+					return new_node;
 				}
 
 				void	_update_tail(node_type* new_node)
 				{
 					if (key_compare()(new_node->data.first, _tail->right->data.first))
 						_tail->right = new_node;
-					if (!(key_compare()(new_node->data.first, _tail->parent->data.first)))
+					if ((key_compare()(_tail->parent->data.first, new_node->data.first)))
+					{
 						_tail->parent = new_node;
+						new_node->right = _tail;
+					}
 				}
 
 				iterator	_find_key(node_type *root, key_type key)
@@ -308,6 +328,14 @@ namespace ft {
 						ret = _find_key(root->right, key);
 					return ret;
 				}
+
+				bool	_check_node_right(node_type *node) const
+				{
+					if (!node->right || node->right == _tail)
+						return false;
+					return true;
+				}
+
 		};
 }
 
