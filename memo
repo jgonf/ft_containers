@@ -1,10 +1,5 @@
 TO DO LIST:
 
-[] : besoin de finir insert pour que ca fonctionne
-insert : besoin de find pour gerer le cas ou il est deja present
-
-=> besoin de faire find
-
-
-
-pb avec le insert iterator : segfault pdt le _find_key
+resoudre pb erase avec iterator. Erase detruit l'iterator donc on ne peut plus avoir le next;
+faire value_compare => creer une structure a l'interieur de la classe ?
+tester const lower et upper bound quand j'aurais refait const_iterator;

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/11 18:20:48 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/12 16:19:35 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,46 +20,46 @@
 namespace ft {
 
 	template <typename T>
-	struct less {
+		struct less {
 
 			bool operator()	(const T &x, const T &y) const { return (x < y); }
 		};
 
 	template <typename T, typename U>
-	class pair {
+		class pair {
 
-		public:
-			T	first;
-			U	second;
+			public:
+				T	first;
+				U	second;
 
-		pair(void): first(), second() {}
-		pair(T& key, U& value): first(key), second(value) {}
-		~pair(void) {}
+				pair(void): first(), second() {}
+				pair(T& key, U& value): first(key), second(value) {}
+				~pair(void) {}
 
-		pair& operator=(const pair& src)
-		{
-			first = src.first;
-			second = src.second;
-			return *this;
-		}
-	};
+				pair& operator=(const pair& src)
+				{
+					first = src.first;
+					second = src.second;
+					return *this;
+				}
+		};
 
 	template< class T1, class T2 >
-	const ft::pair<T1,T2> make_pair( T1 t, T2 u)
-	{
-		const pair<T1, T2> ret(t, u);
-		return ret;
-	}
+		const ft::pair<T1,T2> make_pair( T1 t, T2 u)
+		{
+			const pair<T1, T2> ret(t, u);
+			return ret;
+		}
 
 	template <typename T>
-	struct node_tree {
-		public :
-			T		data;
-			node_tree	*parent;
-			node_tree	*left;
-			node_tree	*right;
-			bool		is_black;
-	};
+		struct node_tree {
+			public :
+				T		data;
+				node_tree	*parent;
+				node_tree	*left;
+				node_tree	*right;
+				bool		is_black;
+		};
 
 	template < typename Key, typename T, typename Compare=less<Key>, typename Alloc=std::allocator<pair<const Key, T> > >
 		class map {
@@ -70,7 +70,7 @@ namespace ft {
 				typedef T										mapped_type;
 				typedef pair<key_type, mapped_type>				value_type;
 				typedef Compare									key_compare;
-//				typedef Alloc									allocator_type;
+				//				typedef Alloc									allocator_type;
 				typedef	typename Alloc::template rebind<node_tree<value_type> >::other	allocator_type;
 				typedef value_type&						reference;
 				typedef value_type*						pointer;
@@ -84,17 +84,15 @@ namespace ft {
 
 				//constructor destructor
 				explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _cmp(comp), _alloc(alloc), _size(0)
-				{
-					_init_tree();
-				}
+			{
+				_init_tree();
+			}
 
 				template <class InputIterator>
 					map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _cmp(comp), _alloc(alloc), _size(0)
 				{
 					_init_tree();
-//					insert(first, last);
-					(void)first;
-					(void)last;
+					insert(first, last);
 				}
 
 				map (const map& x)
@@ -102,24 +100,24 @@ namespace ft {
 					_init_tree();
 					_cmp = x._cmp;
 					_alloc = x._alloc;
-//					insert(x.begin(), x.end());
+					insert(x.begin(), x.end());
 				}
 
 				map& operator=(const map& x)
 				{
 					(void)x;
-//					clear();
-//					insert(x.begin(), x.end());
+					clear();
+					insert(x.begin(), x.end());
 					return *this;
 				}
 
 				~ map(void)
 				{
-//					clear();
+					clear();
 					delete _tail;
 				}
 
-//iterators
+				//iterators
 				iterator begin(void)
 				{
 					return iterator(_get_first());
@@ -140,7 +138,7 @@ namespace ft {
 					return const_iterator(_tail);
 				}
 
-//capacity
+				//capacity
 
 				bool	empty(void)	const
 				{
@@ -153,18 +151,18 @@ namespace ft {
 
 				size_type	max_size(void) const
 				{
-//					std::allocator<ft::node_tree<T> > alloc;
+					//					std::allocator<ft::node_tree<T> > alloc;
 					return _alloc.max_size();
 				}
 
 
-//element access
+				//element access
 				mapped_type& operator[] (const key_type& k)
 				{
 					return  (*((this->insert(make_pair(k,mapped_type()))).first)).second;
 				}
 
-//modifiers
+				//modifiers
 				pair<iterator,bool> insert (const value_type& val)
 				{
 					iterator	ret;
@@ -188,7 +186,7 @@ namespace ft {
 					}
 					new_node = _insert_node(_root, new_node);
 					_size++;
-//					_balance_tree(new_node);
+					//					_balance_tree(new_node);
 					_update_tail(new_node);
 					return ft::make_pair<iterator, bool>(iterator(new_node), true);
 				}
@@ -201,13 +199,13 @@ namespace ft {
 
 				template <class InputIterator>
 					void insert(InputIterator first, InputIterator last)
-				{
-					while (first != last)
 					{
-						insert(*first);
-						++first;
+						while (first != last)
+						{
+							insert(*first);
+							++first;
+						}
 					}
-				}
 
 				void erase(iterator position)
 				{
@@ -222,39 +220,163 @@ namespace ft {
 							node->parent->right = NULL;
 						delete node;
 						_update_max();
+						return ;
 					}
-					else if (!(node->left))
-					{
+					if (!(node->left))
 						tmp = node->right;
-						node->data = tmp->data;
-						node->right = tmp->right;
-						node->left = tmp->left;
-						delete tmp;
-					}
 					else if (!(_check_node_right(node)))
-					{
 						tmp = node->left;
-						node->data = tmp->data;
-						node->right = tmp->right;
-						node->left = tmp->left;
-						delete tmp;
-					}
 					else
 					{
-					
+						tmp = (++position).getPtr();
+						node->data = tmp->data;
+						if (node->right == tmp)
+							node->right = NULL;
+						else
+						{
+							if (key_compare()(tmp->data.first, node->data.first))
+								node->left = NULL;
+							else
+								node->right = NULL;
+						}
+						delete tmp;
+						return ;
 					}
+					node->data = tmp->data;
+					node->right = tmp->right;
+					node->left = tmp->left;
+					delete tmp;
 				}
 
-//operations
+				size_type	erase(const	key_type& k)
+				{
+					iterator	it = find(k);
 
+					if (it == end())
+						return 0;
+					erase(it);
+					return 1;
+				}
+
+				void	erase(iterator first, iterator last)
+				{
+					(void)first;
+					(void)last;
+						//to do later;
+				}
+
+				void	swap(map& x)
+				{
+					node_type	*ptr;
+
+					_size = x._size;
+
+					ptr = _root;
+					_root = x._root;
+					x._root = ptr;
+
+					ptr = _tail;
+					_tail = x._tail;
+					x._tail = ptr;
+				}
+
+				void	clear(void)
+				{
+					erase(begin(), end());
+				}
+
+//observers
+				key_compare	key_comp(void)	const
+				{
+					return _cmp;
+				}
+
+//				value_compare	value_comp(void)	const
+//				{
+//				}
+
+//operations
 				iterator	find(const key_type& k)
 				{
 					if (!_size)
 						return end();
-//					return _find_key(k);
+					//					return _find_key(k);
 					return _find_key(_root, k);
 				}
 
+				const_iterator	find(const key_type& k) const
+				{
+					if (!_size)
+						return end();
+					return _find_key(_root, k);
+				}
+
+				size_type	count(const key_type& k) const
+				{
+					if (find(k) == end())
+						return 0;
+					return 1;
+				}
+
+				iterator lower_bound (const key_type& k)
+				{
+					iterator	it;
+
+					if ((it = find(k)) != end())
+						return it;
+					for (it = begin(); it != end(); ++it)
+						if (key_comp()(k, (*it).first))
+							break ;
+					return it;
+				}
+
+				const_iterator lower_bound (const key_type& k) const
+				{
+					iterator	it;
+
+					if ((it = find(k)) != end())
+						return it;
+					for (it = begin(); it != end(); ++it)
+						if (key_comp()(k, (*it).first))
+							break ;
+					return it;
+				}
+
+				iterator upper_bound (const key_type& k)
+				{
+					iterator	it;
+
+					if ((it = find(k)) != end())
+						return ++it;
+					for (it = begin(); it != end(); ++it)
+						if (key_comp()(k, (*it).first))
+							break ;
+					return it;
+				}
+
+				const_iterator upper_bound (const key_type& k) const
+				{
+					iterator	it;
+
+					if ((it = find(k)) != end())
+						return ++it;
+					for (it = begin(); it != end(); ++it)
+						if (key_comp()(k, (*it).first))
+							break ;
+					return it;
+				}
+
+				pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+				{
+					ft::pair<const_iterator, const_iterator> ret(lower_bound(k), upper_bound(k));
+					return ret;
+				}
+
+				pair<iterator,iterator> equal_range (const key_type& k)
+				{
+					ft::pair<iterator, iterator> ret(lower_bound(k), upper_bound(k));
+					return ret;
+				}
 			private:
 				key_compare	_cmp;
 				allocator_type	_alloc;
@@ -290,7 +412,7 @@ namespace ft {
 						_tail = _root;
 						return;
 					}
-					while (tmp->right)
+					while (_check_node_right(tmp))
 						tmp = tmp->right;
 					_tail->parent = tmp;
 					tmp->right = _tail;
@@ -298,7 +420,7 @@ namespace ft {
 
 				node_type * _insert_node(node_type* root, node_type* new_node)
 				{
-    				if (key_compare()(new_node->data.first, root->data.first))
+					if (key_compare()(new_node->data.first, root->data.first))
 					{
 						if (root->left == NULL)
 						{
@@ -311,7 +433,7 @@ namespace ft {
 					}
 					else
 					{
-						if (root->right == NULL || root->right == _tail)
+						if (!(_check_node_right(root)))
 						{
 							new_node->parent = root;
 							root->right = new_node;
@@ -349,6 +471,22 @@ namespace ft {
 					return ret;
 				}
 
+				const_iterator	_find_key(node_type *root, key_type key) const
+				{
+					const_iterator	ret = end();
+
+					if (root == NULL || root == _tail)
+						return ret;
+					if (root->data.first == key)
+						return iterator(root);
+					if (key_compare()(key, root->data.first))
+						ret = _find_key(root->left, key);
+					if (!(key_compare()(key, root->data.first)))
+						ret = _find_key(root->right, key);
+					return ret;
+				}
+
+
 				bool	_check_node_right(node_type *node) const
 				{
 					if (!node->right || node->right == _tail)
@@ -356,6 +494,12 @@ namespace ft {
 					return true;
 				}
 
+				bool	_is_equal(key_type k1, key_type k2)
+				{
+					if (!(key_comp()(k1, k2)) && !(key_comp()(k2, k1)))
+						return true;
+					return false;
+				}
 		};
 }
 
