@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/12 16:19:35 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/13 17:43:24 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define MAP_HPP
 
 # include <iostream>
+# include "vector.hpp"
+# include <string>
 # include "reverse_iterator.hpp"
 # include "TreeIterator.hpp"
 
@@ -64,15 +66,6 @@ namespace ft {
 	template < typename Key, typename T, typename Compare=less<Key>, typename Alloc=std::allocator<pair<const Key, T> > >
 		class map {
 
-			class value_compare
-			{
-				public:
-					value_compare(const key_compare& compare) : _comp(compare) {}
-					bool operator() (const value_type& a, const value_type& b) const { return _comp(a.first, b.first); }
-				private:
-					key_compare _comp;
-			};
-
 			public:
 
 				typedef Key										key_type;
@@ -90,6 +83,15 @@ namespace ft {
 				typedef reverse_iterator<iterator>		reverse_iterator;
 				typedef std::ptrdiff_t					difference_type;
 				typedef	size_t							size_type;
+
+				class value_compare
+				{
+					public:
+						value_compare(const key_compare& compare) : _comp(compare) {}
+						bool operator() (const value_type& a, const value_type& b) const { return _comp(a.first, b.first); }
+					private:
+						key_compare _comp;
+				};
 
 				//constructor destructor
 				explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _cmp(comp), _alloc(alloc), _size(0)
@@ -221,6 +223,8 @@ namespace ft {
 					node_type	*node = position.getPtr();
 					node_type	*tmp;
 
+					if (_size == 0)
+						return ;
 					if (_size == 1)
 					{
 						_root->parent = NULL;
@@ -233,10 +237,7 @@ namespace ft {
 
 					if (!(node->left) && !((_check_node_right(node))))
 					{
-						if (key_compare()(node->data.first, node->parent->data.first))
-							node->parent->left = NULL;
-						else
-							node->parent->right = NULL;
+						node = NULL;
 						delete node;
 						_size--;
 						_update_max();
@@ -269,7 +270,6 @@ namespace ft {
 					node->left = tmp->left;
 					delete tmp;
 					_size--;
-
 				}
 
 				size_type	erase(const	key_type& k)
@@ -284,17 +284,24 @@ namespace ft {
 
 				void	erase(iterator first, iterator last)
 				{
-					// for (; first != last; ++first)
-						// erase((*first).first);
-					while (first != last)
-						erase(first++);
+					ft::vector<Key> key;
+					typename ft::vector<Key>::iterator it;
+
+					for (; first != last; ++first)
+						key.push_back((*first).first);
+
+					for (it = key.begin(); it != key.end(); ++it)
+						erase(*it);
 				}
 
 				void	swap(map& x)
 				{
 					node_type	*ptr;
+					size_t		tmp;
 
+					tmp = _size;
 					_size = x._size;
+					x._size = tmp;
 
 					ptr = _root;
 					_root = x._root;
@@ -421,6 +428,15 @@ namespace ft {
 					_tail = _root;
 				}
 
+				template <typename U>
+				void	_swap(U x, U y)
+				{
+					U	tmp;
+
+					tmp = x;
+					x = y;
+					y = tmp;
+				}
 
 				node_type	*_get_first(void) const
 				{

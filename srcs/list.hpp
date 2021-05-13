@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 16:43:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/03 10:08:46 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/13 14:32:22 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,8 +292,8 @@ namespace ft {
 
 				void swap(list &x)
 				{
-					std::swap(_tail, x._tail);
-					std::swap(_size, x._size);
+					ft::swap(_tail, x._tail);
+					ft::swap(_size, x._size);
 				}
 
 				void resize (size_type n, value_type val = value_type())

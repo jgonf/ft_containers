@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 21:12:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/01 16:01:57 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/13 14:44:25 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ namespace ft
 				{
 					reverse_iterator	tmp(*this);
 					reverse_iterator	ret(tmp.base().getPtr() + n);
-		
+
 					return ret;
 
 //					iterator_type	tmp(_base);
@@ -138,17 +138,17 @@ namespace ft
 				{
 					return _base == src.base();
 				}
-				
+
 				bool operator!=(reverse_iterator const & src) const
 				{
 					return _base != src.base();
 				}
-			
+
 				bool operator<(reverse_iterator const & src) const
 				{
 					return _base > src.base();
 				}
-				
+
 				bool operator<=(reverse_iterator const & src) const
 				{
 					return _base >= src.base();
@@ -158,7 +158,7 @@ namespace ft
 				{
 					return _base < src.base();
 				}
-				
+
 				bool operator>=(reverse_iterator const & src) const
 				{
 					return _base <= src.base();
@@ -179,7 +179,7 @@ namespace ft
 		{
 			return lhs.base() != rhs.base();
 		}
-		
+
 		template <class value_type>
 		bool operator<(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
@@ -191,7 +191,7 @@ namespace ft
 		{
 			return lhs.base() >= rhs.base();
 		}
-		
+
 		template <class value_type>
 		bool operator>(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{

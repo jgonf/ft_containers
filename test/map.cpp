@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/13 11:23:35 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/13 17:38:08 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	test_modifiers(void)
 	m1.insert(ft::make_pair(3, 3));
 	m1.insert(ft::make_pair(1, 1));
 	m1.insert(ft::make_pair(17, 17));
+	m1.insert(ft::make_pair(17, 17));
 
 	std::cout << "m1 : " << std::endl;
 	for (it = m1.begin(); it != m1.end(); ++it)
@@ -107,8 +108,8 @@ void	test_modifiers(void)
 	for (ite = m1.begin(); ite != m1.end(); ++ite)
 		std::cout << (*ite).second << std::endl;
 
-	std::cout << std::endl << "ret erase key existante " << cpy.erase(2) << std::endl;
-	std::cout << "ret erase key inexistante " << cpy.erase(24) << std::endl;
+	std::cout << std::endl << "ret erase key existante " << cpy.erase(1) << std::endl;
+	std::cout << "ret erase key inexistante " << cpy.erase(23) << std::endl;
 	std::cout << "cpy after erase: " << std::endl;
 	for (ite = cpy.begin(); ite != cpy.end(); ++ite)
 		std::cout << (*ite).second << std::endl;
