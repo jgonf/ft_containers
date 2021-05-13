@@ -64,6 +64,15 @@ namespace ft {
 	template < typename Key, typename T, typename Compare=less<Key>, typename Alloc=std::allocator<pair<const Key, T> > >
 		class map {
 
+			class value_compare
+			{
+				public:
+					value_compare(const key_compare& compare) : _comp(compare) {}
+					bool operator() (const value_type& a, const value_type& b) const { return _comp(a.first, b.first); }
+				private:
+					key_compare _comp;
+			};
+
 			public:
 
 				typedef Key										key_type;
@@ -212,6 +221,16 @@ namespace ft {
 					node_type	*node = position.getPtr();
 					node_type	*tmp;
 
+					if (_size == 1)
+					{
+						_root->parent = NULL;
+						_root->left = NULL;
+						_root->right = NULL;
+						_tail = _root;
+						_size--;
+						return ;
+					}
+
 					if (!(node->left) && !((_check_node_right(node))))
 					{
 						if (key_compare()(node->data.first, node->parent->data.first))
@@ -219,6 +238,7 @@ namespace ft {
 						else
 							node->parent->right = NULL;
 						delete node;
+						_size--;
 						_update_max();
 						return ;
 					}
@@ -240,12 +260,16 @@ namespace ft {
 								node->right = NULL;
 						}
 						delete tmp;
+						_size--;
+
 						return ;
 					}
 					node->data = tmp->data;
 					node->right = tmp->right;
 					node->left = tmp->left;
 					delete tmp;
+					_size--;
+
 				}
 
 				size_type	erase(const	key_type& k)
@@ -260,9 +284,10 @@ namespace ft {
 
 				void	erase(iterator first, iterator last)
 				{
-					(void)first;
-					(void)last;
-						//to do later;
+					// for (; first != last; ++first)
+						// erase((*first).first);
+					while (first != last)
+						erase(first++);
 				}
 
 				void	swap(map& x)
@@ -291,9 +316,10 @@ namespace ft {
 					return _cmp;
 				}
 
-//				value_compare	value_comp(void)	const
-//				{
-//				}
+				value_compare	value_comp(void)	const
+				{
+					return value_compare(key_comp);
+				}
 
 //operations
 				iterator	find(const key_type& k)
@@ -377,6 +403,7 @@ namespace ft {
 					ft::pair<iterator, iterator> ret(lower_bound(k), upper_bound(k));
 					return ret;
 				}
+
 			private:
 				key_compare	_cmp;
 				allocator_type	_alloc;

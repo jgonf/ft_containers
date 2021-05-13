@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/12 16:24:34 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/13 11:23:35 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,16 +184,17 @@ void	test_operations(void)
 	std::cout << "upper bound : " << (*ite).first << std::endl;
 
 	std::cout << "equal range : ";
-	std::cout << ret.first->first << " => " << ret.first->second << '\n';
-	std::cout << ret.second->first << " => " << ret.second->second << '\n';
+//	ret = m1.equal_range(11);
+//	std::cout << ret.first->first << " => " << ret.first->second << '\n';
+//	std::cout << ret.second->first << " => " << ret.second->second << '\n';
 }
 
 int main()
 {
 //	test_iterator();
 //	test_capacity();
-//	test_modifiers();
-	test_observers();
-	test_operations();
+	test_modifiers();
+//	test_observers();
+//	test_operations();
 	return 0;
 }
