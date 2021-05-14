@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/13 17:43:24 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:24:43 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft {
 				U	second;
 
 				pair(void): first(), second() {}
-				pair(T& key, U& value): first(key), second(value) {}
+				pair(T key, U value): first(key), second(value) {}
 				~pair(void) {}
 
 				pair& operator=(const pair& src)

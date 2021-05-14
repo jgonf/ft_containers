@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/11 15:11:30 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:39:50 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ namespace ft
 				TreeIterator	&operator++(void)
 				{
 					_setNextNode();
-//					_ptr = _ptr->next;
 					return *this;
 				}
 
 				TreeIterator	&operator--(void)
 				{
 					_setPrevNode();
-//					_ptr = _ptr->prev;
 					return *this;
 				}
 
@@ -67,7 +65,6 @@ namespace ft
 				{
 					TreeIterator<value_type> tmp = *this;
 					++(*this);
-//					_ptr = _ptr->next;
 					return tmp;
 				}
 
@@ -75,7 +72,6 @@ namespace ft
 				{
 					TreeIterator<value_type> tmp = *this;
 					--(*this);
-//					_ptr = _ptr->prev;
 					return tmp;
 				}
 
@@ -101,8 +97,8 @@ namespace ft
 
 				reference	operator*(void) { return _ptr->data; }
 				reference	operator*(void) const { return _ptr->data; }
-				pointer		operator->(void) { return &(_ptr->data); }
-				pointer		operator->(void) const { return &(_ptr->data); }
+				pointer		operator->(void) { return (_ptr->data); }
+				pointer		operator->(void) const { return (_ptr->data); }
 
 
 			protected:
@@ -176,27 +172,27 @@ namespace ft
 
 			ConstTreeIterator	&operator++(void)
 			{
-				_ptr = _ptr->next;
+				this->_setNextNode();
 				return *this;
 			}
 
 			ConstTreeIterator	&operator--(void)
 			{
-				_ptr = _ptr->prev;
+				this->_setPrevNode();
 				return *this;
 			}
 
 			ConstTreeIterator	operator++(int)
 			{
 				ConstTreeIterator<value_type> tmp = *this;
-				_ptr = _ptr->next;
+				++(*this);
 				return tmp;
 			}
 
 			ConstTreeIterator	operator--(int)
 			{
 				ConstTreeIterator<value_type> tmp = *this;
-				_ptr = _ptr->prev;
+				--(*this);
 				return tmp;
 			}
 

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/13 17:38:08 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/14 14:27:04 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,12 +190,23 @@ void	test_operations(void)
 //	std::cout << ret.second->first << " => " << ret.second->second << '\n';
 }
 
+void	test_debug()
+{
+	ft::pair<int, std::string> pair(3, "hello");
+	ft::make_pair(2, "wesh");
+	ft::map<int, std::string> m1;
+
+	m1.insert(pair);
+
+}
+
 int main()
 {
 //	test_iterator();
 //	test_capacity();
-	test_modifiers();
+//	test_modifiers();
 //	test_observers();
 //	test_operations();
+	test_debug();
 	return 0;
 }
