@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/14 14:24:43 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/14 15:46:30 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ namespace ft {
 	template <typename T>
 		struct node_tree {
 			public :
-				T		data;
+				T			data;
 				node_tree	*parent;
 				node_tree	*left;
 				node_tree	*right;
 				bool		is_black;
+//				typedef typename T::first	first;
+
 		};
 
 	template < typename Key, typename T, typename Compare=less<Key>, typename Alloc=std::allocator<pair<const Key, T> > >
