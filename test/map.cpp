@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/17 11:06:08 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/25 10:21:18 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,17 +192,17 @@ void	test_operations(void)
 
 void	test_debug()
 {
-	ft::pair<int, std::string> empty_pair;
-	ft::pair<int, std::string> pair(3, "hello");
-	ft::make_pair(2, "wesh");
-	ft::map<int, std::string> m1;
-	ft::map<int, std::string>::iterator it;
+	ft::map<int, int> m1;
 
-	m1.insert(pair);
-	it = m1.begin();
-
-
-	std::cout << it->first << " " << it->second << std::endl;
+	m1.insert(ft::make_pair(10, 10));
+	m1.insert(ft::make_pair(7, 10));
+	m1.insert(ft::make_pair(5, 10));
+	m1.insert(ft::make_pair(3, 10));
+	m1.insert(ft::make_pair(2, 10));
+	m1.insert(ft::make_pair(1, 10));
+	m1.insert(ft::make_pair(4, 10));
+	m1.insert(ft::make_pair(0, 10));
+	m1.insert(ft::make_pair(8, 10));
 }
 
 int main()

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/14 15:46:30 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:33:07 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ namespace ft {
 				typedef node_tree<value_type>			node_type;
 				typedef TreeIterator<value_type>		iterator;
 				typedef ConstTreeIterator<value_type>	const_iterator;
+				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>		reverse_iterator;
 				typedef std::ptrdiff_t					difference_type;
 				typedef	size_t							size_type;
@@ -151,6 +152,18 @@ namespace ft {
 					return const_iterator(_tail);
 				}
 
+				reverse_iterator	rbegin(void)
+				{ return reverse_iterator(end()); }
+
+				const_reverse_iterator	rbegin(void) const
+				{ return reverse_iterator(end()); }
+
+				reverse_iterator	rend(void)
+				{ return reverse_iterator(begin()); }
+
+				const_reverse_iterator	rend(void) const
+				{ return reverse_iterator(begin()); }
+
 				//capacity
 
 				bool	empty(void)	const
@@ -207,7 +220,8 @@ namespace ft {
 				iterator insert(iterator position, const value_type& val)
 				{
 					(void)position;
-					insert(val);
+					return insert(val).first;
+
 				}
 
 				template <class InputIterator>

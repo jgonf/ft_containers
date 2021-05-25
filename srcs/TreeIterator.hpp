@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/17 11:11:32 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/05/25 12:24:51 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ namespace ft
 			}
 
 			reference	operator*(void) const { return _ptr->data; }
-			const T	*operator->(void) const { return _ptr->data; }
+			const T	*operator->(void) const { return &(this->operator*()); }
 
 		private:
 			pointer	_ptr;
