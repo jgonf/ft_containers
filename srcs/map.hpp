@@ -192,24 +192,37 @@ namespace ft {
 				pair<iterator,bool> insert (const value_type& val)
 				{
 					iterator	ret;
-					node_type	*new_node = new node_type;
-
 					if ((ret = find(val.first)) != end())
 						return ft::make_pair<iterator, bool>(ret, false);
+
+					node_type	*new_node = new node_type;
+					if (!_size)
+					{
+						_root->data = val;
+						_root->parent = NULL;
+						_root->left = NULL;
+						_root->right = _tail;
+						_tail = new_node;
+						_tail->parent = _root;
+						_tail->right = _root;
+						_tail->left = NULL;
+						_size++;
+						return ft::make_pair<iterator, bool>(begin(), true);
+					}
 					new_node->data = val;
 					new_node->parent = NULL;
 					new_node->right = NULL;
 					new_node->left = NULL;
 					new_node->is_black = false;
-					if (!_size)
-					{
-						_root = new_node;
-						_root->right = _tail;
-						_tail->parent = _root;
-						_tail->right = _root;
-						_size++;
-						return ft::make_pair<iterator, bool>(iterator(new_node), true);
-					}
+//					if (!_size)
+//					{
+//						_root = new_node;
+//						_root->right = _tail;
+//						_tail->parent = _root;
+//						_tail->right = _root;
+//						_size++;
+//						return ft::make_pair<iterator, bool>(begin(), true);
+//					}
 					new_node = _insert_node(_root, new_node);
 					_size++;
 					//					_balance_tree(new_node);
@@ -303,11 +316,20 @@ namespace ft {
 					ft::vector<Key> key;
 					typename ft::vector<Key>::iterator it;
 
+					std::cout << "size : " << _size << std::endl;
+					std::cout << "premier el : " << first->first << std::endl;
+					std::cout << "dernier el : " << last->first << std::endl;
 					for (; first != last; ++first)
 						key.push_back((*first).first);
 
 					for (it = key.begin(); it != key.end(); ++it)
 						erase(*it);
+
+//					while (it != key.end())
+//					{
+//						std::cout << "coucou" << std::endl;
+//						erase(*it);
+//					}
 				}
 
 				void	swap(map& x)

@@ -292,8 +292,8 @@ namespace ft {
 
 				void swap(list &x)
 				{
-					ft::swap(_tail, x._tail);
-					ft::swap(_size, x._size);
+					std::swap(_tail, x._tail);
+					std::swap(_size, x._size);
 				}
 
 				void resize (size_type n, value_type val = value_type())

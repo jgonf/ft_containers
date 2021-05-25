@@ -195,14 +195,14 @@ void	test_debug()
 	ft::map<int, int> m1;
 
 	m1.insert(ft::make_pair(10, 10));
-	m1.insert(ft::make_pair(7, 10));
-	m1.insert(ft::make_pair(5, 10));
-	m1.insert(ft::make_pair(3, 10));
-	m1.insert(ft::make_pair(2, 10));
-	m1.insert(ft::make_pair(1, 10));
-	m1.insert(ft::make_pair(4, 10));
-	m1.insert(ft::make_pair(0, 10));
-	m1.insert(ft::make_pair(8, 10));
+//	m1.insert(ft::make_pair(7, 10));
+//	m1.insert(ft::make_pair(5, 10));
+//	m1.insert(ft::make_pair(3, 10));
+//	m1.insert(ft::make_pair(2, 10));
+//	m1.insert(ft::make_pair(1, 10));
+//	m1.insert(ft::make_pair(4, 10));
+//	m1.insert(ft::make_pair(0, 10));
+//	m1.insert(ft::make_pair(8, 10));
 }
 
 int main()
