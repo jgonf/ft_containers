@@ -107,7 +107,7 @@ namespace ft
 //code a changer plus tard
 				void	_setNextNode(void)
 				{
-					if (_ptr->right)
+					if (_ptr->right && !(_ptr->is_tail))
 					{
 						_ptr = _ptr->right;
 						while (_ptr->left)

@@ -60,7 +60,7 @@ namespace ft {
 				node_tree	*parent;
 				node_tree	*left;
 				node_tree	*right;
-				bool		is_black;
+				bool		is_tail;
 //				typedef typename T::first	first;
 
 		};
@@ -128,7 +128,7 @@ namespace ft {
 				~ map(void)
 				{
 					clear();
-					delete _tail;
+					delete _root;
 				}
 
 				//iterators
@@ -195,25 +195,27 @@ namespace ft {
 					if ((ret = find(val.first)) != end())
 						return ft::make_pair<iterator, bool>(ret, false);
 
-					node_type	*new_node = new node_type;
 					if (!_size)
 					{
+						_tail = new node_type;
 						_root->data = val;
 						_root->parent = NULL;
 						_root->left = NULL;
 						_root->right = _tail;
-						_tail = new_node;
+						_root->is_tail = false;
 						_tail->parent = _root;
 						_tail->right = _root;
 						_tail->left = NULL;
+						_tail->is_tail = true;
 						_size++;
 						return ft::make_pair<iterator, bool>(begin(), true);
 					}
+					node_type	*new_node = new node_type;
 					new_node->data = val;
 					new_node->parent = NULL;
 					new_node->right = NULL;
 					new_node->left = NULL;
-					new_node->is_black = false;
+					new_node->is_tail = false;
 //					if (!_size)
 //					{
 //						_root = new_node;
@@ -254,11 +256,13 @@ namespace ft {
 
 					if (_size == 0)
 						return ;
+					std::cout << "ici" << std::endl;
 					if (_size == 1)
 					{
 						_root->parent = NULL;
 						_root->left = NULL;
 						_root->right = NULL;
+						delete _tail;
 						_tail = _root;
 						_size--;
 						return ;
@@ -266,8 +270,8 @@ namespace ft {
 
 					if (!(node->left) && !((_check_node_right(node))))
 					{
-						node = NULL;
 						delete node;
+						node = NULL;
 						_size--;
 						_update_max();
 						return ;
@@ -317,19 +321,11 @@ namespace ft {
 					typename ft::vector<Key>::iterator it;
 
 					std::cout << "size : " << _size << std::endl;
-					std::cout << "premier el : " << first->first << std::endl;
-					std::cout << "dernier el : " << last->first << std::endl;
+
 					for (; first != last; ++first)
 						key.push_back((*first).first);
-
 					for (it = key.begin(); it != key.end(); ++it)
 						erase(*it);
-
-//					while (it != key.end())
-//					{
-//						std::cout << "coucou" << std::endl;
-//						erase(*it);
-//					}
 				}
 
 				void	swap(map& x)
@@ -371,7 +367,6 @@ namespace ft {
 				{
 					if (!_size)
 						return end();
-					//					return _find_key(k);
 					return _find_key(_root, k);
 				}
 
@@ -462,7 +457,7 @@ namespace ft {
 					_root->parent = NULL;
 					_root->left = NULL;
 					_root->right = NULL;
-					_root->is_black = false;
+					_root->is_tail = true;
 					_tail = _root;
 				}
 

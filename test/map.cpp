@@ -195,14 +195,21 @@ void	test_debug()
 	ft::map<int, int> m1;
 
 	m1.insert(ft::make_pair(10, 10));
-//	m1.insert(ft::make_pair(7, 10));
-//	m1.insert(ft::make_pair(5, 10));
-//	m1.insert(ft::make_pair(3, 10));
-//	m1.insert(ft::make_pair(2, 10));
-//	m1.insert(ft::make_pair(1, 10));
+	m1.insert(ft::make_pair(7, 10));
+	m1.insert(ft::make_pair(12, 10));
+
+	std::cout << "insert 9" << std::endl;
+	m1.insert(ft::make_pair(9, 10));
+	std::cout << "9 inserted" << std::endl;
+//	m1.insert(ft::make_pair(40, 10));
+//	m1.insert(ft::make_pair(8, 10));
+	m1.insert(ft::make_pair(1, 10));
+//	std::cout << "insert 1" << std::endl;
 //	m1.insert(ft::make_pair(4, 10));
 //	m1.insert(ft::make_pair(0, 10));
 //	m1.insert(ft::make_pair(8, 10));
+
+	std::cout << "TEST : " << (*m1.end()).first << std::endl;
 }
 
 int main()
