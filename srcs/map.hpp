@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/08 15:14:58 by jgonfroy          #+#    #+#             */
+/*   Updated: 2021/06/08 15:49:09 by jgonfroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/25 12:33:07 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/06/08 15:14:44 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,15 +228,6 @@ namespace ft {
 					new_node->right = NULL;
 					new_node->left = NULL;
 					new_node->is_tail = false;
-//					if (!_size)
-//					{
-//						_root = new_node;
-//						_root->right = _tail;
-//						_tail->parent = _root;
-//						_tail->right = _root;
-//						_size++;
-//						return ft::make_pair<iterator, bool>(begin(), true);
-//					}
 					new_node = _insert_node(_root, new_node);
 					_size++;
 					//					_balance_tree(new_node);
@@ -256,7 +259,6 @@ namespace ft {
 
 					if (_size == 0)
 						return ;
-					std::cout << "ici" << std::endl;
 					if (_size == 1)
 					{
 						_root->parent = NULL;
@@ -270,18 +272,36 @@ namespace ft {
 
 					if (!(node->left) && !((_check_node_right(node))))
 					{
+						std::cout << "option 1" << std::endl;
+//						if (key_compare()(node->parent->data.first, node->data.first))
+//							node->parent->right = NULL;
+//						else
+//							node->parent->left = NULL;
+						int key = node->data.first;
+						tmp = node->parent;
 						delete node;
 						node = NULL;
+						if (key_compare()(tmp->data.first, key))
+							tmp->right = NULL;
+						else
+							tmp->left = NULL;
 						_size--;
 						_update_max();
 						return ;
 					}
 					if (!(node->left))
+					{
+						std::cout << "option 2" << std::endl;
 						tmp = node->right;
+					}
 					else if (!(_check_node_right(node)))
+					{
+						std::cout << "option 3" << std::endl;
 						tmp = node->left;
+					}
 					else
 					{
+						std::cout << "option 4" << std::endl;
 						tmp = (++position).getPtr();
 						node->data = tmp->data;
 						if (node->right == tmp)
@@ -302,6 +322,7 @@ namespace ft {
 					node->right = tmp->right;
 					node->left = tmp->left;
 					delete tmp;
+					tmp = NULL;
 					_size--;
 				}
 
@@ -320,12 +341,13 @@ namespace ft {
 					ft::vector<Key> key;
 					typename ft::vector<Key>::iterator it;
 
-					std::cout << "size : " << _size << std::endl;
-
 					for (; first != last; ++first)
 						key.push_back((*first).first);
 					for (it = key.begin(); it != key.end(); ++it)
+					{
+						std::cout << "Here : " << *it << std::endl;
 						erase(*it);
+					}
 				}
 
 				void	swap(map& x)

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+///* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   map.cpp                                            :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/25 10:21:18 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/06/08 14:41:35 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,23 +193,22 @@ void	test_operations(void)
 void	test_debug()
 {
 	ft::map<int, int> m1;
+	ft::map<int, int>::iterator it;
 
 	m1.insert(ft::make_pair(10, 10));
 	m1.insert(ft::make_pair(7, 10));
 	m1.insert(ft::make_pair(12, 10));
 
-	std::cout << "insert 9" << std::endl;
 	m1.insert(ft::make_pair(9, 10));
-	std::cout << "9 inserted" << std::endl;
-//	m1.insert(ft::make_pair(40, 10));
-//	m1.insert(ft::make_pair(8, 10));
+	m1.insert(ft::make_pair(13, 10));
+	m1.insert(ft::make_pair(40, 10));
+	m1.insert(ft::make_pair(8, 10));
 	m1.insert(ft::make_pair(1, 10));
-//	std::cout << "insert 1" << std::endl;
-//	m1.insert(ft::make_pair(4, 10));
-//	m1.insert(ft::make_pair(0, 10));
-//	m1.insert(ft::make_pair(8, 10));
+	m1.insert(ft::make_pair(4, 10));
+	m1.insert(ft::make_pair(0, 10));
 
-	std::cout << "TEST : " << (*m1.end()).first << std::endl;
+	for (it = m1.begin(); it != m1.end(); ++it)
+		std::cout << it->first << std::endl;
 }
 
 int main()
