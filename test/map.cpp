@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 17:18:09 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/06/08 14:41:35 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/06/09 14:38:29 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,13 +202,16 @@ void	test_debug()
 	m1.insert(ft::make_pair(9, 10));
 	m1.insert(ft::make_pair(13, 10));
 	m1.insert(ft::make_pair(40, 10));
+
 	m1.insert(ft::make_pair(8, 10));
 	m1.insert(ft::make_pair(1, 10));
 	m1.insert(ft::make_pair(4, 10));
-	m1.insert(ft::make_pair(0, 10));
+	m1.insert(ft::make_pair(3, 10));
 
 	for (it = m1.begin(); it != m1.end(); ++it)
 		std::cout << it->first << std::endl;
+
+//	m1.erase(m1.begin(), m1.end());
 }
 
 int main()
