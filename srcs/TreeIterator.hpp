@@ -107,6 +107,11 @@ namespace ft
 //code a changer plus tard
 				void	_setNextNode(void)
 				{
+					if (_ptr == NULL)
+						std::cout << "WHAT ? " << std::endl;
+					if (this->_ptr->left == NULL)
+						std::cout << "osef" << std::endl;
+					std::cout << "no segfault" << std::endl;
 					if (_ptr->right && !(_ptr->is_tail))
 					{
 						_ptr = _ptr->right;
@@ -144,7 +149,74 @@ namespace ft
 
 	template <class T>
 		class ConstTreeIterator: public TreeIterator<T>
-	{
+	{	
+		public:
+
+				typedef T		value_type;
+				typedef std::ptrdiff_t 	difference_type;
+				typedef node_tree<T>	*pointer;
+				typedef T		&reference;
+				static const bool	input_iter;
+				typedef	ft::BidirectionalIteratorTag	iterator_category;
+
+				ConstTreeIterator(void): _ptr(NULL) {}
+	//			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
+				ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
+				virtual ~ConstTreeIterator(void) {}
+
+				pointer	getPtr(void) const { return _ptr; }
+
+				ConstTreeIterator	&operator=(ConstTreeIterator const & src)
+				{
+					_ptr = src._ptr;
+					return *this;
+				}
+
+				ConstTreeIterator	&operator++(void)
+				{
+					this->_setNextNode();
+					return *this;
+				}
+
+				ConstTreeIterator	&operator--(void)
+				{
+					this->_setPrevNode();
+					return *this;
+				}
+
+				ConstTreeIterator	operator++(int)
+				{
+					ConstTreeIterator<value_type> tmp = *this;
+					++(*this);
+					return tmp;
+				}
+
+				ConstTreeIterator	operator--(int)
+				{
+					ConstTreeIterator<value_type> tmp = *this;
+					--(*this);
+					return tmp;
+				}
+
+				bool operator==(ConstTreeIterator const &cmp) const
+				{
+					return (_ptr == cmp._ptr);
+				}
+
+				bool operator!=(ConstTreeIterator const &cmp) const
+				{
+					return !(*this == cmp);
+				}
+
+				reference	operator*(void) { return (_ptr->data); }
+				reference	operator*(void) const { return (_ptr->data); }
+				T			*operator->(void) { return &(this->operator*()); }
+				T			*operator->(void) const { return &(this->operator*()); }
+
+
+			protected:
+				pointer	_ptr;
+/*
 		public:
 			typedef T		value_type;
 			typedef std::ptrdiff_t 	difference_type;
@@ -155,11 +227,12 @@ namespace ft
 //			typedef	ft::random_access_iterator_tag	iterator_category;
 
 			ConstTreeIterator(void): _ptr(NULL) {}
-			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
+//			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
 //			ConstTreeIterator(ConstTreeIterator const &src): _ptr(src._ptr) {};
 //			ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
-			ConstTreeIterator(node_tree<T> *src): _ptr(src) {};
-			ConstTreeIterator(node_tree<T> src): _ptr(&src) {};
+			ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
+		//	ConstTreeIterator(node_tree<T> *src): _ptr(src) {};
+		//	ConstTreeIterator(node_tree<T> src): _ptr(&src) {};
 			virtual ~ConstTreeIterator(void) {}
 
 			pointer	getPtr(void) const { return _ptr; }
@@ -211,7 +284,7 @@ namespace ft
 
 		private:
 			pointer	_ptr;
-
+*/
 	};
 
 	template < class T>

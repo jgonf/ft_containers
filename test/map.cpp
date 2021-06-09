@@ -193,7 +193,7 @@ void	test_operations(void)
 void	test_debug()
 {
 	ft::map<int, int> m1;
-	ft::map<int, int>::iterator it;
+	ft::map<int, int>::const_iterator it;
 
 	m1.insert(ft::make_pair(10, 10));
 	m1.insert(ft::make_pair(7, 10));
@@ -209,8 +209,11 @@ void	test_debug()
 	m1.insert(ft::make_pair(3, 10));
 
 	for (it = m1.begin(); it != m1.end(); ++it)
+	{
+		std::cout << "before" << std::endl;
 		std::cout << it->first << std::endl;
-
+		std::cout << "after" << std::endl;
+	}
 //	m1.erase(m1.begin(), m1.end());
 }
 
