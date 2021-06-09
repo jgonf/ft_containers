@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/06/09 14:37:47 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/06/09 15:39:25 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -575,6 +575,30 @@ namespace ft {
 					return false;
 				}
 		};
+
+	template <class Key, class T, class Compare, class Alloc>
+		bool operator== ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+		bool operator!= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+		bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+		bool operator<= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+		bool operator>  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+		bool operator>= ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs );
+
+	template <class Key, class T, class Compare, class Alloc>
+		void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)
+	{
+		return x.swap(y);
+	}
 }
 
 #endif
