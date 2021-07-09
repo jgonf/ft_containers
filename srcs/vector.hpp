@@ -17,14 +17,10 @@
 # include <sstream>
 # include "reverse_iterator.hpp"
 # include "RandomIterator.hpp"
+# include "tools.hpp"
 
 namespace ft
 {
-	template<bool, class T>
-		struct enable_if {};
-	template<class T>
-		struct enable_if<true, T> { typedef T type; };
-
 	template < typename T, typename Alloc=std::allocator<T> >
 		class vector {
 
@@ -407,7 +403,7 @@ namespace ft
 		{
 			if (lhs.size() != rhs.size())
 				return false;
-			return std::equal(lhs.begin(), lhs.end(), rhs.begin());
+			return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 		}
 
 	template <class T>
@@ -419,7 +415,7 @@ namespace ft
 	template <class T>
 		bool operator<(const vector<T>& lhs, const vector<T>& rhs)
 		{
-			return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 
 	template <class T>
