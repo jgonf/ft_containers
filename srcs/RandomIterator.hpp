@@ -1,6 +1,8 @@
 #ifndef RANDOMITERATOR_HPP
 #define RANDOMITERATOR_HPP
 
+#include <list>
+
 namespace ft
 {
 	template < typename T>
@@ -17,6 +19,7 @@ namespace ft
 
 				RandomIterator(void): _ptr(NULL) {}
 				RandomIterator(RandomIterator const &src): _ptr(src._ptr) {};
+				RandomIterator(typename std::list<value_type>::iterator const &it): _ptr(&(*it)) {};
 				RandomIterator(pointer ptr): _ptr(ptr) {};
 				virtual ~RandomIterator(void) {}
 

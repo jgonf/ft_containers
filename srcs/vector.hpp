@@ -60,7 +60,7 @@ namespace ft
 				}
 
 				template <class InputIterator>
-					vector(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _alloc(alloc)
+					vector(InputIterator first, typename ft::enable_if<!ft::is_same<InputIterator, int>::value, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _alloc(alloc)
 					{
 						size_type	size = 0;
 
@@ -241,7 +241,7 @@ namespace ft
 				//modifiers
 
 				template <class InputIterator>
-					void assign(InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+					void assign(InputIterator first, typename ft::enable_if<!ft::is_same<InputIterator, int>::value, InputIterator>::type last)
 
 					{
 						size_t size = 0;
@@ -321,7 +321,7 @@ namespace ft
 				}
 
 				template <class InputIterator>
-					void insert (iterator position, InputIterator first, typename ft::enable_if<InputIterator::input_iter, InputIterator>::type last)
+					void insert (iterator position, InputIterator first, typename ft::enable_if<!ft::is_same<InputIterator, int>::value, InputIterator>::type last)
 					{
 						int	len = 0;
 						int	index = 0;

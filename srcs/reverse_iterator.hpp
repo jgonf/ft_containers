@@ -17,9 +17,9 @@
 
 namespace ft
 {
-	struct InputIteratorTag	{};
+	struct input_iterator_tag	{};
 	struct OutputIteratorTag {};
-	struct ForwardIteratorTag : public InputIteratorTag {};
+	struct ForwardIteratorTag : public input_iterator_tag {};
 	struct BidirectionalIteratorTag : public ForwardIteratorTag {};
 	struct random_access_iterator_tag : public BidirectionalIteratorTag {};
 
@@ -50,6 +50,7 @@ namespace ft
 				reverse_iterator(RandomIterator<value_type> it): _base(it) {};
 				reverse_iterator(ListIterator<value_type> it): _base(it) {};
 				reverse_iterator(reverse_iterator<iterator_type > const & src): _base(src.base()) {};
+				reverse_iterator(reverse_iterator<iterator_type > & src): _base(src.base()) {};
 				virtual ~reverse_iterator(void) {};
 
 				iterator_type	base() const { return _base; }

@@ -189,16 +189,16 @@ void	test_constructor(void)
 		std::cout << "What?" << std::endl;
 
 	std::cout << "Test 5: ";
-//	if (v2 == copy)
-//		std::cout << "Success" << std::endl;
-//	else
-//		std::cout << "What?" << std::endl;
-//
-//	std::cout << "Test 6: ";
-//	if (v2 == assignation)
-//		std::cout << "Success" << std::endl;
-//	else
-//		std::cout << "What?" << std::endl;
+	if (v2 == copy)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
+
+	std::cout << "Test 6: ";
+	if (v2 == assignation)
+		std::cout << "Success" << std::endl;
+	else
+		std::cout << "What?" << std::endl;
 }
 
 
@@ -510,21 +510,7 @@ void	test_relational_operator(void)
 
 void	test_debug(void)
 {
-//	ft::vector<std::string> empty;
-//	std::vector<std::string> emptystd;
-//	ft::vector<std::string> v1(5);
-//	std::vector<std::string> s1(5);
-//	ft::vector<std::string> v2(11, "toto");
-//	std::vector<std::string> s2(11, "toto");
-//	ft::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
-//	std::vector<std::string> s3(s2.begin()+1, s2.end() - 2);
-
-	ft::vector<int> i1(2);
-	ft::vector<int> i2(3,5);
-	ft::vector<ft::vector<int> > l1(2, i1);
-	ft::vector<ft::vector<int> > l2 (5, i2);
-
-	l2.insert(++l2.begin(), 1, i1);
+	std::string s1, s2;
 }
 
 int main()

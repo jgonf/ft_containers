@@ -84,6 +84,21 @@ namespace ft
 		struct enable_if {};
 	template<class T>
 		struct enable_if<true, T> { typedef T type; };
+
+
+//is_same
+
+
+	template<typename, typename>
+		struct is_same {
+			const static bool value = false;
+		};
+
+	template<typename T>
+		struct is_same<T, T>  {
+			const static bool value = true;
+		};
+
 }
 
 #endif
