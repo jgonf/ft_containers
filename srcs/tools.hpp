@@ -99,6 +99,15 @@ namespace ft
 			const static bool value = true;
 		};
 
+
+//is_const
+
+	template<bool, typename, typename>
+		struct is_const {};
+	template<class T, class U>
+		struct is_const<true, T, U> { typedef T type; };
+	template<class T, class U>
+		struct is_const<false, T, U> { typedef U type; };
 }
 
 #endif

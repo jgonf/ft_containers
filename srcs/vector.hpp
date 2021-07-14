@@ -35,8 +35,8 @@ namespace ft
 				typedef value_type		*pointer;
 				typedef value_type const	*const_pointer;
 
-				typedef RandomIterator<value_type>	iterator;
-				typedef ConstRandomIterator<value_type>		const_iterator;
+				typedef RandomIterator<value_type, false>	iterator;
+				typedef RandomIterator<value_type, true>		const_iterator;
 				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>	reverse_iterator;
 

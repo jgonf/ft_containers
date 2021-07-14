@@ -1,25 +1,26 @@
 #ifndef RANDOMITERATOR_HPP
 #define RANDOMITERATOR_HPP
 
-#include <list>
+//#include <list>
+#include "tools.hpp"
 
 namespace ft
 {
-	template < typename T>
+	template < typename T, bool const_it>
 		class RandomIterator
 		{
 			public:
 
-				typedef T		value_type;
-				typedef std::ptrdiff_t 	difference_type;
-				typedef T		*pointer;
-				typedef T		&reference;
-				static const bool	input_iter;
-				typedef	ft::random_access_iterator_tag	iterator_category;
+				typedef typename ft::is_const<const_it, const T, T>::type	value_type;
+				typedef std::ptrdiff_t							difference_type;
+				typedef value_type								*pointer;
+				typedef value_type								&reference;
+				static const bool								input_iter;
+				typedef	random_access_iterator_tag			iterator_category;
 
 				RandomIterator(void): _ptr(NULL) {}
 				RandomIterator(RandomIterator const &src): _ptr(src._ptr) {};
-				RandomIterator(typename std::list<value_type>::iterator const &it): _ptr(&(*it)) {};
+//				RandomIterator(typename std::list<value_type>::iterator const &it): _ptr(&(*it)) {};
 				RandomIterator(pointer ptr): _ptr(ptr) {};
 				virtual ~RandomIterator(void) {}
 
@@ -45,14 +46,14 @@ namespace ft
 
 				RandomIterator	operator++(int)
 				{
-					RandomIterator<value_type> tmp = *this;
+					RandomIterator<value_type, const_it> tmp = *this;
 					_ptr++;
 					return tmp;
 				}
 
 				RandomIterator	operator--(int)
 				{
-					RandomIterator<value_type> tmp = *this;
+					RandomIterator<value_type, const_it> tmp = *this;
 					_ptr--;
 					return tmp;
 				}
@@ -62,20 +63,20 @@ namespace ft
 					return (_ptr == cmp._ptr);
 				}
 
-				bool operator==(ConstRandomIterator<T> const &cmp) const
-				{
-					return (_ptr == cmp.getPtr());
-				}
+//				bool operator==(ConstRandomIterator<T> const &cmp) const
+//				{
+//					return (_ptr == cmp.getPtr());
+//				}
 
 				bool operator!=(RandomIterator const &cmp) const
 				{
 					return !(*this == cmp);
 				}
 
-				bool operator!=(ConstRandomIterator<T> const &cmp) const
-				{
-					return !(*this == cmp);
-				}
+//				bool operator!=(ConstRandomIterator<T> const &cmp) const
+//				{
+//					return !(*this == cmp);
+//				}
 
 				reference operator*(void) const { return *_ptr; }
 				pointer	operator->(void) const { return _ptr; }
@@ -108,10 +109,10 @@ namespace ft
 					return (_ptr < cmp._ptr);
 				}
 
-				bool operator<(ConstRandomIterator<T> const &cmp) const
-				{
-					return (_ptr < cmp.getPtr());
-				}
+//				bool operator<(ConstRandomIterator<T> const &cmp) const
+//				{
+//					return (_ptr < cmp.getPtr());
+//				}
 
 
 				bool operator>(RandomIterator const &cmp) const
@@ -119,30 +120,30 @@ namespace ft
 					return (_ptr > cmp._ptr);
 				}
 
-				bool operator>(ConstRandomIterator<T> const &cmp) const
-				{
-					return (_ptr > cmp.getPtr());
-				}
+//				bool operator>(ConstRandomIterator<T> const &cmp) const
+//				{
+//					return (_ptr > cmp.getPtr());
+//				}
 
 				bool operator<=(RandomIterator const &cmp) const
 				{
 					return (_ptr <= cmp._ptr);
 				}
 
-				bool operator<=(ConstRandomIterator<T> const &cmp) const
-				{
-					return (_ptr <= cmp.getPtr());
-				}
+//				bool operator<=(ConstRandomIterator<T> const &cmp) const
+//				{
+//					return (_ptr <= cmp.getPtr());
+//				}
 
 				bool operator>=(RandomIterator const &cmp) const
 				{
 					return (_ptr >= cmp._ptr);
 				}
 
-				bool operator>=(ConstRandomIterator<T> const &cmp) const
-				{
-					return (_ptr >= cmp.getPtr());
-				}
+//				bool operator>=(ConstRandomIterator<T> const &cmp) const
+//				{
+//					return (_ptr >= cmp.getPtr());
+//				}
 
 				RandomIterator operator+=(difference_type n)
 				{
@@ -162,18 +163,18 @@ namespace ft
 				pointer	_ptr;
 		};
 
-	template <typename T>
-		RandomIterator<T> operator+(int n, RandomIterator<T> &src)
+	template <typename T, bool const_it>
+		RandomIterator<T, const_it> operator+(int n, RandomIterator<T, const_it> &src)
 		{
 			T *tmp = src.getPtr();
 			return tmp +=n;
 		}
 
-	template < class T>
-		const bool RandomIterator<T>::input_iter = true;
-
-	template <class T>
-		class ConstRandomIterator: public RandomIterator<T>
+	template < class T, bool const_it>
+		const bool RandomIterator<T, const_it>::input_iter = true;
+/*
+	template <class T, bool const_it>
+		class ConstRandomIterator: public RandomIterator<T, const_it>
 	{
 		public:
 			typedef T		value_type;
@@ -295,7 +296,7 @@ namespace ft
 
 	template < class T>
 		const bool ConstRandomIterator<T>::input_iter = true;
-
+*/
 }
 
 #endif

@@ -23,17 +23,8 @@ namespace ft
 	struct BidirectionalIteratorTag : public ForwardIteratorTag {};
 	struct random_access_iterator_tag : public BidirectionalIteratorTag {};
 
-	template < typename T>
+	template < typename T, bool is_const>
 		class RandomIterator;
-
-	template < typename T>
-		class ConstRandomIterator;
-
-	template < typename T>
-		class ListIterator;
-
-	template < typename T>
-		class ConstListIterator;
 
 	template <class Iterator>
 		class reverse_iterator {
@@ -47,8 +38,7 @@ namespace ft
 				typedef typename Iterator::reference		reference;
 
 				reverse_iterator(void): _base(NULL) {};
-				reverse_iterator(RandomIterator<value_type> it): _base(it) {};
-				reverse_iterator(ListIterator<value_type> it): _base(it) {};
+				reverse_iterator(Iterator it): _base(it) {};
 				reverse_iterator(reverse_iterator<iterator_type > const & src): _base(src.base()) {};
 				reverse_iterator(reverse_iterator<iterator_type > & src): _base(src.base()) {};
 				virtual ~reverse_iterator(void) {};
@@ -169,44 +159,45 @@ namespace ft
 				Iterator	_base;
 		};
 
+/*
 		template <class value_type>
-		bool operator==(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		bool operator==(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() == rhs.base();
 		}
 
 		template <class value_type>
-		bool operator!=(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		bool operator!=(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() != rhs.base();
 		}
 
 		template <class value_type>
-		bool operator<(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		bool operator<(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() > rhs.base();
 		}
 
 		template <class value_type>
-		bool operator<=(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		bool operator<=(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() >= rhs.base();
 		}
 
 		template <class value_type>
-		bool operator>(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		bool operator>(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() < rhs.base();
 		}
 
 		template <class value_type>
-		bool operator>=(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		bool operator>=(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() <= rhs.base();
 		}
 
 		template <class value_type>
-		typename reverse_iterator<RandomIterator<value_type> >::difference_type operator-(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
+		typename reverse_iterator<RandomIterator<value_type, is_const> >::difference_type operator-(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
 		{
 			return lhs.base() - rhs.base();
 		}
@@ -221,5 +212,5 @@ namespace ft
 		}
 
 }
-
+*/
 #endif
