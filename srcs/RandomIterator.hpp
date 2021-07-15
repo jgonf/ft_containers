@@ -19,7 +19,7 @@ namespace ft
 				typedef	random_access_iterator_tag			iterator_category;
 
 				RandomIterator(void): _ptr(NULL) {}
-//				RandomIterator(const RandomIterator &src) {_ptr = src.getPtr(); }
+//				RandomIterator(RandomIterator &src) {_ptr = src.getPtr(); }
 				template <bool is_const>
 					RandomIterator (const RandomIterator<T, is_const> & src, typename ft::enable_if<!is_const, T>::type* = 0) { _ptr = src.getPtr(); }
 //				RandomIterator(typename std::list<value_type>::iterator const &it): _ptr(&(*it)) {};
@@ -48,14 +48,14 @@ namespace ft
 
 				RandomIterator	operator++(int)
 				{
-					RandomIterator<value_type, const_it> tmp (*this);
+					RandomIterator<T, const_it> tmp (*this);
 					_ptr++;
 					return tmp;
 				}
 
 				RandomIterator operator--(int)
 				{
-					RandomIterator<value_type, const_it> tmp (*this);
+					RandomIterator<T, const_it> tmp (*this);
 					_ptr--;
 					return tmp;
 				}

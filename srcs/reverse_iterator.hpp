@@ -39,13 +39,12 @@ namespace ft
 
 				reverse_iterator(void): _base(NULL) {};
 				reverse_iterator(Iterator it): _base(it) {};
-				template <typename T>
-				reverse_iterator(reverse_iterator<T > const & src): _base(src.base()) {};
 				reverse_iterator(reverse_iterator<iterator_type > & src): _base(src.base()) {};
+				template <class T>
+				reverse_iterator(reverse_iterator<T> const & src): _base(src.base()) {};
 				virtual ~reverse_iterator(void) {};
 
 				iterator_type	base() const { return _base; }
-
 				reference	operator*(void) const
 				{
 //					T	*ptr = _base.getPtr();
@@ -126,32 +125,38 @@ namespace ft
 					return base()[-n - 1];
 				}
 
-				bool operator==(reverse_iterator const & src) const
+				template <typename T>
+					bool operator==(reverse_iterator<T> const & src) const
 				{
 					return _base == src.base();
 				}
 
-				bool operator!=(reverse_iterator const & src) const
+				template <typename T>
+					bool operator!=(reverse_iterator<T> const & src) const
 				{
 					return _base != src.base();
 				}
 
-				bool operator<(reverse_iterator const & src) const
+				template <typename T>
+					bool operator<(reverse_iterator<T> const & src) const
 				{
 					return _base > src.base();
 				}
 
-				bool operator<=(reverse_iterator const & src) const
+				template <typename T>
+					bool operator<=(reverse_iterator<T> const & src) const
 				{
 					return _base >= src.base();
 				}
 
-				bool operator>(reverse_iterator const & src) const
+				template <typename T>
+					bool operator>(reverse_iterator<T> const & src) const
 				{
 					return _base < src.base();
 				}
 
-				bool operator>=(reverse_iterator const & src) const
+				template <typename T>
+					bool operator>=(reverse_iterator<T> const & src) const
 				{
 					return _base <= src.base();
 				}
