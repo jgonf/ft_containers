@@ -13,7 +13,6 @@
 #include "../srcs/vector.hpp"
 #include <vector>
 
-
 void	test_iterator(void)
 {
 	std::cout << "Iterator test" << std::endl;
