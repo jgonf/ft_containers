@@ -19,9 +19,9 @@ namespace ft
 				typedef	random_access_iterator_tag			iterator_category;
 
 				RandomIterator(void): _ptr(NULL) {}
+//				RandomIterator(const RandomIterator &src) {_ptr = src.getPtr(); }
 				template <bool is_const>
 					RandomIterator (const RandomIterator<T, is_const> & src, typename ft::enable_if<!is_const, T>::type* = 0) { _ptr = src.getPtr(); }
-//				RandomIterator(RandomIterator const &src): _ptr(src._ptr) {};
 //				RandomIterator(typename std::list<value_type>::iterator const &it): _ptr(&(*it)) {};
 				RandomIterator(pointer ptr): _ptr(ptr) {};
 				virtual ~RandomIterator(void) {}
@@ -48,14 +48,14 @@ namespace ft
 
 				RandomIterator	operator++(int)
 				{
-					RandomIterator<value_type, const_it> tmp = *this;
+					RandomIterator<value_type, const_it> tmp (*this);
 					_ptr++;
 					return tmp;
 				}
 
-				RandomIterator	operator--(int)
+				RandomIterator operator--(int)
 				{
-					RandomIterator<value_type, const_it> tmp = *this;
+					RandomIterator<value_type, const_it> tmp (*this);
 					_ptr--;
 					return tmp;
 				}
@@ -89,27 +89,31 @@ namespace ft
 
 				difference_type operator-(const RandomIterator &cmp) const
 				{
-					return _ptr - cmp._ptr;
+					return _ptr - cmp.getPtr();
 				}
 
-				bool operator<(RandomIterator const &cmp) const
+				template <bool is_const>
+					bool operator<(RandomIterator<T, is_const> const &cmp) const
 				{
-					return (_ptr < cmp._ptr);
+					return (_ptr < cmp.getPtr());
 				}
 
-				bool operator>(RandomIterator const &cmp) const
+				template <bool is_const>
+					bool operator>(RandomIterator<T, is_const> const &cmp) const
 				{
-					return (_ptr > cmp._ptr);
+					return (_ptr > cmp.getPtr());
 				}
 
-				bool operator<=(RandomIterator const &cmp) const
+				template <bool is_const>
+					bool operator<=(RandomIterator<T, is_const> const &cmp) const
 				{
-					return (_ptr <= cmp._ptr);
+					return (_ptr <= cmp.getPtr());
 				}
 
-				bool operator>=(RandomIterator const &cmp) const
+				template <bool is_const>
+					bool operator>=(RandomIterator<T, is_const> const &cmp) const
 				{
-					return (_ptr >= cmp._ptr);
+					return (_ptr >= cmp.getPtr());
 				}
 
 				RandomIterator operator+=(difference_type n)
@@ -135,6 +139,13 @@ namespace ft
 		{
 			T *tmp = src.getPtr();
 			return tmp +=n;
+		}
+
+	template <typename T, bool const_it>
+		RandomIterator<T, const_it> operator+(int n, reverse_iterator< RandomIterator<T, const_it> > &src)
+		{
+			T *tmp = src.base().getPtr();
+			return tmp - n;
 		}
 
 	template < class T, bool const_it>

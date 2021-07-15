@@ -39,7 +39,8 @@ namespace ft
 
 				reverse_iterator(void): _base(NULL) {};
 				reverse_iterator(Iterator it): _base(it) {};
-				reverse_iterator(reverse_iterator<iterator_type > const & src): _base(src.base()) {};
+				template <typename T>
+				reverse_iterator(reverse_iterator<T > const & src): _base(src.base()) {};
 				reverse_iterator(reverse_iterator<iterator_type > & src): _base(src.base()) {};
 				virtual ~reverse_iterator(void) {};
 
@@ -90,7 +91,7 @@ namespace ft
 //					return tmp + n;
 				}
 
-				difference_type operator-(reverse_iterator const& src)
+				difference_type operator-(reverse_iterator const& src) const
 				{
 //					return _base - src.base();
 					return src.base() - _base;
