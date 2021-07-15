@@ -14,10 +14,11 @@
 #define MAP_HPP
 
 # include <iostream>
-# include "vector.hpp"
 # include <string>
+# include "vector.hpp"
 # include "reverse_iterator.hpp"
 # include "TreeIterator.hpp"
+# include "tools.hpp"
 
 namespace ft {
 
@@ -80,8 +81,8 @@ namespace ft {
 				typedef value_type*						pointer;
 				typedef const value_type*				const_pointer;
 				typedef node_tree<value_type>			node_type;
-				typedef TreeIterator<value_type>		iterator;
-				typedef ConstTreeIterator<value_type>	const_iterator;
+				typedef TreeIterator<value_type, false>		iterator;
+				typedef TreeIterator<value_type, true>	const_iterator;
 				typedef reverse_iterator<const_iterator>	const_reverse_iterator;
 				typedef reverse_iterator<iterator>		reverse_iterator;
 				typedef std::ptrdiff_t					difference_type;
@@ -231,7 +232,7 @@ namespace ft {
 				}
 
 				template <class InputIterator>
-					void insert(InputIterator first, InputIterator last)
+					void insert(InputIterator first, typename ft::enable_if<!ft::is_same<InputIterator, int>::value, InputIterator>::type last)
 					{
 						while (first != last)
 						{
@@ -357,7 +358,7 @@ namespace ft {
 
 				value_compare	value_comp(void)	const
 				{
-					return value_compare(key_comp);
+					return value_compare(_cmp);
 				}
 
 //operations

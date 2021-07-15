@@ -21,15 +21,12 @@ namespace ft
 	template <class T>
 		struct node_tree;
 
-	template <class T>
-		class ConstTreeIterator;
-
-	template < typename T>
+	template < typename T, bool const_it>
 		class TreeIterator
 		{
 			public:
 
-				typedef T		value_type;
+				typedef typename ft::is_const<const_it, const T, T>::type	value_type;
 				typedef std::ptrdiff_t 	difference_type;
 				typedef node_tree<T>	*pointer;
 				typedef T		&reference;
@@ -37,15 +34,18 @@ namespace ft
 				typedef	ft::BidirectionalIteratorTag	iterator_category;
 
 				TreeIterator(void): _ptr(NULL) {}
-				TreeIterator(TreeIterator const &src): _ptr(src._ptr) {};
+				template <bool is_const>
+					TreeIterator (const TreeIterator<T, is_const> & src, typename ft::enable_if<!is_const, T>::type* = 0) { _ptr = src.getPtr(); }
+				TreeIterator(TreeIterator const &src): _ptr(src.getPtr()) {};
 				TreeIterator(pointer _ptr): _ptr(_ptr) {};
 				virtual ~TreeIterator(void) {}
 
 				pointer	getPtr(void) const { return _ptr; }
 
-				TreeIterator	&operator=(TreeIterator const & src)
+				template <bool is_const>
+				TreeIterator	&operator=(TreeIterator<T, is_const> const & src)
 				{
-					_ptr = src._ptr;
+					_ptr = src.getPtr();
 					return *this;
 				}
 
@@ -63,34 +63,26 @@ namespace ft
 
 				TreeIterator	operator++(int)
 				{
-					TreeIterator<value_type> tmp = *this;
+					TreeIterator<T, const_it> tmp = *this;
 					++(*this);
 					return tmp;
 				}
 
 				TreeIterator	operator--(int)
 				{
-					TreeIterator<value_type> tmp = *this;
+					TreeIterator<T, const_it> tmp = *this;
 					--(*this);
 					return tmp;
 				}
 
-				bool operator==(TreeIterator const &cmp) const
-				{
-					return (_ptr == cmp._ptr);
-				}
-
-				bool operator==(ConstTreeIterator<T> const &cmp) const
+				template <bool is_const>
+					bool operator==(TreeIterator<T, is_const> const &cmp) const
 				{
 					return (_ptr == cmp.getPtr());
 				}
 
-				bool operator!=(TreeIterator const &cmp) const
-				{
-					return !(*this == cmp);
-				}
-
-				bool operator!=(ConstTreeIterator<T> const &cmp) const
+				template <bool is_const>
+					bool operator!=(TreeIterator<T, is_const> const &cmp) const
 				{
 					return !(*this == cmp);
 				}
@@ -107,11 +99,6 @@ namespace ft
 //code a changer plus tard
 				void	_setNextNode(void)
 				{
-					if (_ptr == NULL)
-						std::cout << "WHAT ? " << std::endl;
-					if (this->_ptr->left == NULL)
-						std::cout << "osef" << std::endl;
-					std::cout << "no segfault" << std::endl;
 					if (_ptr->right && !(_ptr->is_tail))
 					{
 						_ptr = _ptr->right;
@@ -144,151 +131,8 @@ namespace ft
 				}
 		};
 
-	template < class T>
-		const bool TreeIterator<T>::input_iter = true;
-
-	template <class T>
-		class ConstTreeIterator: public TreeIterator<T>
-	{	
-		public:
-
-				typedef T		value_type;
-				typedef std::ptrdiff_t 	difference_type;
-				typedef node_tree<T>	*pointer;
-				typedef T		&reference;
-				static const bool	input_iter;
-				typedef	ft::BidirectionalIteratorTag	iterator_category;
-
-				ConstTreeIterator(void): _ptr(NULL) {}
-	//			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
-				ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
-				virtual ~ConstTreeIterator(void) {}
-
-				pointer	getPtr(void) const { return _ptr; }
-
-				ConstTreeIterator	&operator=(ConstTreeIterator const & src)
-				{
-					_ptr = src._ptr;
-					return *this;
-				}
-
-				ConstTreeIterator	&operator++(void)
-				{
-					this->_setNextNode();
-					return *this;
-				}
-
-				ConstTreeIterator	&operator--(void)
-				{
-					this->_setPrevNode();
-					return *this;
-				}
-
-				ConstTreeIterator	operator++(int)
-				{
-					ConstTreeIterator<value_type> tmp = *this;
-					++(*this);
-					return tmp;
-				}
-
-				ConstTreeIterator	operator--(int)
-				{
-					ConstTreeIterator<value_type> tmp = *this;
-					--(*this);
-					return tmp;
-				}
-
-				bool operator==(ConstTreeIterator const &cmp) const
-				{
-					return (_ptr == cmp._ptr);
-				}
-
-				bool operator!=(ConstTreeIterator const &cmp) const
-				{
-					return !(*this == cmp);
-				}
-
-				reference	operator*(void) { return (_ptr->data); }
-				reference	operator*(void) const { return (_ptr->data); }
-				T			*operator->(void) { return &(this->operator*()); }
-				T			*operator->(void) const { return &(this->operator*()); }
-
-
-			protected:
-				pointer	_ptr;
-/*
-		public:
-			typedef T		value_type;
-			typedef std::ptrdiff_t 	difference_type;
-			typedef node_tree<T>	*pointer;
-			typedef  T		&reference;
-			static const bool	input_iter;
-			typedef	ft::BidirectionalIteratorTag	iterator_category;
-//			typedef	ft::random_access_iterator_tag	iterator_category;
-
-			ConstTreeIterator(void): _ptr(NULL) {}
-//			ConstTreeIterator(TreeIterator<T> const &src): _ptr(src.getPtr()) {};
-//			ConstTreeIterator(ConstTreeIterator const &src): _ptr(src._ptr) {};
-//			ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
-			ConstTreeIterator(pointer _ptr): _ptr(_ptr) {};
-		//	ConstTreeIterator(node_tree<T> *src): _ptr(src) {};
-		//	ConstTreeIterator(node_tree<T> src): _ptr(&src) {};
-			virtual ~ConstTreeIterator(void) {}
-
-			pointer	getPtr(void) const { return _ptr; }
-
-			ConstTreeIterator	&operator=(ConstTreeIterator const & src)
-			{
-				_ptr = src._ptr;
-				return *this;
-			}
-
-			ConstTreeIterator	&operator++(void)
-			{
-				this->_setNextNode();
-				return *this;
-			}
-
-			ConstTreeIterator	&operator--(void)
-			{
-				this->_setPrevNode();
-				return *this;
-			}
-
-			ConstTreeIterator	operator++(int)
-			{
-				ConstTreeIterator<value_type> tmp = *this;
-				++(*this);
-				return tmp;
-			}
-
-			ConstTreeIterator	operator--(int)
-			{
-				ConstTreeIterator<value_type> tmp = *this;
-				--(*this);
-				return tmp;
-			}
-
-			bool operator==(ConstTreeIterator const &cmp) const
-			{
-				return (_ptr == cmp._ptr);
-			}
-
-			bool operator!=(ConstTreeIterator const &cmp) const
-			{
-				return !(*this == cmp);
-			}
-
-			reference	operator*(void) const { return _ptr->data; }
-			const T	*operator->(void) const { return &(this->operator*()); }
-
-		private:
-			pointer	_ptr;
-*/
-	};
-
-	template < class T>
-		const bool ConstTreeIterator<T>::input_iter = true;
+	template < class T, bool const_it>
+		const bool TreeIterator<T, const_it>::input_iter = true;
 
 }
 

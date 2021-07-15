@@ -19,10 +19,8 @@ namespace ft
 				typedef	random_access_iterator_tag			iterator_category;
 
 				RandomIterator(void): _ptr(NULL) {}
-//				RandomIterator(RandomIterator &src) {_ptr = src.getPtr(); }
 				template <bool is_const>
 					RandomIterator (const RandomIterator<T, is_const> & src, typename ft::enable_if<!is_const, T>::type* = 0) { _ptr = src.getPtr(); }
-//				RandomIterator(typename std::list<value_type>::iterator const &it): _ptr(&(*it)) {};
 				RandomIterator(pointer ptr): _ptr(ptr) {};
 				virtual ~RandomIterator(void) {}
 
