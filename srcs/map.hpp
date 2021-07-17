@@ -62,6 +62,17 @@ namespace ft {
 			return (lhs.first == rhs.first && lhs.second == rhs.second);
 		}
 
+	template <class T1, class T2>
+		bool operator< (const pair<T1,T2> & lhs, const pair<T1,T2> & rhs)
+		{
+			if (lhs.first < rhs.first)
+				return true;
+			if (lhs.first == rhs.first && lhs.second < rhs.second)
+				return true;
+			return false;
+		}
+
+
 	template <typename T>
 		struct node_tree {
 			public :
@@ -206,7 +217,8 @@ namespace ft {
 
 					if (!_size)
 					{
-						_tail = new node_type;
+						_root = new node_type;
+//						_tail = new node_type;
 						_root->data = val;
 						_root->parent = NULL;
 						_root->left = NULL;
@@ -251,6 +263,7 @@ namespace ft {
 
 				void erase(iterator position)
 				{
+					bool	is_root = false;
 					node_type	*node = position.getPtr();
 					node_type	*tmp;
 
@@ -266,7 +279,8 @@ namespace ft {
 						_size--;
 						return ;
 					}
-
+					if (node == _root)
+						is_root = true;
 					if (!(node->left) && !((_check_node_right(node))))
 					{
 						if (key_compare()(node->parent->data.first, node->data.first))
@@ -288,7 +302,7 @@ namespace ft {
 						tmp = (++position).getPtr();
 						node->data = tmp->data;
 						if (node->right == tmp)
-							node->right = NULL;
+							node->right = tmp->right;
 						else
 						{
 							if (key_compare()(tmp->data.first, node->data.first))
@@ -298,7 +312,6 @@ namespace ft {
 						}
 						delete tmp;
 						_size--;
-
 						return ;
 					}
 					node->data = tmp->data;
@@ -308,7 +321,6 @@ namespace ft {
 						node->left->parent = node;
 					if (node->right)
 						node->right->parent = node;
-
 					delete tmp;
 					tmp = NULL;
 					_size--;
@@ -387,7 +399,7 @@ namespace ft {
 				size_type	count(const key_type& k) const
 				{
 					if (find(k) == end())
-						return 0;
+							return 0;
 					return 1;
 				}
 
@@ -602,7 +614,7 @@ namespace ft {
 	template <class Key, class T, class Compare, class Alloc>
 		bool operator<  ( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs )
 		{
-			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), lhs.value_comp());
+			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 
 	template <class Key, class T, class Compare, class Alloc>

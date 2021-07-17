@@ -219,11 +219,11 @@ void	test_debug()
 
 int main()
 {
-//	test_iterator();
-//	test_capacity();
-//	test_modifiers();
-//	test_observers();
-//	test_operations();
-	test_debug();
+	test_iterator();
+	test_capacity();
+	test_modifiers();
+	test_observers();
+	test_operations();
+//	test_debug();
 	return 0;
 }

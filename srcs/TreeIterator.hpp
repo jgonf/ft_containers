@@ -30,7 +30,7 @@ namespace ft
 				typedef std::ptrdiff_t 	difference_type;
 				typedef value_type	*pointer;
 				typedef node_tree<T>	*node_ptr;
-				typedef T		&reference;
+				typedef value_type		&reference;
 				static const bool	input_iter;
 				typedef	ft::BidirectionalIteratorTag	iterator_category;
 
@@ -89,7 +89,7 @@ namespace ft
 				}
 
 				reference	operator*(void) const { return (_ptr->data); }
-				T	 		*operator->(void) const { return &(_ptr->data); }
+				value_type	 	*operator->(void) const { return &(_ptr->data); }
 
 			protected:
 				node_ptr	_ptr;
