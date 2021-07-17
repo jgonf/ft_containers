@@ -192,38 +192,17 @@ void	test_operations(void)
 
 void	test_debug()
 {
-	ft::map<int, int> m1;
-	ft::map<int, int>::const_iterator it;
-
-	m1.insert(ft::make_pair(10, 10));
-	m1.insert(ft::make_pair(7, 10));
-	m1.insert(ft::make_pair(12, 10));
-
-	m1.insert(ft::make_pair(9, 10));
-	m1.insert(ft::make_pair(13, 10));
-	m1.insert(ft::make_pair(40, 10));
-
-	m1.insert(ft::make_pair(8, 10));
-	m1.insert(ft::make_pair(1, 10));
-	m1.insert(ft::make_pair(4, 10));
-	m1.insert(ft::make_pair(3, 10));
-
-	for (it = m1.begin(); it != m1.end(); ++it)
-	{
-		std::cout << "before" << std::endl;
-		std::cout << it->first << std::endl;
-		std::cout << "after" << std::endl;
-	}
-//	m1.erase(m1.begin(), m1.end());
+	std::cout << ft::is_integral<char>::value << std::endl;
+	std::cout << ft::is_integral<int>::value << std::endl;
 }
 
 int main()
 {
-	test_iterator();
-	test_capacity();
-	test_modifiers();
-	test_observers();
-	test_operations();
-//	test_debug();
+//	test_iterator();
+//	test_capacity();
+//	test_modifiers();
+//	test_observers();
+//	test_operations();
+	test_debug();
 	return 0;
 }

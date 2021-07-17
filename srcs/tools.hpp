@@ -86,19 +86,17 @@ namespace ft
 		struct enable_if<true, T> { typedef T type; };
 
 
-//is_same
+//is_integral
 
-
-	template<typename, typename>
-		struct is_same {
+	template <class T>
+		struct is_integral {
 			const static bool value = false;
 		};
 
-	template<typename T>
-		struct is_same<T, T>  {
+	template <>
+		struct is_integral<int> {
 			const static bool value = true;
-		};
-
+	};
 
 //is_const
 
