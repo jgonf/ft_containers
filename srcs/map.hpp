@@ -263,7 +263,6 @@ namespace ft {
 
 				void erase(iterator position)
 				{
-					bool	is_root = false;
 					node_type	*node = position.getPtr();
 					node_type	*tmp;
 
@@ -279,8 +278,6 @@ namespace ft {
 						_size--;
 						return ;
 					}
-					if (node == _root)
-						is_root = true;
 					if (!(node->left) && !((_check_node_right(node))))
 					{
 						if (key_compare()(node->parent->data.first, node->data.first))
@@ -306,9 +303,13 @@ namespace ft {
 						else
 						{
 							if (key_compare()(tmp->data.first, node->data.first))
-								node->left = NULL;
+							{
+								std::cout << "impossible ?" << std::endl;
+//								node->left = NULL;
+								tmp->parent->right = NULL;
+							}
 							else
-								node->right = NULL;
+								tmp->parent->left = NULL;
 						}
 						delete tmp;
 						_size--;
