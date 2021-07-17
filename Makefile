@@ -1,8 +1,8 @@
 NAME		= ft_containers
 
 CC		= clang++
-CFLAGS		= -Werror -Wextra -Wall -std=c++98
-FSAN		= -Werror -Wextra -Wall -std=c++98 -g -fsanitize=address
+CFLAGS	= -Werror -Wextra -Wall -std=c++98 -D NAMESPACE="std"
+FSAN	= -Werror -Wextra -Wall -std=c++98 -g -fsanitize=address
 RM		= rm -rf
 
 DIR_SRCS	= test/
@@ -22,10 +22,10 @@ HEADER		= -I $(DIR_INC)
 all:		$(NAME)
 
 $(DIR_OBJS)%.o: $(DIR_SRCS)%.cpp
-		$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
+		$(CC) $(CFLAGS) $(NAMESPACE) $(HEADER) -c $< -o $@
 
 $(NAME):	$(DIR_OBJS) $(OBJS)
-		${CC} $(CFLAGS) $(OBJS) -o $(NAME)
+		${CC} $(CFLAGS) $(NAMESPACE) $(OBJS) -o $(NAME)
 
 $(DIR_OBJS):
 		@mkdir $(DIR_OBJS)

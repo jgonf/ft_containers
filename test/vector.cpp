@@ -10,296 +10,155 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../srcs/vector.hpp"
 #include <vector>
+#include <map>
+#include <stack>
+#include "../srcs/vector.hpp"
+#include "../srcs/map.hpp"
+#include "../srcs/stack.hpp"
 
-void	test_iterator(void)
+template<typename T>
+void	print_vector(NAMESPACE::vector<T> test)
 {
-	std::cout << "Iterator test" << std::endl;
-	ft::vector<int> v1(5, 5);
-	ft::vector<int> v2(5, 5);
+	typename NAMESPACE::vector<T>::iterator it;
 
-	ft::vector<int>::iterator it;
+	std::cout << "Elements: " << std::endl;
+	for (it = test.begin(); it != test.end(); ++it)
+		std::cout << *it << std::endl;
+	std::cout << std::endl;
+}
 
-	std::cout << "test 1: ";
-	if (v1.begin() == v1.begin())
-		std::cout << "Success" << std::endl;
-	if (v1.begin() == v2.begin())
-		std::cout << "What ?" << std::endl;
+void	vector_constructors(void)
+{
+	std::cout << "Test constructors and copy" << std::endl;
+	NAMESPACE::vector<std::string> empty;
+	NAMESPACE::vector<std::string, std::allocator<std::string> > v1(5);
+	NAMESPACE::vector<std::string> v2(5, "toto");
+	NAMESPACE::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
+	NAMESPACE::vector<std::string> copy(v2);
+	NAMESPACE::vector<std::string> assignation;
+	assignation = v1;
 
-	std::cout << "test 2: ";
-	if (v1.begin() != v2.begin())
-		std::cout << "Success" << std::endl;
-	if (v1.begin() != v1.begin())
-		std::cout << "What ?" << std::endl;
+	std::cout << "Size of empty() : " << empty.size() << std::endl;
+	std::cout << "Size of v1(5): " << v1.size() << std::endl;
+	print_vector(v1);
+	std::cout << "Size of v2(5, \"toto\"): " << v2.size() << std::endl;
+	print_vector(v2);
+	std::cout << "Size of v3(v2.begin() + 1, v2.end() - 2): " << v3.size() << std::endl;
+	print_vector(v3);
+	std::cout << "Size of copy(v2): " << copy.size() << std::endl;
+	print_vector(copy);
+	std::cout << "Size of assignation(v1): " << assignation.size() << std::endl;
+	print_vector(assignation);
 
-	std::cout << "test 3: ";
+	std::cout << std::endl;
+}
+
+void	vector_iterators(void)
+{
+	std::cout << "Test iterators and iterators comparisons" << std::endl << std::endl;
+	NAMESPACE::vector<bool> v1(3, true);
+	NAMESPACE::vector<bool> v2(3, true);
+	NAMESPACE::vector<bool>::iterator it;
+
+	std::cout << "	Comparaison between identical vectors v(3, true) :" << std::endl;
+	std::cout << "v1.begin() == v1.begin() " << (v1.begin() == v1.begin()) << std::endl;
+	std::cout << "v1.begin() == v2.begin() " << (v1.begin() == v2.begin()) << std::endl;
+	std::cout << "v1.begin() != v1.begin() " << (v1.begin() != v1.begin()) << std::endl;
+	std::cout << "v1.begin() != v2.begin() " << (v1.begin() != v2.begin()) << std::endl;
+
+	std::cout << "Test *it, --it, it++...: " << std::endl;
 	it = v2.begin();
-	if(*it == 5)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 4: ";
+	std::cout << *it << std::endl;
 	++it;
 	--it;
-	if(it == v2.begin())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
+	std::cout << (it == v2.begin()) << std::endl;
 
-	std::cout << "test 5: ";
 	it++;
 	it--;
-	if(it == v2.begin())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
+	std::cout << (it == v2.begin()) << std::endl;
 
-	ft::vector<int> test1(1, 0);
-	std::vector<int> cmp1(1, 0);
+	std::cout << std::endl;
+	NAMESPACE::vector<int> test(1, 0);
 
 	for (int i = 1; i < 7; ++i)
-	{
-		test1.push_back(i);
-		cmp1.push_back(i);
-	}
+		test.push_back(i);
+	print_vector(test);
 
-	ft::vector<int>::iterator it_test = test1.begin();
-	std::vector<int>::iterator it_cmp = cmp1.begin();
-
-	std::cout << "test 6: ";
-	if (*(it_test + 3) == *(it_cmp + 3))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-	std::cout << "test 7: ";
-	if (*(2 + it_test) == *(2 + it_cmp))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-	std::cout << "test 8: ";
-	if (*(it_test) == *(it_cmp))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 9: ";
+	NAMESPACE::vector<int>::iterator it_test = test.begin();
+	std::cout << "it + 3: " << *(it_test + 3) << std::endl;
+	std::cout << "2 + it: " << *(2 + it_test) << std::endl;
+	std::cout << "it: " << *(it_test) << std::endl;
 	it_test++;
-	it_cmp++;
-	if (*(it_test - 1) == *(it_cmp - 1))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 10: ";
-	if ((it_test - (it_test + 3)) == (it_cmp - (it_cmp + 3)))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 11: ";
-	if ((it_test - (it_test - 2)) == (it_cmp - (it_cmp - 2)))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 12: ";
-	if ((it_test > it_test++) == (it_cmp > it_cmp++))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 13: ";
-	if ((it_test <= it_test) == (it_cmp <= it_cmp))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 14: ";
-	if ((it_test < it_test--) == (it_cmp < it_cmp--))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 15: ";
-	if ((it_test >= it_test) == (it_cmp >= it_cmp))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 16: ";
-	if (*(it_test -= 1) == *(it_cmp -= 1))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-	std::cout << "test 17: ";
-	if (*(it_test += 2) == *(it_cmp += 2))
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-	std::cout << "test 18: ";
-	if (it_test[3] == it_cmp[3])
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What ?" << std::endl;
-
-
+	std::cout << "it++ it-1: " << *(it_test -1) << std::endl;
+	std::cout << "it - (it + 3): " << it_test - (it_test + 3) << std::endl;
+	std::cout << "it - (it - 3): " << it_test - (it_test - 2) << std::endl;
+	std::cout << "it > it++: " << (it_test > it_test++) << std::endl;
+	std::cout << "it <= it: " << (it_test <= it_test) << std::endl;
+	std::cout << "it < it--: " << (it_test < it_test--) << std::endl;
+	std::cout << "it >= it: " << (it_test >= it_test) << std::endl;
+	std::cout << "*(it -= 1): " << *(it_test -= 1) << std::endl;
+	std::cout << "*(it += 2): " << *(it_test += 2) << std::endl;
+	std::cout << "it[3]: " << it_test[3]  << std::endl;
 }
 
-void	test_constructor(void)
+void	vector_capacity(void)
 {
-	std::cout << "Constructor and copy" << std::endl;
-	ft::vector<std::string> empty;
-	std::vector<std::string> emptystd;
-	ft::vector<std::string, std::allocator<std::string> > v1(5);
-	std::vector<std::string> s1(5);
-	ft::vector<std::string> v2(5, "toto");
-	std::vector<std::string> s2(5, "toto");
-	ft::vector<std::string> v3(v2.begin()+1, v2.end() - 2);
-	std::vector<std::string> s3(s2.begin()+1, s2.end() - 2);
-	ft::vector<std::string> copy(v2);
-	ft::vector<std::string> assignation;
-	assignation = v2;
+	NAMESPACE::vector<int> v1(3);
 
-	std::cout << "Test 1: ";
-	if (empty.size() == emptystd.size() && empty.capacity() == emptystd.capacity())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 2: ";
-	if (v1.size() == s1.size() && v1[0] == s1[0])
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 3: ";
-	if (v2.size() == s2.size() && v2[0] == s2[0])
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 4: ";
-	if (v3.size() == s3.size() && v3[0] == s3[0])
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 5: ";
-	if (v2 == copy)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 6: ";
-	if (v2 == assignation)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-}
-
-
-void	test_size_capacity(void)
-{
 	std::cout << "Test size, max_size, resize, capacity, empty and reserve" << std::endl;
-	ft::vector<int> v1(3);
-	std::vector<int> s1(3);
 
-	std::cout << "Test 1: ";
-	if (v1.size() == 3)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 2: ";
-	if (v1.max_size() == s1.max_size())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
+	std::cout << "Max_size of v1(3): "<< v1.max_size() << std::endl;
 	v1.resize(9, 5);
-	std::cout << "Test 3: ";
-	if (v1.size() == 9 && *(v1.end() -1) == 5)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	v1.resize(4, 9);
-	std::cout << "Test 3: ";
-	if (v1.size() == 4 && *(v1.end()-1) == 5)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
+	std::cout << "Resize(9, 5) >> size: "<< v1.size() << std::endl;
+	print_vector(v1);
+	v1.resize(4, 8);
+	std::cout << "Resize(4, 8) >> size: "<< v1.size() << std::endl;
+	print_vector(v1);
 
 	v1.reserve(20);
-	std::cout << "Test 4: ";
-	if (v1.capacity() == 20)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
+	std::cout << "Reserve(20) >> capacity: "<< v1.capacity() << std::endl;
 	v1.reserve(10);
-	std::cout << "Test 5: ";
-	if (v1.capacity() == 20)
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 6: ";
-	if (!v1.empty())
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 7: ";
+	std::cout << "Reserve(10) >> capacity: "<< v1.capacity() << std::endl;
+	std::cout << "Is empty? " << v1.empty() << std::endl;
+	std::cout << "Try reserve more than max_size" << std::endl;
 	try {
 		v1.reserve(v1.max_size() + 1);
-		std::cout << "What? " << std::endl;	
 	}
 	catch (std::exception & e)
 	{
-		std::cout << "Success" << std::endl;
+		std::cout << "exception catch" << std::endl;
 	}
+	std::cout << std::endl;
 }
 
-void	test_element_access(void)
+void	vector_elements_access(void)
 {
 	std::cout << "Test [], at, front, back" << std::endl;
 
-	ft::vector<char> v1(4,'a');
+	NAMESPACE::vector<char> v1(3,'a');
+	v1.push_back('b');
+	v1.push_back('c');
+	print_vector(v1);
+	std::cout << "v1[0]: " << v1[0] << std::endl;
+	std::cout << "v1[3]: " << v1[3] << std::endl;
+	std::cout << "v1.at(1): " << v1.at(1) << std::endl;
+	std::cout << "v1.at(4)]: " << v1.at(4) << std::endl;
 
-	std::cout << "Test 1: ";
-	if (v1[0] == 'a' && v1[3] == 'a')
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 2: ";
-	if (v1.at(0) == 'a' && v1.at(3) == 'a')
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
-	std::cout << "Test 3: ";
+	std::cout << "Try v1.at(12)" << std::endl;
 	try {
-		v1.at(4);
-		std::cout << "What? " << std::endl;	
+		v1.at(12);
 	}
 	catch (std::exception & e)
 	{
-		std::cout << "Success" << std::endl;
+		std::cout << "Exception caught" << std::endl;
 	}
 
-	v1[0] = 'b';
-	v1[3] = 'c';
-	std::cout << "Test 4: ";
-	if (v1.front() == 'b' && v1.back() == 'c')
-		std::cout << "Success" << std::endl;
-	else
-		std::cout << "What?" << std::endl;
-
+	v1[0] = 'w';
+	v1[4] = 'z';
+	std::cout << "v1[0] = 'w' and v1[4] = 'z'" << std::endl;
+	std::cout << "v1.front(): " << v1.front() << std::endl; 
+	std::cout << "v1.back(): " << v1.back() << std::endl; 
 }
 
 void	test_modifiers1(void)
@@ -529,16 +388,19 @@ ft::vector<int> myvector;
 
 }
 
+void	test_vector(void)
+{
+	std::cout << "/////TEST VECTOR/////" << std::endl << std::endl;
+	vector_constructors();
+	vector_iterators();
+	vector_capacity();
+	vector_elements_access();
+}
+
 int main()
 {
-	test_debug();
+	test_vector();
 
-//	test_constructor();
-//	std::cout << std::endl;
-//
-//	test_iterator();
-//	std::cout << std::endl;
-//
 //	test_size_capacity();
 //	std::cout << std::endl;
 //
