@@ -63,8 +63,9 @@ namespace ft
 					vector(InputIterator first, typename ft::enable_if<!ft::is_same<InputIterator, int>::value, InputIterator>::type last, const allocator_type& alloc = allocator_type()): _alloc(alloc)
 					{
 						size_type	size = 0;
+						InputIterator	cpy = first;
 
-						for (iterator it = first; it != last; ++it)
+						for (; cpy != last; ++cpy)
 							size++;
 						_cont = _alloc.allocate(size);
 						_capacity = size;
@@ -245,8 +246,9 @@ namespace ft
 
 					{
 						size_t size = 0;
-
-						for (iterator it(first); it != last; ++it)
+						InputIterator cpy = first;
+//						for (iterator it(first); it != last; ++it)
+						for (; cpy != last; ++cpy)
 							size++;
 						clear();
 						if (_capacity < size)
@@ -325,10 +327,12 @@ namespace ft
 					{
 						int	len = 0;
 						int	index = 0;
+						InputIterator	cpy = first;
+
 
 						for (iterator it = begin(); it != position; ++it)
 							index++;
-						for (iterator it = first; it != last; ++it)
+						for (; cpy != last; ++cpy)
 							len++;
 						if (_size == 0 || _size * 2 < _size + len)
 							reserve(_size + len);
