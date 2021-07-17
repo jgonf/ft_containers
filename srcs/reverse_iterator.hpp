@@ -118,6 +118,7 @@ namespace ft
 				pointer	operator->(void) const
 				{
 					return &(operator*());
+//					return &((*_base));
 				}
 
 				reference	operator[](difference_type n) const
