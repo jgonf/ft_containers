@@ -464,6 +464,11 @@ namespace ft {
 					return ret;
 				}
 
+				allocator_type get_allocator() const
+				{
+					return _alloc;
+				}
+
 			private:
 				key_compare	_cmp;
 				allocator_type	_alloc;

@@ -395,7 +395,12 @@ namespace ft
 					_size = 0;
 				}
 
-			protected:
+				allocator_type get_allocator() const
+				{
+					return _alloc;
+				}
+
+			private:
 				value_type		*_cont;
 				size_type		_size;
 				size_type		_capacity;
