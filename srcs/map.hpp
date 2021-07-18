@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 12:37:58 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/06/09 15:39:25 by jgonfroy         ###   ########.fr       */
+/*   Created: 2021/07/18 11:08:46 by jgonfroy          #+#    #+#             */
+/*   Updated: 2021/07/18 14:21:23 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ namespace ft {
 				typedef T										mapped_type;
 				typedef pair<key_type, mapped_type>				value_type;
 				typedef Compare									key_compare;
-				//				typedef Alloc									allocator_type;
+//								typedef Alloc									allocator_type;
 				typedef	typename Alloc::template rebind<node_tree<value_type> >::other	allocator_type;
 				typedef value_type&						reference;
 				typedef value_type*						pointer;
@@ -148,7 +148,8 @@ namespace ft {
 				~ map(void)
 				{
 					clear();
-					delete _root;
+					_alloc.destroy (_root);
+					_alloc.deallocate (_root, 1);
 				}
 
 				//iterators
@@ -211,32 +212,36 @@ namespace ft {
 				//modifiers
 				pair<iterator,bool> insert (const value_type& val)
 				{
+					node_type	tmp;
 					iterator	ret;
+
 					if ((ret = find(val.first)) != end())
 						return ft::make_pair<iterator, bool>(ret, false);
 
 					if (!_size)
 					{
-						_root = new node_type;
-//						_tail = new node_type;
-						_root->data = val;
-						_root->parent = NULL;
-						_root->left = NULL;
-						_root->right = _tail;
-						_root->is_tail = false;
+						_root = _alloc.allocate(1);
+						tmp.data = val;
+						tmp.parent = NULL;
+						tmp.left = NULL;
+						tmp.right = _tail;
+						tmp.is_tail = false;
 						_tail->parent = _root;
 						_tail->right = _root;
 						_tail->left = NULL;
 						_tail->is_tail = true;
+						_alloc.construct(_root, tmp);
 						_size++;
 						return ft::make_pair<iterator, bool>(begin(), true);
 					}
-					node_type	*new_node = new node_type;
-					new_node->data = val;
-					new_node->parent = NULL;
-					new_node->right = NULL;
-					new_node->left = NULL;
-					new_node->is_tail = false;
+					node_type	*new_node;
+					new_node = _alloc.allocate(1);
+					tmp.data = val;
+					tmp.parent = NULL;
+					tmp.right = NULL;
+					tmp.left = NULL;
+					tmp.is_tail = false;
+					_alloc.construct(new_node, tmp);
 					new_node = _insert_node(_root, new_node);
 					_size++;
 					//					_balance_tree(new_node);
@@ -273,7 +278,8 @@ namespace ft {
 						_root->parent = NULL;
 						_root->left = NULL;
 						_root->right = NULL;
-						delete _tail;
+						_alloc.destroy(_tail);
+						_alloc.deallocate(_tail, 1);
 						_tail = _root;
 						_size--;
 						return ;
@@ -284,7 +290,8 @@ namespace ft {
 							node->parent->right = NULL;
 						else
 							node->parent->left = NULL;
-						delete node;
+						_alloc.destroy(node);
+						_alloc.deallocate(node, 1);
 						node = NULL;
 						_size--;
 						_update_max();
@@ -464,7 +471,7 @@ namespace ft {
 					return ret;
 				}
 
-				allocator_type get_allocator() const
+				Alloc get_allocator() const
 				{
 					return _alloc;
 				}
@@ -478,11 +485,15 @@ namespace ft {
 
 				void	_init_tree(void)
 				{
-					_root = new node_type;
-					_root->parent = NULL;
-					_root->left = NULL;
-					_root->right = NULL;
-					_root->is_tail = true;
+					node_type tmp;
+
+					_size = 0;
+					_root = _alloc.allocate(1);
+					tmp.parent = NULL;
+					tmp.left = NULL;
+					tmp.right = NULL;
+					tmp.is_tail = true;
+					_alloc.construct(_root, tmp);
 					_tail = _root;
 				}
 

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/25 12:24:51 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/07/18 11:20:18 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ namespace ft
 				TreeIterator(void): _ptr(NULL) {}
 				template <bool is_const>
 					TreeIterator (const TreeIterator<T, is_const> & src, typename ft::enable_if<!is_const, T>::type* = 0) { _ptr = src.getPtr(); }
-//				TreeIterator(TreeIterator const &src): _ptr(src.getPtr()) {};
 				TreeIterator(node_ptr _ptr): _ptr(_ptr) {};
 				virtual ~TreeIterator(void) {}
 
@@ -89,7 +88,7 @@ namespace ft
 				}
 
 				reference	operator*(void) const { return (_ptr->data); }
-				value_type	 	*operator->(void) const { return &(_ptr->data); }
+				value_type	 	*operator->(void) const { return &(operator*()); }
 
 			protected:
 				node_ptr	_ptr;

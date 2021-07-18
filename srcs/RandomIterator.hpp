@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RandomIterator.hpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/18 11:09:15 by jgonfroy          #+#    #+#             */
+/*   Updated: 2021/07/18 11:14:11 by jgonfroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RANDOMITERATOR_HPP
 #define RANDOMITERATOR_HPP
 
-#include <list>
 #include "tools.hpp"
 
 namespace ft

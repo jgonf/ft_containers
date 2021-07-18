@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/31 21:12:36 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/13 14:44:25 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/07/18 11:19:45 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ namespace ft
 				iterator_type	base() const { return _base; }
 				reference	operator*(void) const
 				{
-//					T	*ptr = _base.getPtr();
 					iterator_type cpy(_base);
-//					return *--it;
 					return *--(cpy);
 				}
 
@@ -85,14 +83,10 @@ namespace ft
 					reverse_iterator	ret(tmp.base().getPtr() + n);
 
 					return ret;
-
-//					iterator_type	tmp(_base);
-//					return tmp + n;
 				}
 
 				difference_type operator-(reverse_iterator const& src) const
 				{
-//					return _base - src.base();
 					return src.base() - _base;
 				}
 
@@ -118,7 +112,6 @@ namespace ft
 				pointer	operator->(void) const
 				{
 					return &(operator*());
-//					return &((*_base));
 				}
 
 				reference	operator[](difference_type n) const
@@ -165,59 +158,6 @@ namespace ft
 			private:
 				Iterator	_base;
 		};
-
-/*
-		template <class value_type>
-		bool operator==(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() == rhs.base();
-		}
-
-		template <class value_type>
-		bool operator!=(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() != rhs.base();
-		}
-
-		template <class value_type>
-		bool operator<(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() > rhs.base();
-		}
-
-		template <class value_type>
-		bool operator<=(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() >= rhs.base();
-		}
-
-		template <class value_type>
-		bool operator>(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() < rhs.base();
-		}
-
-		template <class value_type>
-		bool operator>=(const reverse_iterator<RandomIterator<value_type, is_const> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() <= rhs.base();
-		}
-
-		template <class value_type>
-		typename reverse_iterator<RandomIterator<value_type, is_const> >::difference_type operator-(const reverse_iterator<RandomIterator<value_type> >& lhs, const reverse_iterator<ConstRandomIterator<value_type> >& rhs)
-		{
-			return lhs.base() - rhs.base();
-		}
-
-		template <class Iterator>
-                reverse_iterator<Iterator> operator+(int n, reverse_iterator<Iterator> &src) { return src + n; }
-
-		template <class Iterator>
-		typename reverse_iterator<Iterator>::difference_type operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		{
-			return lhs.base() - rhs.base();
-		}
-*/
 }
 
 #endif

@@ -18,10 +18,7 @@ DIR_SRCS	= test/
 DIR_OBJS	= objs/
 DIR_INC		= ./srcs/
 
-#F_SRCS		= main.cpp
-#F_SRCS		= map.cpp
-F_SRCS		= vector.cpp
-#F_SRCS		= reverse_iterator.cpp
+F_SRCS		= main.cpp vector.cpp map.cpp
 SRCS		= $(addprefix $(DIR_SRCS), $(F_SRCS))
 
 OBJS		= $(addprefix $(DIR_OBJS), $(F_SRCS:.cpp=.o))

@@ -6,16 +6,12 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 17:06:04 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/05/02 10:58:58 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/07/18 11:41:03 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
-#include <map>
-#include <stack>
-#include "../srcs/vector.hpp"
-#include "../srcs/map.hpp"
-#include "../srcs/stack.hpp"
+#include "../srcs/testeur.hpp"
+
 
 template<typename T>
 void	print_vector(NAMESPACE::vector<T> test)
@@ -101,6 +97,11 @@ void	vector_iterators(void)
 	std::cout << "*(it += 2): " << *(it_test += 2) << std::endl;
 	std::cout << "it[3]: " << it_test[3]  << std::endl;
 
+	std::cout << std::endl << "Reserve iterator: " << std::endl;
+	NAMESPACE::vector<int>::reverse_iterator rit = test.rbegin();
+
+	for (; rit != test.rend(); ++rit)
+		std::cout << *rit << std::endl;
 	std::cout << std::endl << std::endl;
 }
 
@@ -277,25 +278,5 @@ void	vector_relational_operators(void)
 	std::cout << "t1 >= t3 = " << (t1 >= t3) << std::endl;
 
 	std::cout << std::endl << std::endl;
-}
-
-void	test_vector(void)
-{
-	std::cout << "/////TEST VECTOR/////" << std::endl << std::endl;
-	vector_constructors();
-	vector_iterators();
-	vector_capacity();
-	vector_elements_access();
-	vector_modifiers();
-	vector_allocator();
-	vector_relational_operators();
-}
-
-int main()
-{
-	std::cout << std::boolalpha;
-	test_vector();
-
-	return 1;
 }
 
