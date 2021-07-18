@@ -6,11 +6,13 @@
 /*   By: user42 <jgonfroy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/18 11:06:36 by user42            #+#    #+#             */
-/*   Updated: 2021/07/18 14:32:51 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/07/18 16:05:21 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../srcs/testeur.hpp"
+#include "../srcs/testeur.hpp"
+#include <time.h>
+#include <string.h>
 
 void	test_vector(void)
 {
@@ -37,11 +39,42 @@ void	test_map(void)
 	map_relational_operators();
 }
 
-int main()
+void	test_stack(void)
 {
+	std::cout << "/////TEST STACK/////" << std::endl << std::endl;
+	stack_constructors();
+	stack_member_functions();
+}
+
+int	find(char **args, std::string cont)
+{
+	int i = 0;
+
+	while (args[i] != NULL)
+	{
+		if (cont.compare(args[i]) == 0)
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+int main(int ac, char **av)
+{
+	clock_t begin = clock();
+
 	std::cout << std::boolalpha;
-	test_vector();
-	test_map();
+	if (ac == 1 || find(av, "vector"))
+		test_vector();
+	if (ac == 1 || find(av, "map"))
+		test_map();
+	if (ac == 1 || find(av, "stack"))
+		test_stack();
+
+	clock_t end = clock();
+	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
+	std::cout << "\n\nEXCECUTION TIME: " <<  time_spent << std::endl;
 	return 1;
 }
 

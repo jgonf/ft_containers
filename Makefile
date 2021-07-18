@@ -1,15 +1,16 @@
 NAMESP	= "ft"
+OUTPUT	= "ft_containers"
 # If the first argument is "ft"...
 ifeq (std ,$(firstword $(MAKECMDGOALS)))
   # create the namespace
   NAMESP = "std"
+  OUTPUT = "std_containers"
 endif
 
 
 NAME		= ft_containers
 
 CC		= clang++
-#CFLAGS	= -Werror -Wextra -Wall -std=c++98 -D NAMESPACE="ft"
 CFLAGS	= -Werror -Wextra -Wall -std=c++98 -D NAMESPACE=$(NAMESP)
 FSAN	= -Werror -Wextra -Wall -std=c++98 -g -fsanitize=address
 RM		= rm -rf
@@ -18,7 +19,7 @@ DIR_SRCS	= test/
 DIR_OBJS	= objs/
 DIR_INC		= ./srcs/
 
-F_SRCS		= main.cpp vector.cpp map.cpp
+F_SRCS		= main.cpp vector.cpp map.cpp stack.cpp
 SRCS		= $(addprefix $(DIR_SRCS), $(F_SRCS))
 
 OBJS		= $(addprefix $(DIR_OBJS), $(F_SRCS:.cpp=.o))
@@ -31,7 +32,7 @@ $(DIR_OBJS)%.o: $(DIR_SRCS)%.cpp
 		$(CC) $(CFLAGS) $(NAMESPACE) $(HEADER) -c $< -o $@
 
 $(NAME):	$(DIR_OBJS) $(OBJS)
-		${CC} $(CFLAGS) $(NAMESPACE) $(OBJS) -o $(NAME)
+		${CC} $(CFLAGS) $(NAMESPACE) $(OBJS) -o $(OUTPUT)
 
 $(DIR_OBJS):
 		@mkdir $(DIR_OBJS)

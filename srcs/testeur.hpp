@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/18 11:11:50 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/07/18 13:54:09 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/07/18 15:39:03 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ void	map_observers(void);
 void	map_operations(void);
 void	map_allocator(void);
 void	map_relational_operators(void);
+
+/*
+ * stack.cpp
+ */
+
+void	stack_constructors(void);
+void	stack_member_functions(void);
 
 
 #endif

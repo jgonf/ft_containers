@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:38:10 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/07/18 11:20:18 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/07/18 16:36:54 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ namespace ft
 			protected:
 				node_ptr	_ptr;
 
-//code a changer plus tard
 				void	_setNextNode(void)
 				{
 					if (_ptr->right && !(_ptr->is_tail))
