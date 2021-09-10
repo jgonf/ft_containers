@@ -383,9 +383,9 @@ namespace ft
 
 				void	swap(vector &x)
 				{
-					std::swap(_cont, x._cont);
-					std::swap(_size, x._size);
-					std::swap(_capacity, x._capacity);
+					ft::swap(_cont, x._cont);
+					ft::swap(_size, x._size);
+					ft::swap(_capacity, x._capacity);
 				}
 
 				void	clear()

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/09 10:18:42 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/07/18 11:18:37 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/09/10 16:55:36 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 
 namespace ft
 {
+
+//ft::swap
+
+	template <class T >
+		void	swap(T &a, T &b)
+		{
+			T tmp;
+
+			tmp = a;
+			a = b;
+			b = tmp;
+		}
 
 //ft::equal
 
