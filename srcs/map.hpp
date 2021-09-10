@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/18 11:08:46 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/07/18 14:21:23 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/09/10 17:04:54 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ namespace ft {
 				node_tree	*left;
 				node_tree	*right;
 				bool		is_tail;
-//				typedef typename T::first	first;
+				bool		is_black;
 
 		};
 
@@ -226,6 +226,7 @@ namespace ft {
 						tmp.left = NULL;
 						tmp.right = _tail;
 						tmp.is_tail = false;
+						tmp.is_black = true;
 						_tail->parent = _root;
 						_tail->right = _root;
 						_tail->left = NULL;
@@ -241,10 +242,11 @@ namespace ft {
 					tmp.right = NULL;
 					tmp.left = NULL;
 					tmp.is_tail = false;
+					tmp.is_black = false;
 					_alloc.construct(new_node, tmp);
 					new_node = _insert_node(_root, new_node);
 					_size++;
-					//					_balance_tree(new_node);
+					_balance_tree(new_node);
 					_update_tail(new_node);
 					return ft::make_pair<iterator, bool>(iterator(new_node), true);
 				}
@@ -357,20 +359,24 @@ namespace ft {
 
 				void	swap(map& x)
 				{
-					node_type	*ptr;
-					size_t		tmp;
+					// node_type	*ptr;
+					// size_t		tmp;
 
-					tmp = _size;
-					_size = x._size;
-					x._size = tmp;
+					// tmp = _size;
+					// _size = x._size;
+					// x._size = tmp;
 
-					ptr = _root;
-					_root = x._root;
-					x._root = ptr;
+					// ptr = _root;
+					// _root = x._root;
+					// x._root = ptr;
 
-					ptr = _tail;
-					_tail = x._tail;
-					x._tail = ptr;
+					// ptr = _tail;
+					// _tail = x._tail;
+					// x._tail = ptr;
+
+					ft::swap(_size, x._size);
+					ft::swap(_root, x._root);
+					ft::swap(_tail, x._tail);
 				}
 
 				void	clear(void)
@@ -493,19 +499,20 @@ namespace ft {
 					tmp.left = NULL;
 					tmp.right = NULL;
 					tmp.is_tail = true;
+					tmp.is_black = true;
 					_alloc.construct(_root, tmp);
 					_tail = _root;
 				}
 
-				template <typename U>
-				void	_swap(U x, U y)
-				{
-					U	tmp;
+				// template <typename U>
+				// void	_swap(U x, U y)
+				// {
+				// 	U	tmp;
 
-					tmp = x;
-					x = y;
-					y = tmp;
-				}
+				// 	tmp = x;
+				// 	x = y;
+				// 	y = tmp;
+				// }
 
 				node_type	*_get_first(void) const
 				{
@@ -555,6 +562,36 @@ namespace ft {
 							_insert_node(root->right, new_node);
 					}
 					return new_node;
+				}
+
+				void	_balance_tree(node_type	*new_node)
+				{
+					
+
+				}
+
+				void _check_color(node_type *new_node)
+				{
+					node_type	*uncle;
+
+					//possibilite deja elimine plus tot ?
+					if (new_node == _root)
+						return ;
+					if (new_node->parent->is_black)
+						return ;
+					uncle = _get_uncle(new_node);
+					if (uncle == NULL)
+						return ;
+					if (uncle->is_black == false)
+					{}
+				}
+
+				node_type	*_get_uncle(node_type *node)
+				{
+					if (node->parent->parent->right == node->parent)
+						return node->parent->left;
+					else
+						return node->parent->right;
 				}
 
 				void	_update_tail(node_type* new_node)
